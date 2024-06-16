@@ -124,3 +124,42 @@
     font-size: 1.4em;
   }
 }
+
+
+.cardAI span {
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  display: block;
+  // margin-top: aut;
+  font-size: 3vh;
+}
+
+.cardAI .infoAI {
+  font-weight: 400;
+  color: white;
+  display: block;
+  text-align: center;
+  font-size: 2vh;
+  margin: 1em;
+  padding: 0.5em;
+}
+
+
+.cardAI button {
+  padding: 0.8em 1.7em;
+  display: block;
+  margin: auto;
+  border-radius: 25px;
+  border: none;
+  font-weight: bold;
+  background: #ffffff;
+  color: rgb(0, 0, 0);
+  transition: .4s ease-in-out;
+}
+
+.cardAI button:hover {
+  background: red;
+  color: white;
+  cursor: pointer;
+}
