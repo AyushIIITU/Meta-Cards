@@ -1,0 +1,97 @@
+.home {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 0 4%;
+
+}
+/*Aqui se cambia el color del fondo de h1, h2, y h3 */
+.home-content {
+    /*background: yellowgreen;*/
+    max-width: 600px;
+}
+
+.home-content h1 {
+    font-size: 56px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.home-content h3 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #0dbfff;
+}
+
+.home-content p {
+    font-size: 16px;
+    margin: 20px 0 40px;
+
+}
+
+/* Botones */
+.home-content .btn-box {
+    display: flex;
+    justify-content: space-between;
+
+    width: 345px;
+    height: 50px;
+    /*background: yellowgreen;*/
+}
+/*color y borde de botones */
+.btn-box a {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 100%;
+    background: #0dbfff;
+    border: 2px solid #0dbfff;
+    border-radius: 8px;
+    font-size: 19px;
+    color: #081b29;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    z-index: 1;
+    overflow: hidden;
+    transition: .5s;
+
+}
+/* Color de boton izquiero */
+.btn-box a:hover {
+    color: #0dbfff;
+
+}
+
+.btn-box a:nth-child(2) {
+    background: transparent;
+    color: #0dbfff;
+}
+/*color del boton derecho*/
+.btn-box a:nth-child(2):hover {
+    color: #081b29;
+
+}
+.btn-box a:nth-child(2)::before {
+background: #0dbfff;
+
+}
+
+.btn-box a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: #081b29;
+    z-index: -1;
+    transition: .5s;
+}
+
+.btn-box a:hover::before {
+    width: 100%;
+
+}

@@ -160,8 +160,8 @@ function Cake() {
     <rect x="10" y="475.571" fill="#fefae9" width="180" height="4" />
 </svg>
 <div className="text">
-  <h1>happy birthday!</h1>
-  <p>Poly</p>
+  <h1>Happy birthday!</h1>
+  <p>Rishvant</p>
 </div></>
   )
 }

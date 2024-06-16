@@ -8,7 +8,7 @@ function BCards1() {
         <img src="https://image.ibb.co/fYzTrb/lastofus.jpg"/>
     </div>
     <div className={style["details"]}>
-        <h4 className={`text-[26px] leading-[1px] font-amatic-sc ${style["color1"]}`}>You're not a Fossil! (YET)</h4>
+        <h4 className={style["color1 h4"]}>You're not a Fossil! (YET)</h4>
         <h4 className={style["color2 margin h4"]}>(HAPPY BIRTHDAY)</h4>
         <p>Dear Dad,</p>
         <p>Let's see.. .</p>

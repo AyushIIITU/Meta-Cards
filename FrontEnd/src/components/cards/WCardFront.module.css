@@ -1,0 +1,11 @@
+
+.cover:hover {
+    transform: rotateY(-100deg);
+  }
+  
+  .cover-style {
+    width: 500px;
+    position: relative;
+    margin-left: auto;
+  }
+  

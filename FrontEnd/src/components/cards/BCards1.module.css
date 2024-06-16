@@ -3,9 +3,9 @@
 
 
 
-::selection {
+/* ::selection {
 	background: transparent;
-}
+} */
 
 .h4 {
 	font-size: 26px;
@@ -105,8 +105,8 @@
 .card .details p {
 	font-size: 15px;
 	line-height: 5px;
-	transform: rotate(-10deg);
-	padding: 0 0 0 20px;
+	transform: rotate(354deg);
+    padding: 18px 14px 3px 8px;
 }
 
 .card .details h4 {
