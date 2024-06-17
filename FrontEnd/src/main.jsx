@@ -10,6 +10,8 @@ import Cake from './components/cakes/Cake.jsx'
 import WCards2 from './components/cards/WCards2.jsx'
 import CakeEdits from './components/Edits/CakeEdits.jsx'
 import FontPicker from './components/Test/FontPicker.jsx'
+import CakeLink from './components/Link/CakeLink.jsx'
+import CakeDisplay from './components/cakes/CakeDisplay.jsx'
 // import './input.css'
 const router=createBrowserRouter([
   {
@@ -41,6 +43,19 @@ const router=createBrowserRouter([
   {
     path:"editCake",
     element:<CakeEdits/>
+  },
+  {
+    path:"/Cake",
+    children:[
+      {
+        path:"",
+        element:<CakeDisplay/>
+      },
+      {
+        path:":id",
+        element:<CakeLink/>
+      }
+    ]
   },
   {
     path:"fpicker",

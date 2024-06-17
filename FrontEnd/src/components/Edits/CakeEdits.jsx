@@ -1,71 +1,125 @@
-import  { useState } from 'react'
-import "../cakes/style.scss"
+import { useState } from "react";
+import "../cakes/style.scss";
 // import { Input } from 'postcss';
-import axios from 'axios'
-import { ColorPicker } from 'primereact/colorpicker';
-import { API } from '../../Utils/Apis';
-import BMessageSke from '../skeleton/BMessageSke';
+import axios from "axios";
+import { ColorPicker } from "primereact/colorpicker";
+import { API } from "../../Utils/Apis";
+import BMessageSke from "../skeleton/BMessageSke";
 import { CiEdit } from "react-icons/ci";
 import { MdDownloadDone } from "react-icons/md";
-import FontPicker from '../Test/FontPicker';
-import {fonts} from '../../Utils/Fonts';
+import FontPicker from "../Test/FontPicker";
+import { fonts } from "../../Utils/Fonts";
+import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 function CakeEdits() {
-    const [colorHEX1, setColorHEX1] = useState("a88679");
-    const [colorHEX2, setColorHEX2] = useState("8b4554");
-    const [colorHEX3, setColorHEX3] = useState("fefae9");
-    const [editableName, setEditableName] = useState(false);
-    const [backGroundIMG,setBackGroundIMG]=useState(null);
-    const [bText,setBText]=useState("#8b6a60");
-    const [BName,setBName]=useState("Rishvant")
-    const [generate,setGenerate]=useState(true);
-    const [selectedFont,setSelectedFonts]=useState(fonts[0].value);
-    const [message,setMessage]=useState("May your special day be filled with joy and laughter. As you celebrate another year of life, may you cherish the memories and embrace the future. May your wishes come true, and may this year be your best yet. Happy birthday!");
-    const handleOnRegerate=async()=>{
-      try {
-        setGenerate(false);
-        const response=await axios.get(`${API}/ai/cake`);
-        setMessage(response.data);
-        setGenerate(true);
-      } catch (err) {
-        setGenerate(true);
-        if(err.status===503){
-          setMessage("Sorry, our AI is currently busy. Please try again later.");
-        }
-        console.error(err);
+  const [colorHEX1, setColorHEX1] = useState("a88679");
+  const [colorHEX2, setColorHEX2] = useState("8b4554");
+  const [colorHEX3, setColorHEX3] = useState("fefae9");
+  const [editableName, setEditableName] = useState(false);
+  const [backGroundIMG, setBackGroundIMG] = useState(null);
+  const [bText, setBText] = useState("#8b6a60");
+  const [BName, setBName] = useState("Rishvant");
+  const [generate, setGenerate] = useState(true);
+  const [selectedFont, setSelectedFonts] = useState(fonts[0].value);
+  const [cakeBackGround,setCakeBackGround]=useState(null);
+  const [message, setMessage] = useState(
+    "May your special day be filled with joy and laughter. As you celebrate another year of life, may you cherish the memories and embrace the future. May your wishes come true, and may this year be your best yet. Happy birthday!"
+  );
+  const handleOnRegerate = async () => {
+    try {
+      setGenerate(false);
+      const response = await axios.get(`${API}/ai/cake`);
+      setMessage(response.data);
+      setGenerate(true);
+    } catch (err) {
+      setGenerate(true);
+      if (err.status === 503) {
+        setMessage("Sorry, our AI is currently busy. Please try again later.");
       }
+      console.error(err);
     }
-    const handleFileUpload = (e) => {
-      const file = e.target.files[0];
-      // console.log('file', file)
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setBackGroundIMG(`url(${reader.result})`);
-        };
-        reader.readAsDataURL(file);
-        
-        
-      }
-    };
+  };
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    // console.log('file', file)
+    if (file) {
+      setCakeBackGround(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBackGroundIMG(`url(${reader.result})`);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleCakeSubmit = async () => {
+    try {
+      const response = {
+        message: message,
+        l1: colorHEX1,
+        l2: colorHEX2,
+        l3: colorHEX3,
+        CakeBackGroundIMG: cakeBackGround,
+        BName: {
+          Name: BName,
+          Font: selectedFont,
+          Color: bText,
+        },
 
+        creater: "6670327fb7566a70723d7afb",
+      };
+      console.log(cakeBackGround);
+      const res = await axios.post(`${API}/api/cake`, response, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res);
+      if (res.status === 201) {
+        toast.success("Successfully added");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
-
-
-<div style={{backgroundImage:backGroundIMG}} className='bg-cover  bg-center bg-no-repeat object-contain overflow-hidden'>
-  <div>
-<div className="velas">
-    <div className="fuego"></div>
-    <div className="fuego"></div>
-    <div className="fuego"></div>
-    <div className="fuego"></div>
-    <div className="fuego"></div>
-</div>
-<svg id="cake" version="1.1" x="0px" y="0px" width="200px" height="500px" viewBox="0 0 200 500" enableBackground="new 0 0 200 500" xmlSpace="preserve">
-
-    <path fill={`#${colorHEX2}`} d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
-		c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z">
-        <animate id="bizcocho_3" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1" begin="relleno_2.end" dur="0.3s" fill="freeze" values="
+    <div
+      style={{ backgroundImage: backGroundIMG }}
+      className="bg-cover  bg-center bg-no-repeat object-contain overflow-hidden"
+    >
+      <div>
+        <div className="velas">
+          <div className="fuego"></div>
+          <div className="fuego"></div>
+          <div className="fuego"></div>
+          <div className="fuego"></div>
+          <div className="fuego"></div>
+        </div>
+        <svg
+          id="cake"
+          version="1.1"
+          x="0px"
+          y="0px"
+          width="200px"
+          height="500px"
+          viewBox="0 0 200 500"
+          enableBackground="new 0 0 200 500"
+          xmlSpace="preserve"
+        >
+          <path
+            fill={`#${colorHEX2}`}
+            d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
+		c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z"
+          >
+            <animate
+              id="bizcocho_3"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1"
+              begin="relleno_2.end"
+              dur="0.3s"
+              fill="freeze"
+              values="
                           M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
 		c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z
                           ;
@@ -75,12 +129,24 @@ function CakeEdits() {
                           ;
                           M173.667,427.569c-49.795,0-101.101,0-147.334,0c-3.999,0-4-16.002,0-16.002
 		c46.385,0,97.539,0,147.334,0C177.668,411.567,177.667,427.569,173.667,427.569z
-                          " />
-    </path>
-    <path fill={`#${colorHEX1}`} d="M100-178.521c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227
+                          "
+            />
+          </path>
+          <path
+            fill={`#${colorHEX1}`}
+            d="M100-178.521c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227
 		c0,19.144,0,57.431,0,76.574c0,10.152,0,40.607,0,40.607c0,1.858-1.506,3.364-3.364,3.364l0,0c-1.858,0-3.364-1.506-3.364-3.364c0,0,0-30.455,0-40.607c0-19.144,0-57.432,0-76.575c0-11.057,0-44.226,0-44.226C96.636-177.015,98.142-178.521,100-178.521
-		L100-178.521z">
-        <animate id="relleno_2" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1; 0 0 0.58 1" begin="bizcocho_2.end" dur="0.5s" fill="freeze" values="
+		L100-178.521z"
+          >
+            <animate
+              id="relleno_2"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1; 0 0 0.58 1"
+              begin="bizcocho_2.end"
+              dur="0.5s"
+              fill="freeze"
+              values="
                           M100-178.521c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227
 		c0,19.144,0,57.431,0,76.574c0,10.152,0,40.607,0,40.607c0,1.858-1.506,3.364-3.364,3.364l0,0c-1.858,0-3.364-1.506-3.364-3.364c0,0,0-30.455,0-40.607c0-19.144,0-57.432,0-76.575c0-11.057,0-44.226,0-44.226C96.636-177.015,98.142-178.521,100-178.521
 		L100-178.521z
@@ -98,11 +164,23 @@ function CakeEdits() {
                           M102.242,427.569c5.348,0,14.079,0,17.462,0c0,0,17.026,0,27.504,0
 		c19.143,0,20.39-3.797,26.459,0c3,1.877,0,7.823,0,7.823c-2.412,2.258-58.328,0-73.667,0l0,0c-1.858,0-67.187,0-73.667,0
 		c0,0-4.125-4.983,0-7.823c5.201-3.58,16.085,0,23.725,0c8.841,0,20.762,0,20.762,0c3.686,0,8.597,0,19.511,0H102.242z
-                          " />
-    </path>
-    <path fill={`#${colorHEX2}`} d="M173.667-15.929c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002
-		c43.566,0,97.96,0,147.334,0C177.667-31.931,177.666-15.929,173.667-15.929z">
-        <animate id="bizcocho_2" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1; 0.25 0 0.58 1" begin="relleno_1.end" dur="0.5s" fill="freeze" values="
+                          "
+            />
+          </path>
+          <path
+            fill={`#${colorHEX2}`}
+            d="M173.667-15.929c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002
+		c43.566,0,97.96,0,147.334,0C177.667-31.931,177.666-15.929,173.667-15.929z"
+          >
+            <animate
+              id="bizcocho_2"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1; 0.25 0 0.58 1"
+              begin="relleno_1.end"
+              dur="0.5s"
+              fill="freeze"
+              values="
                           M173.667-15.929c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002
 		c43.566,0,97.96,0,147.334,0C177.667-31.931,177.666-15.929,173.667-15.929z
                           ;
@@ -114,12 +192,24 @@ function CakeEdits() {
                           ;
                           M173.667,451.394c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
 		c44.697,0,96.586,0,147.334,0C177.667,435.392,177.668,451.394,173.667,451.394z
-                          " />
-    </path>
-    <path fill={`#${colorHEX1}`} d="M101.368-73.685c0,12.164,0,15.18,0,28.519c0,22.702,0-13.661,0,8.304c0,14.48,0,18.233,0,30.512
+                          "
+            />
+          </path>
+          <path
+            fill={`#${colorHEX1}`}
+            d="M101.368-73.685c0,12.164,0,15.18,0,28.519c0,22.702,0-13.661,0,8.304c0,14.48,0,18.233,0,30.512
 		c0,1.753-2.958,1.847-2.958,0c0-12.68,0-16.277,0-30.401c0-21.983,0,11.66,0-8.305c0-13.027,0-15.992,0-28.628
-		C98.411-75.883,101.368-75.592,101.368-73.685z">
-        <animate id="relleno_1" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1; 0 0 0.6 1" begin="bizcocho_1.end" dur="0.5s" fill="freeze" values="
+		C98.411-75.883,101.368-75.592,101.368-73.685z"
+          >
+            <animate
+              id="relleno_1"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1; 0 0 0.6 1"
+              begin="bizcocho_1.end"
+              dur="0.5s"
+              fill="freeze"
+              values="
                           M101.368-73.685c0,12.164,0,15.18,0,28.519c0,22.702,0-13.661,0,8.304c0,14.48,0,18.233,0,30.512
 		c0,1.753-2.958,1.847-2.958,0c0-12.68,0-16.277,0-30.401c0-21.983,0,11.66,0-8.305c0-13.027,0-15.992,0-28.628
 		C98.411-75.883,101.368-75.592,101.368-73.685z
@@ -135,11 +225,23 @@ function CakeEdits() {
                           M173.667,451.394c2.875,0,2.997,9.257,0,9.131c-22.662-0.956-32.09-0.956-41.756-0.956
 		c-14.48,0-17.884,0-30.163,0c-2.087,0-2.068,0-3.915,0c-13.333,0-8.963,0-23.088,0c-11.668,0-34.99-0.294-48.412,1.831
 		c-4.109,0.65-3.01-10.006,0-10.006C37.129,451.394,149.379,451.394,173.667,451.394z
-                          " />
-    </path>
-    <path fill={`#${colorHEX2}`} d="M173.667,21.571c-33.174,0-111.467,0-147.334,0c-4,0-4-16.002,0-16.002c39.836,0,105.982,0,147.334,0
-		C177.668,5.569,177.667,21.571,173.667,21.571z">
-        <animate id="bizcocho_1" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0.25 0 1 1; 0 0 1 1; 0.25 0 0.6 1" begin="2s" dur="0.8s" fill="freeze" values="
+                          "
+            />
+          </path>
+          <path
+            fill={`#${colorHEX2}`}
+            d="M173.667,21.571c-33.174,0-111.467,0-147.334,0c-4,0-4-16.002,0-16.002c39.836,0,105.982,0,147.334,0
+		C177.668,5.569,177.667,21.571,173.667,21.571z"
+          >
+            <animate
+              id="bizcocho_1"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0.25 0 1 1; 0 0 1 1; 0.25 0 0.6 1"
+              begin="2s"
+              dur="0.8s"
+              fill="freeze"
+              values="
                           M173.667,21.571c-33.174,0-111.467,0-147.334,0c-4,0-4-16.002,0-16.002c39.836,0,105.982,0,147.334,0
 		C177.668,5.569,177.667,21.571,173.667,21.571z
                           ;
@@ -160,13 +262,25 @@ function CakeEdits() {
                           ;
                           M173.667,475.571c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002c43.566,0,97.96,0,147.334,0
 		C177.667,459.569,177.666,475.571,173.667,475.571z
-                          " />
-    </path>
-    <path fill={`#${colorHEX3}`} d="M104.812,113.216c0,3.119-2.164,5.67-4.812,5.67c-2.646,0-4.812-2.551-4.812-5.67c0-5.594,0-16.782,0-22.375
+                          "
+            />
+          </path>
+          <path
+            fill={`#${colorHEX3}`}
+            d="M104.812,113.216c0,3.119-2.164,5.67-4.812,5.67c-2.646,0-4.812-2.551-4.812-5.67c0-5.594,0-16.782,0-22.375
 	c0-5.143,0-15.427,0-20.568c0-7.333,0-21.998,0-29.33c0-5.523,0-16.569,0-22.092c0-3.295,0-9.885,0-13.181
 	C95.188,2.551,97.353,0,100,0c2.648,0,4.812,2.551,4.812,5.669c0,3.248,0,9.743,0,12.991c0,5.428,0,16.284,0,21.711
-	c0,7.618,0,22.854,0,30.472c0,4.952,0,14.854,0,19.807C104.812,96.292,104.812,107.576,104.812,113.216z">
-        <animate id="crema" attributeName="d" calcMode="spline" keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0.25 0 1 1; 0 0 1 1; 0 0 0.58 1" begin="bizcocho_3.end" dur="2s" fill="freeze" values="
+	c0,7.618,0,22.854,0,30.472c0,4.952,0,14.854,0,19.807C104.812,96.292,104.812,107.576,104.812,113.216z"
+          >
+            <animate
+              id="crema"
+              attributeName="d"
+              calcMode="spline"
+              keySplines="0 0 1 1; 0 0 1 1; 0 0 1 1; 0.25 0 1 1; 0 0 1 1; 0 0 0.58 1"
+              begin="bizcocho_3.end"
+              dur="2s"
+              fill="freeze"
+              values="
                           M104.812,113.216c0,3.119-2.164,5.67-4.812,5.67c-2.646,0-4.812-2.551-4.812-5.67c0-5.594,0-16.782,0-22.375
 	c0-5.143,0-15.427,0-20.568c0-7.333,0-21.998,0-29.33c0-5.523,0-16.569,0-22.092c0-3.295,0-9.885,0-13.181
 	C95.188,2.551,97.353,0,100,0c2.648,0,4.812,2.551,4.812,5.669c0,3.248,0,9.743,0,12.991c0,5.428,0,16.284,0,21.711
@@ -206,72 +320,155 @@ function CakeEdits() {
 	c-7.5,4.833-9.508-3.78-9.299-7.004c0.799-12.329,23.592-7.153,38.132-7.329c10.234-0.124,20.238-1.505,38.287-2.167
 	c16.642-0.61,32.903,1.125,46.213,1.5c12.438,0.351,35.058-5.579,31.863,6.451c-5.532,20.833,1.25,28.216-4.409,27.883
 	c-7.606-0.447-6.058-37.895-20.62-23.333c-10.167,10.166-15.972-0.747-25,12C119.547,443.568,121.798,416.515,111.547,415.233z
-                          " />
-    </path>
-    <rect x="10" y="475.571" fill={`#${colorHEX3}`} width="180" height="4" />
-</svg>
+                          "
+            />
+          </path>
+          <rect
+            x="10"
+            y="475.571"
+            fill={`#${colorHEX3}`}
+            width="180"
+            height="4"
+          />
+        </svg>
 
-<div style={{color:`${bText}`,fontFamily:selectedFont}} className={`text-center font-[300] font-['Lato',sans-serif] t w-max relative mx-auto flex content-center flex-col`}>
-
+        <div
+          style={{ color: `${bText}`, fontFamily: selectedFont }}
+          className={`text-center font-[300] font-['Lato',sans-serif] t w-max relative mx-auto flex content-center flex-col`}
+        >
           {/* {editable ? 'Save' : 'Edit'} */}
-      {editableName?<MdDownloadDone onClick={()=>setEditableName(false)
-      }/>:<CiEdit onClick={() =>setEditableName(true)} className="absolute m-[-2vh] text-black h-[2.5vh] w-[2.5vh] top-0 right-0" />}
-      <h1 className='mx-auto'>Happy birthday!</h1>
-      {editableName ? (<>
-  <input
-    type="text"
-    defaultValue={BName}
-    onChange={(e) => {setBName(e.target.value) }}
-  />
-  <input type="color" defaultValue={`${bText}`} onChange={e=>setBText(e.target.value)} />
-  <FontPicker selectedFont={selectedFont} setSelectedFont={setSelectedFonts}/>
-  </>
-) : (
-  <p>{BName}</p>
-)}
-    </div>
-</div>
-<br />
-<div className='flex justify-between flex-wrap content-evenly flex-row'>
-  <div>
-<ColorPicker format="hex" value={colorHEX1} onChange={(e) =>{ setColorHEX1(e.value);}} /> 
-<div>Bread Layer</div></div>
-<div>
-<ColorPicker format="hex" value={colorHEX2} onChange={(e) =>{ setColorHEX2(e.value);}} /><div>Cream Layer</div>
-</div>
-<div>
-<ColorPicker format="hex" value={colorHEX3} onChange={(e) =>{ setColorHEX3(e.value);}} /><div>Top Layer</div>
-</div>
-</div>
-<div className="flex flex-row flex-wrap content-stretch justify-around">
-<div
-      className="cardAI max-w-[45vh] w-auto h-[40vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col mr-auto ml-auto"
-      style={{ clipPath: 'polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px)' }}
-    >
-  
-  <span >Birthday Note By AI</span>
-  {generate?<p className="infoAI">{message}</p>:<BMessageSke/>}
- <div className='flex content-between mb-[1vh] mt-auto'>
-  <button onClick={handleOnRegerate}>Regenerate</button> <button>Edit</button></div>
-</div>
-
-<div className="flex items-center justify-center w-[25vh] mx-auto">
-    <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-            <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-            </svg>
-            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+          {editableName ? (
+            <MdDownloadDone onClick={() => setEditableName(false)} />
+          ) : (
+            <CiEdit
+              onClick={() => setEditableName(true)}
+              className="absolute m-[-2vh] text-black h-[2.5vh] w-[2.5vh] top-0 right-0"
+            />
+          )}
+          <h1 className="mx-auto">Happy birthday!</h1>
+          {editableName ? (
+            <>
+              <input
+                type="text"
+                defaultValue={BName}
+                onChange={(e) => {
+                  setBName(e.target.value);
+                }}
+              />
+              <input
+                type="color"
+                defaultValue={`${bText}`}
+                onChange={(e) => setBText(e.target.value)}
+              />
+              <FontPicker
+                selectedFont={selectedFont}
+                setSelectedFont={setSelectedFonts}
+              />
+            </>
+          ) : (
+            <p>{BName}</p>
+          )}
         </div>
-        <input id="dropzone-file" type="file" accept='.png, .gif, .jpeg, .jpg' onChange={handleFileUpload} className="hidden" />
-    </label>
-</div> 
-</div>
+      </div>
+      <br />
+      <div className="flex justify-between flex-wrap content-evenly flex-row">
+        <div>
+          <ColorPicker
+            format="hex"
+            value={colorHEX1}
+            onChange={(e) => {
+              setColorHEX1(e.value);
+            }}
+          />
+          <div>Bread Layer</div>
+        </div>
+        <div>
+          <ColorPicker
+            format="hex"
+            value={colorHEX2}
+            onChange={(e) => {
+              setColorHEX2(e.value);
+            }}
+          />
+          <div>Cream Layer</div>
+        </div>
+        <div>
+          <ColorPicker
+            format="hex"
+            value={colorHEX3}
+            onChange={(e) => {
+              setColorHEX3(e.value);
+            }}
+          />
+          <div>Top Layer</div>
+        </div>
+      </div>
+      <div className="flex flex-row flex-wrap content-stretch justify-around">
+        <div
+          className="cardAI max-w-[45vh] w-auto h-[40vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col mr-auto ml-auto"
+          style={{
+            clipPath:
+              "polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px)",
+          }}
+        >
+          <span>Birthday Note By AI</span>
+          {generate ? <p className="infoAI">{message}</p> : <BMessageSke />}
+          <div className="flex content-between mb-[1vh] mt-auto">
+            <button onClick={handleOnRegerate}>Regenerate</button>{" "}
+            <button>Edit</button>
+          </div>
+        </div>
 
-
-</div>
-  )
+        <div className="flex items-center justify-center w-[25vh] mx-auto">
+          <label
+            htmlFor="dropzone-file"
+            className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg
+                className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span className="font-semibold">Click to upload</span> or drag
+                and drop
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                SVG, PNG, JPG or GIF (MAX. 800x400px)
+              </p>
+            </div>
+            <input
+              id="dropzone-file"
+              type="file"
+              accept=".png, .gif, .jpeg, .jpg"
+              onChange={handleFileUpload}
+              className="hidden"
+            />
+          </label>
+        </div>
+      </div>
+      <Link
+        to=""
+        onClick={handleCakeSubmit}
+        className="relative cursor-pointer flex max-w-[12vh] mx-auto opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#8122b0] to-[#dc98fd] active:scale-95"
+      >
+        <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]">
+          Done
+        </span>
+      </Link>
+    </div>
+  );
 }
 
 export default CakeEdits;
