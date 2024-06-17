@@ -14,7 +14,7 @@ function CakeLink() {
     try {
       setLoading(true);
       const response = await axios.get(`${API}/api/cake/${id}`);
-      console.log("response.data", response.data); // Use the id variable
+      // console.log("response.data", response.data); // Use the id variable
       setData(response.data); // Set the data with response.data
       setIMG(`${API}/${response.data.CakeBackGroundIMG.replace(
         /\\/g,
@@ -26,31 +26,14 @@ function CakeLink() {
       setLoading(false); // Ensure loading is set to false even on error
     }
   };
-const SettingIMG=async ()=>{
-  try {
-    const response=`${
-      API}/${data.CakeBackGroundIMG.replace(
-                    /\\/g,
-                    "/"
-       ) }`
-       setIMG(response);
-       
-  } catch (err) {
-    console.log('err', err)
-  }
-}
+
   useEffect(() => {
     fetchData(); 
     
     // Call fetchData correctly within useEffect
   }, []); // Empty dependency array to run once on mount
-  const handleOnClick=()=>{
-    console.log('API', API);
-    setIMG(`${API}/${data.CakeBackGroundIMG.replace(
-      /\\/g,
-      "/"
-)}` )
-  }
+  
+  
   return (
     <>
    
