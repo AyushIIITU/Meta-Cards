@@ -9,6 +9,7 @@ import BCards1 from './components/cards/BCards1.jsx'
 import Cake from './components/cakes/Cake.jsx'
 import WCards2 from './components/cards/WCards2.jsx'
 import CakeEdits from './components/Edits/CakeEdits.jsx'
+import FontPicker from './components/Test/FontPicker.jsx'
 // import './input.css'
 const router=createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router=createBrowserRouter([
   {
     path:"editCake",
     element:<CakeEdits/>
+  },
+  {
+    path:"fpicker",
+    element:<FontPicker/>
   }
   
 ])

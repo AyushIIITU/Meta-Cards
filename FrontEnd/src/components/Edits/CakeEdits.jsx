@@ -1,17 +1,59 @@
 import  { useState } from 'react'
 import "../cakes/style.scss"
 // import { Input } from 'postcss';
-
+import axios from 'axios'
 import { ColorPicker } from 'primereact/colorpicker';
-        
+import { API } from '../../Utils/Apis';
+import BMessageSke from '../skeleton/BMessageSke';
+import { CiEdit } from "react-icons/ci";
+import { MdDownloadDone } from "react-icons/md";
+import FontPicker from '../Test/FontPicker';
+import {fonts} from '../../Utils/Fonts';
 function CakeEdits() {
     const [colorHEX1, setColorHEX1] = useState("a88679");
     const [colorHEX2, setColorHEX2] = useState("8b4554");
     const [colorHEX3, setColorHEX3] = useState("fefae9");
+    const [editableName, setEditableName] = useState(false);
+    const [backGroundIMG,setBackGroundIMG]=useState(null);
+    const [bText,setBText]=useState("#8b6a60");
+    const [BName,setBName]=useState("Rishvant")
+    const [generate,setGenerate]=useState(true);
+    const [selectedFont,setSelectedFonts]=useState(fonts[0].value);
+    const [message,setMessage]=useState("May your special day be filled with joy and laughter. As you celebrate another year of life, may you cherish the memories and embrace the future. May your wishes come true, and may this year be your best yet. Happy birthday!");
+    const handleOnRegerate=async()=>{
+      try {
+        setGenerate(false);
+        const response=await axios.get(`${API}/ai/cake`);
+        setMessage(response.data);
+        setGenerate(true);
+      } catch (err) {
+        setGenerate(true);
+        if(err.status===503){
+          setMessage("Sorry, our AI is currently busy. Please try again later.");
+        }
+        console.error(err);
+      }
+    }
+    const handleFileUpload = (e) => {
+      const file = e.target.files[0];
+      // console.log('file', file)
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          setBackGroundIMG(`url(${reader.result})`);
+        };
+        reader.readAsDataURL(file);
+        
+        
+      }
+    };
+
 
   return (
 
-<>
+
+<div style={{backgroundImage:backGroundIMG}} className='bg-cover  bg-center bg-no-repeat object-contain overflow-hidden'>
+  <div>
 <div className="velas">
     <div className="fuego"></div>
     <div className="fuego"></div>
@@ -166,12 +208,28 @@ function CakeEdits() {
 	c-7.606-0.447-6.058-37.895-20.62-23.333c-10.167,10.166-15.972-0.747-25,12C119.547,443.568,121.798,416.515,111.547,415.233z
                           " />
     </path>
-    <rect x="10" y="475.571" fill="#fefae9" width="180" height="4" />
+    <rect x="10" y="475.571" fill={`#${colorHEX3}`} width="180" height="4" />
 </svg>
-<div className="text">
-  <h1>Happy birthday!</h1>
-  <p>Rishvant</p>
 
+<div style={{color:`${bText}`,fontFamily:selectedFont}} className={`text-center font-[300] font-['Lato',sans-serif] t w-max relative mx-auto flex content-center flex-col`}>
+
+          {/* {editable ? 'Save' : 'Edit'} */}
+      {editableName?<MdDownloadDone onClick={()=>setEditableName(false)
+      }/>:<CiEdit onClick={() =>setEditableName(true)} className="absolute m-[-2vh] text-black h-[2.5vh] w-[2.5vh] top-0 right-0" />}
+      <h1 className='mx-auto'>Happy birthday!</h1>
+      {editableName ? (<>
+  <input
+    type="text"
+    defaultValue={BName}
+    onChange={(e) => {setBName(e.target.value) }}
+  />
+  <input type="color" defaultValue={`${bText}`} onChange={e=>setBText(e.target.value)} />
+  <FontPicker selectedFont={selectedFont} setSelectedFont={setSelectedFonts}/>
+  </>
+) : (
+  <p>{BName}</p>
+)}
+    </div>
 </div>
 <br />
 <div className='flex justify-between flex-wrap content-evenly flex-row'>
@@ -185,19 +243,34 @@ function CakeEdits() {
 <ColorPicker format="hex" value={colorHEX3} onChange={(e) =>{ setColorHEX3(e.value);}} /><div>Top Layer</div>
 </div>
 </div>
+<div className="flex flex-row flex-wrap content-stretch justify-around">
 <div
-      className="cardAI w-[45vh] h-[50vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col mr-auto ml-auto"
+      className="cardAI max-w-[45vh] w-auto h-[40vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col mr-auto ml-auto"
       style={{ clipPath: 'polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px)' }}
     >
   
   <span >Birthday Note By AI</span>
-  <p className="infoAI">I’m Walter, a multidisciplinary designer who focuses on telling my clients’ stories visually, through enjoyable and meaningful experiences. I specialize in responsive websites and functional user interfaces.</p>
+  {generate?<p className="infoAI">{message}</p>:<BMessageSke/>}
  <div className='flex content-between mb-[1vh] mt-auto'>
-  <button>Regenerate</button> <button>Edit</button></div>
+  <button onClick={handleOnRegerate}>Regenerate</button> <button>Edit</button></div>
+</div>
+
+<div className="flex items-center justify-center w-[25vh] mx-auto">
+    <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+        </div>
+        <input id="dropzone-file" type="file" accept='.png, .gif, .jpeg, .jpg' onChange={handleFileUpload} className="hidden" />
+    </label>
+</div> 
 </div>
 
 
-</>
+</div>
   )
 }
 
