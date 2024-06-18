@@ -12,6 +12,9 @@ import CakeEdits from './components/Edits/CakeEdits.jsx'
 import FontPicker from './components/Test/FontPicker.jsx'
 import CakeLink from './components/Link/CakeLink.jsx'
 import CakeDisplay from './components/cakes/CakeDisplay.jsx'
+import LogInSine from './components/Login-SignUp/Login.jsx'
+import OTPCard from './components/Test/OTPCard.jsx'
+import Otp2 from './components/Test/Otp2.jsx'
 // import './input.css'
 const router=createBrowserRouter([
   {
@@ -60,6 +63,13 @@ const router=createBrowserRouter([
   {
     path:"fpicker",
     element:<FontPicker/>
+  },
+  {
+    path:'laa',
+    element:<LogInSine/>
+  },{
+    path:'otp',
+    element:<Otp2/>
   }
   
 ])
