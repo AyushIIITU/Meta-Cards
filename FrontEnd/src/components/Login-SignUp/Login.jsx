@@ -89,7 +89,7 @@ const LogInSine = () => {
   return (
     <div className="w-[100vw] h-[100vh] flex items-center" /*style={{ backgroundImage: `url(${BackGround})`, backgroundSize: 'cover', backgroundPosition: 'center' }} */>
     <div className="App">
-      <FormPanel signIn={signIn} />
+      <FormPanel signIn={signIn} setSignIn={setSignIn} />
       <ActionPanel signIn={signIn} slide={slide} />
     </div></div>
   );

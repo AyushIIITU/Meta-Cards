@@ -1,6 +1,7 @@
 import React from 'react'
 import stylee from "./Otp2.module.css"
-function Otp2() {
+function Otp2({refOTP}) {
+  
   return (
     <>
   {/* <div className="design-container"> */}
@@ -11,7 +12,7 @@ function Otp2() {
       <p className={stylee["form-card-title"]}>Please check your email for the confirmation code.</p>
       <p className={stylee["form-card-prompt"]}>Enter 6 digits of otp</p>
       <div className={stylee["form-card-input-wrapper"]}>
-        <input type="tel" maxLength="6" placeholder="______" style={{width:'17rem',padding:'0'}} className={stylee["form-card-input"]}/>
+        <input type="tel" ref={refOTP} maxLength="6" placeholder="______" style={{width:'17rem',padding:'0'}} className={stylee["form-card-input"]}/>
         <div className={stylee["form-card-input-bg"]}></div>
       </div>
       

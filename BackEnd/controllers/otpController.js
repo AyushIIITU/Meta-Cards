@@ -21,7 +21,7 @@ exports.sendOTP = async (req, res, next) => {
 
         await sendEmail({
             to: email,
-            subject: 'Your OTP to Reset Password',
+            subject: 'Your OTP to Verify Email',
             message: `<html>
       <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #dddddd; border-radius: 10px; padding: 20px;">
@@ -59,6 +59,7 @@ exports.sendOTP = async (req, res, next) => {
     }
 };
 exports.verifyFirstTimeOTP = async (req, res, next) => {
+  console.log(req.body);
   try {
       const {data,otp}=req.body;
       const email=data.email;

@@ -1,22 +1,30 @@
 import { Form, Link } from "react-router-dom";
 import "./FormPanel.css";
-import { useState } from "react";
+import { useRef, useState } from "react";
 // import Otp from "../../../../BackEnd/models/Otp";
 import Otp2 from "../Test/Otp2";
-const FormPanel = ({ signIn }) => {
+import axios from 'axios'
+import stylee from "../Test/Otp2.module.css"
+import {API} from "../../Utils/Apis"
+const FormPanel = ({ signIn,setSignIn }) => {
     let heading = signIn ? "Sign in" : "Create account";
-    const [verifyOTP,setVerifyOTP]=useState(true);
+    const refName=useRef('');
+    const refEmail=useRef('');
+    const refPassword=useRef('');
+    const [registerData,setRegisterData]=useState([]);
+    const refOTP=useRef('');
+    const [verifyOTP,setVerifyOTP]=useState(false);
     heading=verifyOTP?"Varify OTP":heading;
     const inputs = [
       {
         type: "text",
         placeholder: "Email",
-        name:"Email"
+        ref:refEmail
       },
       {
         type: "password",
         placeholder: "Password",
-        name:"Password"
+        ref:refPassword
       },
     ];
   
@@ -24,20 +32,57 @@ const FormPanel = ({ signIn }) => {
       inputs.unshift({
         type: "text",
         placeholder: "Name",
-        name:"Name"
+        ref:refName
       });
     }
-    
+    const sendApiOtp=async()=>{
+      try {
+        const response= await axios.get(`${API}/api/sendOTP?email=${refEmail.current.value}`);
+        console.log(response);
+        if(response.status==200){
+          setRegisterData({name:refName.current.value,email:refEmail.current.value,password:refPassword.current.value});
+          setVerifyOTP(true);
+        }
+      } catch (err) {
+        console.error("Eror in Register",err);
+      }
+    }
     const button = signIn ? "Sign in" : "Sign up";
     const handleOnClick=async ()=>{
       if(signIn){
         //sign in logic
-        console.log(signIn);
+        sendApiOtp();
+        
       }
       else{
-        //sign up logic
-
+        //sign up(register) logic
+        try {
+          const response= await axios.get(`${API}/api/sendOTP?email=${refEmail.current.value}`);
+          console.log(response);
+          if(response.status==200){
+            setRegisterData({name:refName.current.value,email:refEmail.current.value,password:refPassword.current.value});
+            setVerifyOTP(true);
+          }
+        } catch (err) {
+          console.error("Eror in Register",err);
+        }
       }
+    }
+    const handleOTPV=async(e)=>{
+      e.preventDefault();
+      try {
+        const response= await axios.post(`${API}/api/register`,{data:registerData,otp:refOTP.current.value});
+        if(response.status===200){
+          setVerifyOTP(false);
+          setSignIn(true);
+  
+        }
+      } catch (err) {
+        console.error("error in Otp",err);
+      }
+    }
+    const handleResend=async()=>{
+      sendApiOtp();
     }
     return (
       <div className="Panel FormPanel">
@@ -46,25 +91,36 @@ const FormPanel = ({ signIn }) => {
         {/* <p>{paragraph}</p> */}
         {
   verifyOTP ? (
-    <><Otp2/>
-    <div className="w-full flex flex-row items-center justify-between "><button style={{margin:'auto'}}  className="cursor-pointer transition-all bg-blue-500 m-auto  text-white px-6 py-2 rounded-lg
+    <>
+    <form style={{backgroundColor:'transparent'}} onSubmit={handleOTPV} className={stylee["form-card"]}>
+      <p className={stylee["form-card-title"]}>Please check your email for the confirmation code.</p>
+      <p className={stylee["form-card-prompt"]}>Enter 6 digits of otp</p>
+      <div className={stylee["form-card-input-wrapper"]}>
+        <input type="tel" ref={refOTP} maxLength="6" placeholder="______" style={{width:'17rem',padding:'0'}} className={stylee["form-card-input"]}/>
+        <div className={stylee["form-card-input-bg"]}></div>
+      </div>
+      <div className="w-full flex mt-[4vh] flex-row items-center justify-between ">
+      <button style={{margin:'auto'}} onClick={handleResend} className="cursor-pointer transition-all bg-blue-500 m-auto  text-white px-6 py-2 rounded-lg
     border-blue-600
     border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
     active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
       Resend
     </button>
-    <button style={{margin:'auto'}} className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg
+    <button style={{margin:'auto'}} type="submit" className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg
     border-blue-600
     border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px]
     active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
       Verify
     </button>
-    </div></>
+    </div>
+
+    </form>
+   </>
   ) : (
     <>
       <Form>
-        {inputs.map(({ type, placeholder, name }) => (
-          <input type={type} key={placeholder} name={name} placeholder={placeholder} />
+        {inputs.map(({ type, placeholder, ref }) => (
+          <input type={type} key={placeholder} ref={ref} placeholder={placeholder} />
         ))}
       </Form>
       <Link to="#">Forgot your password?</Link>

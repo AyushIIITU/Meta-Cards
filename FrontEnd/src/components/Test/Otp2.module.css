@@ -37,6 +37,7 @@
   
   .form-card-input-wrapper {
     position: relative;
+    margin-top: 4vh;
     width: 100%;
     height: 3rem;
     display: -webkit-box;
