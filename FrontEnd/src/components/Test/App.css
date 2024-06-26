@@ -1,0 +1,37 @@
+/* src/App.css */
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  .image-editor {
+    width: 80%;
+    height: 80%;
+    max-width: 800px;
+    max-height: 600px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .controls {
+    margin-top: 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .controls label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .controls input[type="range"] {
+    width: 100%;
+  }
+  

@@ -1,10 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const uploadWithDestination = require("../multer");
-const { generateToken, jwtAuthMiddleware } = require("../jwt");
 const CakeDetails = require("../models/Cake");
 const fs = require("fs");
-const { error } = require("console");
 const fields = [{ name: "CakeBackGroundIMG", maxCount: 1 }];
 
 // POST route to create a new cake entry

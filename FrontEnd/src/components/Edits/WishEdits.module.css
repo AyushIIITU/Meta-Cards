@@ -13,28 +13,28 @@
 	font-family: 'Amatic SC', cursive !important;
 }
 
-/* .color1{color:#1BBC9B}/*MOUNTAIN MEADOW*/
-/* .color2{color:#C0392BTALL POPPY*/ 
+.color1{color:#1BBC9B}/*MOUNTAIN MEADOW*/
+.color2{color:#C0392B/*TALL POPPY*/}
 
 
 .card {
 	color: #013243; /*SHERPA BLUE*/
-	position: absolute;
+	/* position: absolute; */
 	top: 50%;
 	left: 50%;
 	width: 300px;
-	height: 400px;
+	height: 50vh;
 	background: #e0e1dc;
-	transform-style: preserve-3d;
+	/* transform-style: preserve-3d; */
 	transform: translate(-50%,-50%) perspective(2000px);
-	box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5);
-	transition: 1s;
+	/* box-shadow: inset 300px 0 50px rgba(0,0,0,.5), 20px 0 60px rgba(0,0,0,.5); */
+	/* transition: 1s; */
 }
 
-.card:hover {
+/* .card:hover {
 	transform: translate(-50%,-50%) perspective(2000px) rotate(15deg) scale(1.2);
 	box-shadow: inset 20px 0 50px rgba(0,0,0,.5), 0 10px 100px rgba(0,0,0,.5);
-}
+} */
 
 .card:before {
 	content:'';
@@ -42,10 +42,10 @@
 	top: -5px;
 	left: 0;
 	width: 100%;
-	height: 5px;
+	/* height: 5px; */
 	background: #BAC1BA;
 	transform-origin: bottom;
-	transform: skewX(-45deg);
+	/* transform: skewX(-45deg); */
 }
 
 .card:after {
@@ -53,11 +53,11 @@
 	position: absolute;
 	top: 0;
 	right: -5px;
-	width: 5px;
+	/* width: 5px; */
 	height: 100%;
 	background: #92A29C;
 	transform-origin: left;
-	transform: skewY(-45deg);
+	/* transform: skewY(-45deg); */
 }
 
 .card .imgBox {
@@ -70,7 +70,7 @@
 
 .card .bark {
 	position: absolute;
-	/* background: #e0e1dc; */
+	background: #e0e1dc;
 	width: 100%;
 	height: 100%;
 	opacity: 0;
@@ -105,7 +105,7 @@
 .card .details p {
 	font-size: 15px;
 	line-height: 5px;
-	transform: rotate(354deg);
+	/* transform: rotate(354deg); */
     padding: 18px 14px 3px 8px;
 }
 
@@ -115,4 +115,12 @@
 
 .text-right {
 	text-align: right;
+}
+.cover-img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }

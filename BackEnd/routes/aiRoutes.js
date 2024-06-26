@@ -14,6 +14,11 @@ route.get("/:type",async (req,res)=>{
     if(type=='cake'){
         prompt="Write a birthday message in 40 words";
     }
+    if(type=='wish'){
+        prompt=`Write a ${req.body.wish} message in 6 lines contain maximum 10 words each`;
+    }
+
+  
     const result=await model.generateContent(prompt);
     const response=await result.response;
     const text=response.text();

@@ -1,9 +1,6 @@
-@font-face {
-    font-family: "La Flibustisre";
-    src: url(https://res.cloudinary.com/areeba/raw/upload/v1650492268/La_Flibusti%C3%A8re.ttf);
-  }
+
 .container {
-    background: url("https://res.cloudinary.com/areeba/image/upload/v1650488986/938ba925943764901f2c2889ea835d42--dark-navy-blue-cobalt-blue.jpg");
+
     object-fit: cover;
     width: 500px;
     height: 500px;

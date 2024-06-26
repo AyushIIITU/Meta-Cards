@@ -2,7 +2,7 @@ import style from "./WCardBack.module.css"
 
 function WCardBack() {
   return (
-    <div className={style["container"]}>
+    <div className={style["container"]} style={{    background: `url("https://res.cloudinary.com/areeba/image/upload/v1650488986/938ba925943764901f2c2889ea835d42--dark-navy-blue-cobalt-blue.jpg")`}}>
     <img
       src="https://res.cloudinary.com/areeba/image/upload/v1650490204/free-golden-deco-corner-clipart-photo-background-gold-corner-border-lace-pattern-text-graphics-transparent-png-1536307.png"
       className="w-[25vh]"

@@ -1,0 +1,9 @@
+.container{object-fit: cover;
+width: 500px;
+height: 500px;
+position: absolute;
+margin-left: auto;
+border-left: 1px solid rgb(181, 119, 41);
+transform-origin: left center;
+transition: 2s;
+margin-right: auto;}
