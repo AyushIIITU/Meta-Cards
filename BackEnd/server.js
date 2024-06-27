@@ -5,6 +5,7 @@ const userRoutes=require('./routes/userRoutes');
 const aiRoutes=require('./routes/aiRoutes');
 const cakeRoutes=require('./routes/cakeRoutes');
 const wishRoutes=require('./routes/wishRoutes.js');
+const weddingRoutes=require("./routes/weddingRoutes.js");
 const otpRoutes=require('./routes/otpRoutes.js');
 const path = require("path");
 const app=express();
@@ -23,6 +24,7 @@ app.use('/ai',aiRoutes);
 app.use('/api/user',userRoutes);
 app.use('/api/cake',cakeRoutes);
 app.use('/api/wish',wishRoutes);
+app.use('/api/wedding',weddingRoutes);
 app.use('/',otpRoutes);
 app.listen(PORT,()=>{
     console.log(`Server is running on port http://localhost:${PORT}`);

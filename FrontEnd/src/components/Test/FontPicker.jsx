@@ -8,8 +8,8 @@ const FontPicker = ({selectedFont,setSelectedFont}) => {
   // const [selectedFont, setSelectedFont] = useState(fonts[0].value);
   // console.log(fonts);
   return (
-    <div className="p-4">
-      <h1 className="text-2xl mb-4">Select a Font</h1>
+    <>
+      {/* <h1 className="text-2xl mb-4">Select a Font</h1> */}
       <select
         className="mb-4 p-2 border rounded"
         onChange={(e) => setSelectedFont(e.target.value)}
@@ -21,7 +21,7 @@ const FontPicker = ({selectedFont,setSelectedFont}) => {
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 };
 
