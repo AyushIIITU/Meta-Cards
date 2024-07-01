@@ -22,6 +22,7 @@ import Test from "./components/Test/Test.jsx";
 import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
 import Test2 from "./components/Test/Test2.jsx";
 import { ThemeProvider } from "@material-tailwind/react";
+import WeddingLink from "./components/Link/WeddingLink.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
@@ -92,6 +93,15 @@ const router = createBrowserRouter([
       {
         path: ":id",
         element: <CakeLink />,
+      },
+    ],
+  },
+  {
+    path: "/Wedding",
+    children: [
+      {
+        path: ":id",
+        element: <WeddingLink />,
       },
     ],
   },
