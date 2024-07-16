@@ -5,8 +5,7 @@ import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
 import style from "../cards/BCards1.module.css";
 
-function WishLink() {
-  const { id } = useParams(); // Destructure id from useParams
+function WishLink({id}) { // Destructure id from useParams
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [IMG, setIMG] = useState(null);
@@ -40,7 +39,7 @@ function WishLink() {
       style={{
         backgroundImage: `url(${IMG})`,
       }}
-      className="bg-cover min-h-screen bg-center bg-no-repeat object-contain overflow-hidden"
+      className="bg-cover min-h-screen bg-center bg-no-repeat flex justify-center items-center object-contain overflow-hidden"
     >
       <div  style={{
             color: `${data?.l1}`,

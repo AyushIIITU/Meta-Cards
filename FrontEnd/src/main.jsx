@@ -21,16 +21,62 @@ import WishLink from "./components/Link/WishLink.jsx";
 import Test from "./components/Test/Test.jsx";
 import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
 import Test2 from "./components/Test/Test2.jsx";
-import { ThemeProvider } from "@material-tailwind/react";
+// import { ThemeProvider } from "@material-tailwind/react";
 import WeddingLink from "./components/Link/WeddingLink.jsx";
+import Home from "./components/Home/Home.jsx";
+import Create from "./components/Create/Create.jsx";
+import CardTest from "./components/Test/CardTest.jsx";
+import CardTest2 from "./components/Test/CardTest2.jsx";
+// import ReactToImg from "./components/Test/ReactToImage.jsx";
+import CardTest3 from "./components/Test/CardTest3.jsx";
+import WeddingTest from "./components/Test/WeddingTest.jsx";
+import WeddingLinkProvider from "./components/Link/WeddingLinkProvider.jsx";
+import BTest from "./components/Test/BTest.jsx";
+import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
+import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
+import CoustomCrousalTest from "./components/Test/CoustomCrousalTest.jsx";
+import TestCarousel from "./components/Test/TestCrousal.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    children: [
+      {
+        path:"",
+        element:<Home/>
+      },
+      {
+        path:"Create",
+        element:<Create/>
+      },
+
+      {
+        path:"3d",
+        element:<Test3dCrousal/>
+      }
+    
+    
+    ]
   },{
     path:'/test',
     element:<Test/>
+  },
+  {
+    path:'/Ctest',
+    element:<CardTest3/>
+  },
+  {
+    path:'Wtest',
+    element:<WeddingTest/>
+  },
+  {
+    path:"Btest",
+    element:<BTest/>
+  },
+  {
+    path:"CCTest",
+    element:<TestCarousel/>
   },
   {
     path: "/preview",
@@ -66,9 +112,13 @@ const router = createBrowserRouter([
     path:"/editWedding",
     element:<WeddingEdits/>
   },
+  // {
+  //   path:'/ReactToImg',
+  //   element:<ReactToImg/>
+  // },
 {
   path:'/test2',
-  element:<Test2/>
+  element:<CardTest2/>
 },
   {
     path: "editCake",
@@ -79,7 +129,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":id",
-        element: <WishLink />,
+        element: <WishLinkProvider />,
       },
     ],
   },
@@ -101,7 +151,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: ":id",
-        element: <WeddingLink />,
+        element: <WeddingLinkProvider/>,
       },
     ],
   },
@@ -120,7 +170,7 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-     <ThemeProvider/>
+     {/* <ThemeProvider/> */}
     <RouterProvider router={router} />
     <Toaster position="top-center" reverseOrder={false} />
     

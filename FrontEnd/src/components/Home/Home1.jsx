@@ -4,15 +4,20 @@ import style from "./Home1.module.css"
 function Home1() {
   return (
     <>
-    <div className={style["hero"]}></div>
+    {/* <div className={style["hero"]}></div> */}
 
     <section  className={style["home"]}>
         <div className={style["home-content"]}>
             <h1 className='text-white'>A virtual Cards</h1>
             <h3>for pricious Oucassions</h3>
             <p className='text-white'>In this website you can create a virtual card which can be sent on ocassions</p>
+            <h1 className="text-blue-400 size-4000">Welcome to Meta Cards</h1> 
+            <h4>Here You can Cretae your own custom cards for occasions</h4>  
                 <div className={style["btn-box"]}>
-                    <Link to="preview">Preview</Link>
+                <Link to="preview" className={style["button"]}>
+  <span className={style["button-content"]}>Preview </span>
+</Link>
+
                     <Link to="create">Create</Link>
                 </div>
         </div>

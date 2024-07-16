@@ -134,12 +134,12 @@ function WeddingEdits() {
   return (
     <div
       style={{ backgroundImage: coverBackGroundDisplay }}
-      className="bg-cover min-h-screen bg-center bg-no-repeat object-contain overflow-hidden"
+      className="bg-cover min-h-screen bg-center bg-no-repeat object-contain"
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col flex-wrap items-center">
           <div
-            className="w-[500px] h-[500px] bg-center bg-no-repeat object-contain overflow-hidden bg-cover"
+            className="w-[500px] h-[500px] bg-center bg-no-repeat object-contain bg-cover"
             style={{ backgroundImage: coverFrontGroundDisplay }}
           >
             <img src={borderDesing} className="w-[500px]" />

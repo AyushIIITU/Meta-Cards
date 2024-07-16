@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
 import axios from "axios";
@@ -7,8 +6,7 @@ import WeddingLinkFront from "./WeddingLinkFront";
 // import WCardFront from "../cards/WCardFront";
 import WeddingLinkBack from "./WeddingLinkBack";
 
-function WeddingLink() {
-  const { id } = useParams();
+function WeddingLink({id}) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [IMG, setIMG] = useState(null);
@@ -41,14 +39,16 @@ function WeddingLink() {
             style={{
               backgroundImage: `url(${IMG})`,
             }}
-            className="w-full h-[100vh] bg-cover  bg-center bg-no-repeat object-contain overflow-hidden"
+            className="bg-cover h-[100vh] flex items-center w-full bg-center bg-no-repeat object-contain overflow-hidden"
           >
-            <div
-              className="mt-[10%] relative w-[500px] h-[500px] mx-auto"
-              style={{ perspective: "1000px" }}
-            >
+             <div
+    className="relative w-[500px] max-w-[90vw] h-[500px] max-h-[90vh] min-h-[250px] min-w-[250px] mx-auto"
+    style={{ perspective: "1000px" }}
+  >
               {/* <WCardFront/> */}
               {data.Front && <WeddingLinkFront FrontData={data.Front} />}
+              
+
               {data.Back && <WeddingLinkBack BackData={data.Back} />}
             </div>
           </div>

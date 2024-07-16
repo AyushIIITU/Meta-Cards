@@ -7,7 +7,7 @@ const fields = [{ name: "WishBackGroundIMG", maxCount: 1 },{name:"WishFrontIMG",
 
 
 router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
       const WishBackGroundIMGPath = req.files["WishBackGroundIMG"]
         ? req.files["WishBackGroundIMG"][0]?.path
