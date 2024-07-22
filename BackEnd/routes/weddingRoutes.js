@@ -25,7 +25,7 @@ router.post(
       const WeddingFrontIMGpath = req.files["WeddingFrontIMG"]
         ? req.files["WeddingFrontIMG"][0]?.path
         : null;
-      const { f1, f2, f3, c1, c2, d1, d2, s1, l1, l2, l3, creater } = req.body;
+      const { f1, f2, f3, c1, c2, d1, d2, s1, l1, l2, l3, creater,type } = req.body;
 
       if (!creater) {
         return res
@@ -53,6 +53,8 @@ router.post(
           Desing: d2,
         },
         creater: creater,
+        type:type?type:"private",
+        tokenID:generateToken(l2)
       });
       const response = await wedding.save();
       res.status(201).json(response);

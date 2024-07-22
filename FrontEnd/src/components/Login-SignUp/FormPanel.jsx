@@ -1,11 +1,10 @@
 import { Form, Link } from "react-router-dom";
 import "./FormPanel.css";
 import { useRef, useState } from "react";
-// import Otp from "../../../../BackEnd/models/Otp";
-import Otp2 from "../Test/Otp2";
 import axios from 'axios'
 import stylee from "../Test/Otp2.module.css"
 import {API} from "../../Utils/Apis"
+import style from "./Login.module.css";
 const FormPanel = ({ signIn,setSignIn }) => {
     let heading = signIn ? "Sign in" : "Create account";
     const refName=useRef('');
@@ -51,8 +50,13 @@ const FormPanel = ({ signIn,setSignIn }) => {
     const handleOnClick=async ()=>{
       if(signIn){
         //sign in logic
-        sendApiOtp();
-        
+        const response=await axios.post(`${API}/api/user/login`,{
+          email:refEmail.current.value,
+          password:refPassword.current.value
+        })
+        console.log(response);
+        localStorage.setItem('token',response.data.token);
+        localStorage.setItem('UserID',response.data.id);
       }
       else{
         //sign up(register) logic
@@ -85,7 +89,7 @@ const FormPanel = ({ signIn,setSignIn }) => {
       sendApiOtp();
     }
     return (
-      <div className="Panel FormPanel">
+      <div className={`${style['Panel']} ${style['FormPanel']}`} >
         <h2>{heading}</h2>
     
         {/* <p>{paragraph}</p> */}

@@ -15,7 +15,7 @@ router.post(
         ? req.files["CakeBackGroundIMG"][0]?.path
         : null;
 
-      const { message, l1, l2, l3, BName, creater } = req.body;
+      const { message, l1, l2, l3, BName, creater,type } = req.body;
 
       if (!message || !creater) {
         return res.status(400).json({ message: "Message and Creater are required" });
@@ -29,6 +29,8 @@ router.post(
         CakeBackGroundIMG: CakeBackGroundIMGPath,
         BName,
         creater,
+        type:type?type:"private",
+        tokenID:generateToken(message)
       });
 
       const response = await cake.save();

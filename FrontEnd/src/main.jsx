@@ -36,6 +36,8 @@ import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
 import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
 import CoustomCrousalTest from "./components/Test/CoustomCrousalTest.jsx";
 import TestCarousel from "./components/Test/TestCrousal.jsx";
+import Cardtest4 from "./components/Test/Cardtest4.jsx";
+import CardClub from "./components/Test/CardClub.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
@@ -66,6 +68,14 @@ const router = createBrowserRouter([
     path:'/Ctest',
     element:<CardTest3/>
   },
+  {
+path:'/cardTest',
+element:<Cardtest4/>
+  },
+  {
+    path:'/test7',
+    element:<CardClub/>
+      },
   {
     path:'Wtest',
     element:<WeddingTest/>
@@ -160,7 +170,7 @@ const router = createBrowserRouter([
     element: <FontPicker />,
   },
   {
-    path: "laa",
+    path: "auth",
     element: <LogInSine />,
   },
   {

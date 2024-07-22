@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 const uploadWithDestination = require("../multer");
 const WishDetails = require("../models/Wish");
+const jwt = require('jsonwebtoken');
 const fs = require("fs");
+const { generateToken } = require("../jwt");
 const fields = [{ name: "WishBackGroundIMG", maxCount: 1 },{name:"WishFrontIMG",maxCount:1}];
 
 
@@ -15,7 +17,7 @@ router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (re
         const WishFrontIMGPath = req.files["WishFrontIMG"]
         ? req.files["WishFrontIMG"][0]?.path
         : null;
-      const {l1, l2,Wish, creater } = req.body;
+      const {l1, l2,Wish, creater,type } = req.body;
 
       if (!Wish['Body']|| !creater) {
         return res.status(400).json({ message: "Body and Creater are required" });
@@ -28,6 +30,8 @@ router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (re
         WishFrontIMG:WishFrontIMGPath,
         Wish,
         creater,
+        type:type?type:"private",
+        tokenID:generateToken(Wish)
       });
 
       const response = await wish.save();
@@ -67,7 +71,23 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.get("/private/:id/:tokenID", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tokenID = req.params.tokenID;
+    
+    const wish = await WishDetails.findById(id);
 
+    if (!wish) {
+      return res.status(404).json({ message: "wish Not Found" });
+    }
+
+    res.status(200).json(wish);
+  } catch (err) {
+    console.error("Error fetching wish details:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
   
 // DELETE route to remove a wish entry by ID
 router.delete("/:id", async (req, res) => {

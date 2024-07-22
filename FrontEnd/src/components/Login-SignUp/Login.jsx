@@ -1,11 +1,7 @@
 import { useState } from "react";
-// import ReactDOM from "react-dom";
 import ActionPanel from "./ActionPanel";
 import FormPanel from "./FormPanel";
-// import BackGround from "../../Images/percut_generated.jpg"
-import "./Login.css"
-
-
+import style from "./Login.module.css";
 
 const LogInSine = () => {
   const [signIn, setSignIn] = useState(true);
@@ -14,8 +10,8 @@ const LogInSine = () => {
   const slide = () => {
     if (transition) return;
 
-    const formPanel = document.querySelector(".FormPanel");
-    const actionPanel = document.querySelector(".ActionPanel");
+    const formPanel = document.querySelector(`.${style['FormPanel']}`);
+    const actionPanel = document.querySelector(`.${style['ActionPanel']}`);
     const actionPanelChildren = actionPanel.children;
 
     const formBoundingRect = formPanel.getBoundingClientRect();
@@ -58,9 +54,7 @@ const LogInSine = () => {
     setTimeout(() => {
       [...actionPanelChildren].forEach((child) => {
         child.style.transition = "none";
-        child.style.transform = `translateX(${
-          signIn ? -actionBoundingRect.width / 3 : actionBoundingRect.width / 3
-        }%)`;
+        child.style.transform = `translateX(${signIn ? -actionBoundingRect.width / 3 : actionBoundingRect.width / 3}%)`;
       });
 
       setSignIn(!signIn);
@@ -87,12 +81,13 @@ const LogInSine = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] flex items-center" /*style={{ backgroundImage: `url(${BackGround})`, backgroundSize: 'cover', backgroundPosition: 'center' }} */>
-    <div className="App">
-      <FormPanel signIn={signIn} setSignIn={setSignIn} />
-      <ActionPanel signIn={signIn} slide={slide} />
-    </div></div>
+    <div className="w-[100vw] h-[100vh] flex items-center">
+      <div className={style["App"]}>
+        <FormPanel signIn={signIn} setSignIn={setSignIn} />
+        <ActionPanel signIn={signIn} slide={slide} />
+      </div>
+    </div>
   );
 };
+
 export default LogInSine;
-// ReactDOM.render(<App />, document.getElementById("root"));

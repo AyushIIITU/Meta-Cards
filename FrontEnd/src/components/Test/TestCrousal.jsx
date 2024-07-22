@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from "react";
+import BirthDayGif from "../../Video/BirthDay.mp4";
+import WeddingGif from "../../Video/Wedding.mp4";
+import FormalCard from "../../Video/Formal_Card.mp4";
 import styles from "./TestCarousel.module.css";
 
 const TestCarousel = () => {
@@ -45,9 +48,45 @@ const TestCarousel = () => {
         style={{ transform: `rotateY(${currdeg}deg)` }}
         ref={carouselRef}
       >
-        <div className={`${styles.item} ${styles.a}`}>A</div>
-        <div className={`${styles.item} ${styles.b}`}>B</div>
-        <div className={`${styles.item} ${styles.c}`}>C</div>
+        <div className={`${styles.item} ${styles.a}`}><video
+          loading="lazy"
+          muted="muted"
+          src={BirthDayGif}
+          type="video/mp4"
+          autoPlay="autoplay"
+          loop="loop"
+          style={{
+            maxHeight: "50vh",
+            borderTopLeftRadius: `10px`,
+            borderTopRightRadius: `10px`,
+          }}
+        ></video></div>
+        <div className={`${styles.item} ${styles.b}`}><video
+          loading="lazy"
+          muted="muted"
+          src={FormalCard}
+          type="video/mp4"
+          autoPlay="autoplay"
+          loop="loop"
+          style={{
+            maxHeight: "50vh",
+            borderTopLeftRadius: `10px`,
+            borderTopRightRadius: `10px`,
+          }}
+        ></video></div>
+        <div className={`${styles.item} ${styles.c}`}> <video
+          loading="lazy"
+          muted="muted"
+          src={WeddingGif}
+          type="video/mp4"
+          autoPlay="autoplay"
+          loop="loop"
+          style={{
+            maxHeight: "50vh",
+            borderTopLeftRadius: `10px`,
+            borderTopRightRadius: `10px`,
+          }}
+        ></video></div>
       </div>
     </div>
   );
