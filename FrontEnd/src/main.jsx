@@ -38,6 +38,9 @@ import CoustomCrousalTest from "./components/Test/CoustomCrousalTest.jsx";
 import TestCarousel from "./components/Test/TestCrousal.jsx";
 import Cardtest4 from "./components/Test/Cardtest4.jsx";
 import CardClub from "./components/Test/CardClub.jsx";
+import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
+import CakeDemo from "./components/Demo/CakeDemo.jsx";
+import WishTest from "./components/Test/WishTest.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
@@ -72,6 +75,10 @@ const router = createBrowserRouter([
 path:'/cardTest',
 element:<Cardtest4/>
   },
+  {
+    path:'/weddingTest',
+    element:<WeddingTestCard/>
+      },
   {
     path:'/test7',
     element:<CardClub/>
@@ -177,6 +184,14 @@ element:<Cardtest4/>
     path: "otp",
     element: <Otp2 />,
   },
+  {
+    path:'dcake',
+    element:<CakeDemo/>
+  },
+  {
+    path:'ww',
+    element:<WishTest/>
+  }
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

@@ -23,7 +23,7 @@ db.on('error', (err) => {
 });
 
 db.on('disconnected', () => {
-    console.log('MongoDB disconnected');
+    console.log('MongoDB disconnected',Date.now());
 });
 
 // Export the database connection

@@ -1,8 +1,7 @@
-// import Public from 'Public'
 import { useState } from "react";
-import CakeDemo from "../Demo/CakeDemo";
+import WeddingLink from "../Link/WeddingLink";
 
-function Cardtest4() {
+function WeddingTestCard() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Private");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,13 +15,13 @@ function Cardtest4() {
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   const closeModal = () => {
     // console.log("oko");
-    setSelectedOption(selectedOption==="Private"?"Public":"Private");
+    setSelectedOption(selectedOption === "Private" ? "Public" : "Private");
     setIsModalOpen(false);
   };
   return (
     <>
-    {/* // Add this button inside your return statement for debugging */}
-    {/* <button onClick={() => setIsModalOpen(!isModalOpen)}>Open Modal</button> */}
+      {/* // Add this button inside your return statement for debugging */}
+      {/* <button onClick={() => setIsModalOpen(!isModalOpen)}>Open Modal</button> */}
       <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div className="flex justify-end px-4 pt-4">
           <button
@@ -76,7 +75,7 @@ function Cardtest4() {
         </div>
 
         <div className="flex flex-col items-center pb-5">
-          <CakeDemo height={'100%'}/>
+          <WeddingLink id={"667dc05b527d5369b1e0d22c"} height={'100%'}/>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">
             Bonnie Green
           </h5>
@@ -124,7 +123,6 @@ function Cardtest4() {
             </div>
           </div>
         </div>
-        
       </div>
       {isModalOpen && (
         <div
@@ -168,16 +166,16 @@ function Cardtest4() {
               {/* <!-- Modal body --> */}
               <div className="p-4 md:p-5 space-y-4">
                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                  If you make this public then it will be displayed over all over the website and anyone can see your creation
+                  If you make this public then it will be displayed over all
+                  over the website and anyone can see your creation
                 </p>
                 <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                 Are you sure to send make this chages
+                  Are you sure to send make this chages
                 </p>
               </div>
               {/* <!-- Modal footer --> */}
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
-                    
                   data-modal-hide="default-modal"
                   type="button"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -185,7 +183,7 @@ function Cardtest4() {
                   I accept
                 </button>
                 <button
-                onClick={closeModal}
+                  onClick={closeModal}
                   data-modal-hide="default-modal"
                   type="button"
                   className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
@@ -198,9 +196,8 @@ function Cardtest4() {
         </div>
       )}
       {/* // <!-- Main modal --> */}
-    
     </>
   );
 }
 
-export default Cardtest4;
+export default WeddingTestCard;

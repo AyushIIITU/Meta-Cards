@@ -1,15 +1,17 @@
 // import React from 'react'
 import BackIMG from "../../Images/BirthDayBackGround.jpg"
 import style from '../Link/CakeLink.module.css'
-function CakeDemo() {
+function CakeDemo({height}) {
   return (
     <>
    
       <div
 style={{
   backgroundImage: `url(${BackIMG})`,
+  height: height ?height: '100vh'  
 }}
-className="bg-cover h-full w-full bg-center bg-no-repeat object-contain overflow-hidden"
+className="bg-cover w-full bg-center bg-no-repeat object-contain overflow-hidden"
+
 >
 
         <div className={style["flip-card"]}>

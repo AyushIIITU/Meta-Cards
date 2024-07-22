@@ -6,7 +6,7 @@ import WeddingLinkFront from "./WeddingLinkFront";
 // import WCardFront from "../cards/WCardFront";
 import WeddingLinkBack from "./WeddingLinkBack";
 
-function WeddingLink({id}) {
+function WeddingLink({id,height}) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [IMG, setIMG] = useState(null);
@@ -38,8 +38,9 @@ function WeddingLink({id}) {
           <div
             style={{
               backgroundImage: `url(${IMG})`,
+              height: height ?height: '100vh'  
             }}
-            className="bg-cover h-[100vh] flex items-center w-full bg-center bg-no-repeat object-contain overflow-hidden"
+            className="bg-cover flex items-center w-full bg-center bg-no-repeat object-contain overflow-hidden"
           >
              <div
     className="relative w-[500px] max-w-[90vw] h-[500px] max-h-[90vh] min-h-[250px] min-w-[250px] mx-auto"
