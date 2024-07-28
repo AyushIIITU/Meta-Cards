@@ -2,38 +2,39 @@ const express = require("express");
 const router = express.Router();
 const uploadWithDestination = require("../multer");
 const WishDetails = require("../models/Wish");
-const jwt = require('jsonwebtoken');
 const fs = require("fs");
-const { generateToken } = require("../jwt");
+const { generateTokenWithoutExp } = require("../jwt");
+const Wish = require("../models/Wish");
 const fields = [{ name: "WishBackGroundIMG", maxCount: 1 },{name:"WishFrontIMG",maxCount:1}];
 
 
 router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (req, res) => {
-    // console.log(req.body)
     try {
+      if (!req.files || !req.body) {
+        return res.status(400).json({ message: "Files and body are required" });
+      }
       const WishBackGroundIMGPath = req.files["WishBackGroundIMG"]
         ? req.files["WishBackGroundIMG"][0]?.path
         : null;
-        const WishFrontIMGPath = req.files["WishFrontIMG"]
+      const WishFrontIMGPath = req.files["WishFrontIMG"]
         ? req.files["WishFrontIMG"][0]?.path
         : null;
-      const {l1, l2,Wish, creater,type } = req.body;
+      const { l1, l2, Wish, creater, type } = req.body;
 
-      if (!Wish['Body']|| !creater) {
+      if (!Wish || !Wish['Body'] || !creater) {
         return res.status(400).json({ message: "Body and Creater are required" });
       }
-
+      const token = generateTokenWithoutExp(Wish);
       const wish = new WishDetails({
         l1,
         l2,
         WishBackGroundIMG: WishBackGroundIMGPath,
-        WishFrontIMG:WishFrontIMGPath,
+        WishFrontIMG: WishFrontIMGPath,
         Wish,
         creater,
-        type:type?type:"private",
-        tokenID:generateToken(Wish)
+        type: type ? type : "private",
+        tokenId: token
       });
-
       const response = await wish.save();
       res.status(201).json(response);
     } catch (err) {
@@ -71,18 +72,22 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-router.get("/private/:id/:tokenID", async (req, res) => {
+router.get("/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
-    const tokenID = req.params.tokenID;
-    
-    const wish = await WishDetails.findById(id);
-
+    const token=req.params.token;
+    const wish = await Wish.findById(id);
+  
     if (!wish) {
       return res.status(404).json({ message: "wish Not Found" });
     }
-
-    res.status(200).json(wish);
+    if(wish.type==="public"){
+      return res.status(200).json(wish);
+    }
+    if(wish.tokenId!==token){
+      return res.status(401).json({message:"Unauthorized"})
+    }
+    return res.status(200).json(wish);
   } catch (err) {
     console.error("Error fetching wish details:", err);
     res.status(500).json({ message: "Internal Server Error" });
@@ -112,5 +117,19 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.get("/public",async(req,res)=>{
+  try {
+    const wish= await WishDetails.find({type:"public"});
+    if(!wish){
+      return res.status(404).json({message:"No Public Wish Found"})
+    }
+    res.status(200).json(wish);
+  } catch (err) {
+    console.error("Error in fetching Public Wish",err)
+    return res.status(500).json("Internal Server Error")
+    // console.error("Erorr in Wish Link",err)
+  }
+})
+
 
 module.exports = router;

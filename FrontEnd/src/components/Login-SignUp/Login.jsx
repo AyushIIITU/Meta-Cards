@@ -81,7 +81,7 @@ const LogInSine = () => {
   };
 
   return (
-    <div className="w-[100vw] h-[100vh] flex items-center">
+    <div className={`w-[100vw] h-[100vh] ${style['container']} flex items-center`}>
       <div className={style["App"]}>
         <FormPanel signIn={signIn} setSignIn={setSignIn} />
         <ActionPanel signIn={signIn} slide={slide} />

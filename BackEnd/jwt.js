@@ -29,5 +29,7 @@ const generateToken = (userData) => {
     // Generate a new JWT token using user data
     return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRY||4000000});
 }
-
-module.exports = {jwtAuthMiddleware, generateToken};
+const generateTokenWithoutExp = (userData) => {
+    return jwt.sign(userData, process.env.JWT_SECRET);
+}
+module.exports = {jwtAuthMiddleware,generateTokenWithoutExp, generateToken};

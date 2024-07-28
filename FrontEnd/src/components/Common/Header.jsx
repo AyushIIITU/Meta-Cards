@@ -23,13 +23,14 @@ import {
 } from '@heroicons/react/24/outline'
 import { MdOutlineCake } from "react-icons/md";
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { Link } from 'react-router-dom'
 
 const products = [
-  { name: 'BirthDay Card', description: 'Get a better understanding of your traffic', href: '#', icon: MdOutlineCake},
-  { name: 'Engagement Card', description: 'Speak directly to your customers', href: '#', icon: 
+  { name: 'BirthDay Card', description: 'Get a better understanding of your traffic', href: 'editCake', icon: MdOutlineCake},
+  { name: 'Engagement Card', description: 'Speak directly to your customers', href: 'editWedding', icon: 
     weddingIcon
    },
-  { name: 'Wishing Card', description: 'Your customers’ data will be safe and secure', href: '#', icon: greetingCard },
+  { name: 'Wishing Card', description: 'Your customers’ data will be safe and secure', href: 'editWishCard', icon: greetingCard },
 ]
 const callsToAction = [
   { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
@@ -41,7 +42,7 @@ function classNames(...classes) {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
+  const token=localStorage.getItem('token');
   return (
     <header className="bg-white">
       <nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
@@ -62,9 +63,9 @@ export default function Header() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
-          <Popover className="relative">
+          {token&&<Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
-              Product
+              Create
               <ChevronDownIcon className="h-5 w-5 flex-none text-gray-400" aria-hidden="true" />
             </PopoverButton>
 
@@ -82,10 +83,10 @@ export default function Header() {
                       <item.icon className="h-6 w-6 text-gray-600 group-hover:text-indigo-600" aria-hidden="true" />
                     </div>
                     <div className="flex-auto">
-                      <a href={item.href} className="block font-semibold text-gray-900">
+                      <Link to={item.href} className="block font-semibold text-gray-900">
                         {item.name}
                         <span className="absolute inset-0" />
-                      </a>
+                      </Link>
                       <p className="mt-1 text-gray-600">{item.description}</p>
                     </div>
                   </div>
@@ -104,7 +105,7 @@ export default function Header() {
                 ))}
               </div>
             </PopoverPanel>
-          </Popover>
+          </Popover>}
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Public Cards
@@ -148,6 +149,7 @@ export default function Header() {
               </div>
             </PopoverPanel>
           </Popover>
+          {token&&
           <Popover className="relative">
             <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
               Your Card
@@ -179,16 +181,17 @@ export default function Header() {
               </div>
             
             </PopoverPanel>
-          </Popover>
+          </Popover>}
           <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
             Abou Us
           </a>
         
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          
+          <Link to={token ? "/" : "/auth"} className="text-sm font-semibold leading-6 text-gray-900">
+            {token ? "Log out" : "Log in"}<span aria-hidden="true">&rarr;</span>
+          </Link>
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -219,7 +222,7 @@ export default function Header() {
                   {({ open }) => (
                     <>
                       <DisclosureButton className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Product
+                        Create
                         <ChevronDownIcon
                           className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
                           aria-hidden="true"
@@ -285,12 +288,18 @@ export default function Header() {
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
+             <Link
+                  onClick={token&&(()=>{
+                    localStorage.removeItem('token')
+                    localStorage.removeItem('UserID')
+                    localStorage.removeItem('UserName')
+                  })}
+                  to={token?'':'auth'}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Log in
-                </a>
+                  {token?("Log out"):("Log in")}
+                </Link>
+                
               </div>
             </div>
           </div>

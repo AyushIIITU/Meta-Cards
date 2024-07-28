@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../cakes/style.scss";
 // import { Input } from 'postcss';
 import axios from "axios";
@@ -9,10 +9,17 @@ import { CiEdit } from "react-icons/ci";
 import { MdDownloadDone } from "react-icons/md";
 import FontPicker from "../Test/FontPicker";
 import { fonts } from "../../Utils/Fonts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import ImageUpload from "../Test/ImageUpload";
 function CakeEdits() {
+  const navigate=useNavigate();
+  useEffect(()=>{
+    const token=localStorage.getItem('token');
+    if(!token){
+      navigate('/');
+    }
+  })
   const [colorHEX1, setColorHEX1] = useState("a88679");
   const [colorHEX2, setColorHEX2] = useState("8b4554");
   const [colorHEX3, setColorHEX3] = useState("fefae9");
@@ -66,7 +73,7 @@ function CakeEdits() {
           Color: bText,
         },
 
-        creater: "6670327fb7566a70723d7afb",
+        creater: localStorage.getItem('UserID'),
       };
       console.log(cakeBackGround);
       const res = await axios.post(`${API}/api/cake`, response, {

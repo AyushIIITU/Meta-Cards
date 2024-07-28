@@ -3,6 +3,8 @@ const router = express.Router();
 const uploadWithDestination = require("../multer");
 const CakeDetails = require("../models/Cake");
 const fs = require("fs");
+const { generateTokenWithoutExp } = require("../jwt");
+const Cake = require("../models/Cake");
 const fields = [{ name: "CakeBackGroundIMG", maxCount: 1 }];
 
 // POST route to create a new cake entry
@@ -30,7 +32,7 @@ router.post(
         BName,
         creater,
         type:type?type:"private",
-        tokenID:generateToken(message)
+        tokenId:generateTokenWithoutExp(message)
       });
 
       const response = await cake.save();
@@ -55,16 +57,22 @@ router.get('/all', async (req, res) => {
 });
 
 // GET route to fetch cake details by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
+    const token=req.params.token;
     const cake = await CakeDetails.findById(id);
-
+  
     if (!cake) {
       return res.status(404).json({ message: "Cake Not Found" });
     }
-
-    res.status(200).json(cake);
+    if(cake.type==="public"){
+      return res.status(200).json(cake);
+    }
+    if(cake.tokenId!==token){
+      return res.status(401).json({message:"Unauthorized"})
+    }
+    return res.status(200).json(cake);
   } catch (err) {
     console.error("Error fetching Cake details:", err);
     res.status(500).json({ message: "Internal Server Error" });
@@ -92,5 +100,18 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.get("/public",async(req,res)=>{
+  try {
+    const cake= await Cake.find({type:"public"});
+    if(!cake){
+      return res.status(404).json({message:"No Public cake Found"})
+    }
+    res.status(200).json(cake);
+  } catch (err) {
+    console.error("Error in fetching Public cake",err)
+    return res.status(500).json("Internal Server Error")
+    // console.error("Erorr in cake Link",err)
+  }
+})
 
 module.exports = router;

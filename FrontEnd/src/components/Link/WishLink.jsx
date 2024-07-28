@@ -5,7 +5,7 @@ import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
 import style from "../cards/BCards1.module.css";
 
-function WishLink({id,height}) { // Destructure id from useParams
+function WishLink({ id, height }) {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(false);
   const [IMG, setIMG] = useState(null);
@@ -15,7 +15,6 @@ function WishLink({id,height}) { // Destructure id from useParams
     try {
       setLoading(true);
       const response = await axios.get(`${API}/api/wish/${id}`);
-      console.log("response.data", response.data);
       setData(response.data);
       setIMG(`${API}/${response.data.WishBackGroundIMG.replace(/\\/g, "/")}`);
       setCardIMG(`${API}/${response.data.WishFrontIMG.replace(/\\/g, "/")}`);
@@ -38,17 +37,25 @@ function WishLink({id,height}) { // Destructure id from useParams
     <div
       style={{
         backgroundImage: `url(${IMG})`,
-        height: height ?height: '100vh' 
+        height: height ? height : "100vh",
       }}
       className="bg-cover flex justify-center items-center w-full bg-center bg-no-repeat object-contain overflow-auto"
     >
-      <div  style={{
-            color: `${data?.l1}`,
-            backgroundColor: `${data?.l2}`,
-          }} className={style.card}>
+      <div
+        style={{
+          color: `${data?.l1}`,
+          backgroundColor: `${data?.l2}`,
+        }}
+        className={style.card}
+      >
         <div className={style.imgBox}>
           <div className={style.bark}></div>
-          <img style={{ minWidth: "300px" }} className=" w-full h-full object-cover" src={CardIMG} alt="Card" />
+          <img
+            style={{ minWidth: "300px" }}
+            className=" w-full h-full object-cover"
+            src={CardIMG}
+            alt="Card"
+          />
         </div>
         <div className={style.details}>
           {data.Wish?.Header?.map((he, index) => (

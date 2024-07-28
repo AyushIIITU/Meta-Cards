@@ -4,6 +4,8 @@ const uploadWithDestination = require("../multer");
 const WeddingDetails = require("../models/Wedding");
 const fs = require("fs");
 const { create } = require("domain");
+const { generateTokenWithoutExp } = require("../jwt");
+const Wedding = require("../models/Wedding");
 const fields = [
   { name: "WeddingBackGroundIMG", maxCount: 1 },
   { name: "WeddingBackIMG", maxCount: 1 },
@@ -54,7 +56,7 @@ router.post(
         },
         creater: creater,
         type:type?type:"private",
-        tokenID:generateToken(l2)
+        tokenId:generateTokenWithoutExp(l2)
       });
       const response = await wedding.save();
       res.status(201).json(response);
@@ -76,18 +78,36 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
+router.get("/public",async(req,res)=>{
+  try {
+    const wedding= await WeddingDetails.find({type:"public"});
+    if(!wedding){
+      return res.status(404).json({message:"No Public Wish Found"})
+    }
+    res.status(200).json(wedding);
+  } catch (err) {
+    console.error("Error in fetching Public Wish",err)
+    return res.status(500).json("Internal Server Error")
+    // console.error("Erorr in Wish Link",err)
+  }
+})
 // GET route to fetch wedding details by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
-    const wedding = await WeddingDetails.findById(id);
-
+    const token=req.params.token;
+    const wedding = await Wedding.findById(id);
+  
     if (!wedding) {
-      return res.status(404).json({ message: "wedding Not Found" });
+      return res.status(404).json({ message: "Cake Not Found" });
     }
-
-    res.status(200).json(wedding);
+    if(wedding.type==="public"){
+      return res.status(200).json(wedding);
+    }
+    if(wedding.tokenId!==token){
+      return res.status(401).json({message:"Unauthorized"})
+    }
+    return res.status(200).json(wedding);
   } catch (err) {
     console.error("Error fetching wedding details:", err);
     res.status(500).json({ message: "Internal Server Error" });

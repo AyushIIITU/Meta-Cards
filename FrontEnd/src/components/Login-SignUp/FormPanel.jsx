@@ -1,4 +1,4 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import "./FormPanel.css";
 import { useRef, useState } from "react";
 import axios from 'axios'
@@ -6,6 +6,7 @@ import stylee from "../Test/Otp2.module.css"
 import {API} from "../../Utils/Apis"
 import style from "./Login.module.css";
 const FormPanel = ({ signIn,setSignIn }) => {
+  const navigate=useNavigate();
     let heading = signIn ? "Sign in" : "Create account";
     const refName=useRef('');
     const refEmail=useRef('');
@@ -54,9 +55,11 @@ const FormPanel = ({ signIn,setSignIn }) => {
           email:refEmail.current.value,
           password:refPassword.current.value
         })
-        console.log(response);
+       
         localStorage.setItem('token',response.data.token);
         localStorage.setItem('UserID',response.data.id);
+        localStorage.setItem('UserName',response.data.user);
+        navigate('/');
       }
       else{
         //sign up(register) logic
