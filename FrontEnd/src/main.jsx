@@ -20,7 +20,7 @@ import WishEdits2 from "./components/Edits/WishEdits2.jsx";
 import Test from "./components/Test/Test.jsx";
 import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
 
-import Home from "./components/Home/Home.jsx";
+
 import Create from "./components/Create/Create.jsx";
 
 import CardTest2 from "./components/Test/CardTest2.jsx";
@@ -30,14 +30,16 @@ import WeddingTest from "./components/Test/WeddingTest.jsx";
 import WeddingLinkProvider from "./components/Link/WeddingLinkProvider.jsx";
 import BTest from "./components/Test/BTest.jsx";
 import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
-import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
+// import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
 
-import TestCarousel from "./components/Test/TestCrousal.jsx";
+// import TestCarousel from "./components/Test/TestCrousal.jsx";
 import Cardtest4 from "./components/Test/Cardtest4.jsx";
 import CardClub from "./components/Test/CardClub.jsx";
 import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
 import CakeDemo from "./components/Demo/CakeDemo.jsx";
 import WishTest from "./components/Test/WishTest.jsx";
+import Home1 from "./components/Home/Home1.jsx";
+import PublicCake from "./components/Public Cards/PublicCake.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
@@ -46,7 +48,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home />,
+        element: <Home1/>,
       },
       {
         path: "Create",
@@ -57,20 +59,21 @@ const router = createBrowserRouter([
         element: <CakeEdits />,
       },
       {
-        path: "/editWishCard",
+        path: "editWishCard",
         element: <WishEdits2 />,
       },
       {
-        path: "/editWedding",
+        path: "editWedding",
         element: <WeddingEdits />,
       },
+      
       {
-        path: "/public/greetingCard",
+path:'public/gt',
+element:<PublicCake/>
+      }
+      ,{
+        path: "public/greetingCard",
         element: <WishTest />,
-      },
-      {
-        path: "3d",
-        element: <Test3dCrousal />,
       },
     ],
   },
@@ -106,10 +109,10 @@ const router = createBrowserRouter([
     path: "Btest",
     element: <BTest />,
   },
-  {
-    path: "CCTest",
-    element: <TestCarousel />,
-  },
+  // {
+  //   path: "CCTest",
+  //   element: <TestCarousel />,
+  // },
   {
     path: "/preview",
 

@@ -242,7 +242,7 @@ function Cake() {
       </svg>
       <div className="text">
         <h1>Happy birthday!</h1>
-        <p>Rishvant</p>
+        <p>UserName</p>
       </div>
     </>
   );

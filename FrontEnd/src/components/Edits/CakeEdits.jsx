@@ -17,7 +17,7 @@ function CakeEdits() {
   useEffect(()=>{
     const token=localStorage.getItem('token');
     if(!token){
-      navigate('/');
+      return navigate('/');
     }
   })
   const [colorHEX1, setColorHEX1] = useState("a88679");
@@ -26,7 +26,7 @@ function CakeEdits() {
   const [editableName, setEditableName] = useState(false);
   const [backGroundIMG, setBackGroundIMG] = useState(null);
   const [bText, setBText] = useState("#8b6a60");
-  const [BName, setBName] = useState("Rishvant");
+  const [BName, setBName] = useState("UserName");
   const [generate, setGenerate] = useState(true);
   const [selectedFont, setSelectedFonts] = useState(fonts[0].value);
   const [cakeBackGround,setCakeBackGround]=useState(null);

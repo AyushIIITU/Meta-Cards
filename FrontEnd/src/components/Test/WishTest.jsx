@@ -14,7 +14,6 @@ function WishTest() {
     // Step 3: Toggle dropdown visibility
     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
     const closeModal = () => {
-      // console.log("oko");
       setSelectedOption(selectedOption==="Private"?"Public":"Private");
       setIsModalOpen(false);
     };
@@ -75,7 +74,7 @@ function WishTest() {
           </div>
   
           <div className="flex flex-col items-center pb-5">
-          <WishLink id={"66786d53127746cdacc0fda5"} height={'100%'} />
+        <WishLink/>
             <h5 className="text-xl font-medium text-gray-900 dark:text-white">
               Bonnie Green
             </h5>

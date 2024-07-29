@@ -19,8 +19,8 @@ function WeddingEdits() {
   const [selectedHeadFont, setSelectedHeadFonts] = useState(fonts[8].value);
   const [frontFont, setFrontFont] = useState(fonts[0].value);
   const [head1, setHead1] = useState("Invitation");
-  const [head2, setHead2] = useState("Rishvant");
-  const [head3, setHead3] = useState("Nuunu");
+  const [head2, setHead2] = useState("BrideName");
+  const [head3, setHead3] = useState("GroomName");
   // const frontText=useRef("Risvant & Nuunu");
   const [frontText, setFrontText] = useState("Risvant & Nuunu");
   const [p1, setp1] = useState(

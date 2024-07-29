@@ -13,7 +13,7 @@
     "@headlessui/react": "^2.1.1",
     "@heroicons/react": "^2.1.4",
     "axios": "^1.7.2",
-    "html2canvas": "^1.4.1",
+    "jwt-decode": "^4.0.0",
     "primereact": "^10.6.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -23,8 +23,6 @@
     "react-multi-carousel": "^2.8.5",
     "react-router-dom": "^6.23.1",
     "react-scripts": "2.0.3",
-    "react-spring": "^9.7.3",
-    "react-spring-3d-carousel": "1.2.0",
     "uuid": "3.3.2",
     "vanilla-tilt": "^1.8.1"
   },

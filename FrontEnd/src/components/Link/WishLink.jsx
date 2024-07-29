@@ -14,7 +14,7 @@ function WishLink({ id, height }) {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${API}/api/wish/${id}`);
+      const response = await axios.get(`${API}/api/wish/get/${id}`);
       setData(response.data);
       setIMG(`${API}/${response.data.WishBackGroundIMG.replace(/\\/g, "/")}`);
       setCardIMG(`${API}/${response.data.WishFrontIMG.replace(/\\/g, "/")}`);

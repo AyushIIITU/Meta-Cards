@@ -19,11 +19,11 @@ function WCardBack() {
         We would be delighted with your attendance <br />
         at the wedding of{" "}
       </p>
-      <h1 className={style.h1}>Rishvant</h1>
+      <h1 className={style.h1}>BrideName</h1>
       <p className="text-[#c18435] font-lobster text-center font-size-14">
         D/O rotodina & rotodile
       </p>
-      <h1 className={style.h1}>Nuunu</h1>
+      <h1 className={style.h1}>GroomName</h1>
       <p className="text-[#c18435] font-lobster text-center font-size-14">
         S/O panda & pandoria
       </p>

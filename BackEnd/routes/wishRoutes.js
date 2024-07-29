@@ -5,6 +5,7 @@ const WishDetails = require("../models/Wish");
 const fs = require("fs");
 const { generateTokenWithoutExp } = require("../jwt");
 const Wish = require("../models/Wish");
+const User = require("../models/User");
 const fields = [{ name: "WishBackGroundIMG", maxCount: 1 },{name:"WishFrontIMG",maxCount:1}];
 
 
@@ -55,9 +56,21 @@ router.get('/all', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-
+router.get("/public",async(req,res)=>{
+  try {
+    const wish = await WishDetails.find({ type: "public" }).populate("creater").populate("ref", User);
+    if(!wish){
+      return res.status(404).json({message:"No Public Wish Found"})
+    }
+    res.status(200).json(wish);
+  } catch (err) {
+    console.error("Error in fetching Public Wish",err)
+    return res.status(500).json({message:"Internal Server Error"})
+    // console.error("Erorr in Wish Link",err)
+  }
+})
 // GET route to fetch wish details by ID
-router.get("/:id", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const wish = await WishDetails.findById(id);
@@ -72,7 +85,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-router.get("/:id/:token", async (req, res) => {
+router.get("/get/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
     const token=req.params.token;
@@ -117,19 +130,7 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-router.get("/public",async(req,res)=>{
-  try {
-    const wish= await WishDetails.find({type:"public"});
-    if(!wish){
-      return res.status(404).json({message:"No Public Wish Found"})
-    }
-    res.status(200).json(wish);
-  } catch (err) {
-    console.error("Error in fetching Public Wish",err)
-    return res.status(500).json("Internal Server Error")
-    // console.error("Erorr in Wish Link",err)
-  }
-})
+
 
 
 module.exports = router;
