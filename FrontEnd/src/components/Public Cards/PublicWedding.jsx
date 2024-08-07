@@ -2,16 +2,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
-import CakeLinkData from "../Link/CakeLinkData";
+import WeddingLinkData from "../Link/WeddingLinkData";
 
 
-function PublicCake() {
+function PublicWedding() {
   const [publicCard, setPublicCard] = useState([]);
   const [loading, setLoading] = useState(false);
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(`${API}/api/cake/public`);
+      const response = await axios.get(`${API}/api/wedding/public`);
       setPublicCard(response.data);
     } catch (err) {
       console.error(err);
@@ -30,7 +30,7 @@ function PublicCake() {
       ) : (
         <div>
           {publicCard.map((card, ind) => (
-            <CakeLinkData key={ind} data={card} height={"100%"} ind={ind} />
+            <WeddingLinkData key={ind} data={card} height={"100%"} ind={ind} />
           ))}
         </div>
       )}
@@ -38,4 +38,4 @@ function PublicCake() {
   );
 }
 
-export default PublicCake;
+export default PublicWedding;

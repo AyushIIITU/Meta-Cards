@@ -56,19 +56,27 @@ router.get('/all', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 });
-router.get("/public",async(req,res)=>{
+router.get("/public", async (req, res) => {
   try {
-    const wish = await WishDetails.find({ type: "public" }).populate("creater").populate("ref", User);
-    if(!wish){
-      return res.status(404).json({message:"No Public Wish Found"})
+    const wishes = await WishDetails.find({ type: "public" })
+      .populate({
+        path: 'creater',
+        select:'name -_id'
+      }).select('-tokenId')
+      
+
+    if (!wishes || wishes.length === 0) {
+      return res.status(404).json({ message: "No Public Wish Found" });
     }
-    res.status(200).json(wish);
+
+    res.status(200).json(wishes);
   } catch (err) {
-    console.error("Error in fetching Public Wish",err)
-    return res.status(500).json({message:"Internal Server Error"})
-    // console.error("Erorr in Wish Link",err)
+    console.error("Error in fetching Public Wish", err);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
-})
+});
+
+
 // GET route to fetch wish details by ID
 router.get("/get/:id", async (req, res) => {
   try {

@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { API } from "../../Utils/Apis";
 import { TbCloudUpload } from "react-icons/tb";
-
+import style from './WishEdit2.module.css'
 function WishEdits2() {
   const [textColour, setTextColour] = useState("#000000");
   const [coverImage, setCoverImage] = useState(null);
@@ -11,6 +11,7 @@ function WishEdits2() {
   const [backGroundColour, setBackGroundColour] = useState("#e0e1dc");
   const [coverImageDisplay, setCoverImageDisplay] = useState();
   const [coverBackGroundDisplay, setCoverBackGroundDisplay] = useState();
+  const [selectedTab, setSelectedTab] = useState('private');
   const [line, setLine] = useState([
     "Dear Dad,",
     "Let's see.. .",
@@ -113,7 +114,8 @@ function WishEdits2() {
                 Body:line,
                 Footer:endPara
             },
-            creater:"6675ad756f694c5f49085e44"
+            creater:localStorage.getItem('UserID'),
+            type:selectedTab
         }
         console.log(data);
         const response=await axios.post(`${API}/api/wish`,data,{
@@ -283,7 +285,29 @@ function WishEdits2() {
           onChange={handleBackGroundUpload}
           className="hidden" // No need for max-width on hidden input
         />
-        {/* {coverImage && <img src={coverImage} alt="Cover" className="mt-4" />} */}
+   <div className={style["body"]}>
+      <div className={style["tabs"]}>
+        <input
+          checked={selectedTab === 'private'}
+          value="private"
+          id="private"
+          type="radio"
+          className={style["input"]}
+          onChange={() => setSelectedTab('private')}
+        />
+        <label htmlFor="private" className={style["label"]}>Private</label>
+
+        <input
+          checked={selectedTab === 'public'}
+          value="public"
+          id="public"
+          type="radio"
+          className={style["input"]}
+          onChange={() => setSelectedTab('public')}
+        />
+        <label htmlFor="public" className={style["label"]}>Public</label>
+      </div>
+    </div>
       </div>
       <button onClick={handelWishSubmit}>Submit</button>
     </div>

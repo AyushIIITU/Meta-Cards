@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../cakes/style.scss";
-// import { Input } from 'postcss';
+import stylee from './WishEdit2.module.css'
 import axios from "axios";
 import { ColorPicker } from "primereact/colorpicker";
 import { API } from "../../Utils/Apis";
@@ -14,12 +14,14 @@ import toast from "react-hot-toast";
 import ImageUpload from "../Test/ImageUpload";
 function CakeEdits() {
   const navigate=useNavigate();
+  console.log("sahi jagha");
   useEffect(()=>{
     const token=localStorage.getItem('token');
     if(!token){
       return navigate('/');
     }
   })
+  const [selectedTab, setSelectedTab] = useState('private');
   const [colorHEX1, setColorHEX1] = useState("a88679");
   const [colorHEX2, setColorHEX2] = useState("8b4554");
   const [colorHEX3, setColorHEX3] = useState("fefae9");
@@ -72,8 +74,8 @@ function CakeEdits() {
           Font: selectedFont,
           Color: bText,
         },
-
-        creater: localStorage.getItem('UserID'),
+        creater:localStorage.getItem('UserID'),
+        type:selectedTab
       };
       console.log(cakeBackGround);
       const res = await axios.post(`${API}/api/cake`, response, {
@@ -431,6 +433,29 @@ function CakeEdits() {
           <ImageUpload handleFileUpload={handleFileUpload}/>
          
         </div>
+        <div className={stylee["body"]}>
+      <div className={stylee["tabs"]}>
+        <input
+          checked={selectedTab === 'private'}
+          value="private"
+          id="private"
+          type="radio"
+          className={stylee["input"]}
+          onChange={() => setSelectedTab('private')}
+        />
+        <label htmlFor="private" className={stylee["label"]}>Private</label>
+
+        <input
+          checked={selectedTab === 'public'}
+          value="public"
+          id="public"
+          type="radio"
+          className={stylee["input"]}
+          onChange={() => setSelectedTab('public')}
+        />
+        <label htmlFor="public" className={stylee["label"]}>Public</label>
+      </div>
+    </div>
       </div>
       <Link
         to=""

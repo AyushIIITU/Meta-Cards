@@ -196,6 +196,9 @@ expand the main panel to cover the entirety of the viewport
     margin: 0;
     box-shadow: none;
   }
+  .Panel{
+    width: 100%;
+  }
 }
 
 

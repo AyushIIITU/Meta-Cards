@@ -14,7 +14,7 @@ import CakeLink from "./components/Link/CakeLink.jsx";
 import CakeDisplay from "./components/cakes/CakeDisplay.jsx";
 import LogInSine from "./components/Login-SignUp/Login.jsx";
 import Otp2 from "./components/Test/Otp2.jsx";
-import WishEdits from "./components/Edits/WishEdits.jsx";
+// import WishEdits from "./components/Edits/WishEdits.jsx";
 import WishEdits2 from "./components/Edits/WishEdits2.jsx";
 
 import Test from "./components/Test/Test.jsx";
@@ -39,6 +39,9 @@ import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
 import CakeDemo from "./components/Demo/CakeDemo.jsx";
 import WishTest from "./components/Test/WishTest.jsx";
 import Home1 from "./components/Home/Home1.jsx";
+// import PublicCake from "./components/Public Cards/PublicWish.jsx";
+import PublicWish from "./components/Public Cards/PublicWish.jsx";
+import PublicWedding from "./components/Public Cards/PublicWedding.jsx";
 import PublicCake from "./components/Public Cards/PublicCake.jsx";
 // import './input.css'
 const router = createBrowserRouter([
@@ -69,12 +72,20 @@ const router = createBrowserRouter([
       
       {
 path:'public/gt',
-element:<PublicCake/>
+element:<PublicWish/>
       }
       ,{
         path: "public/greetingCard",
         element: <WishTest />,
       },
+      {
+        path:"public/wed",
+        element:<PublicWedding/>
+      },
+      {
+        path:"public/gc",
+        element:<PublicCake/>
+      }
     ],
   },
   {

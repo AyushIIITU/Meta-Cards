@@ -1,0 +1,1 @@
+export const SHARE='http://localhost:5173'

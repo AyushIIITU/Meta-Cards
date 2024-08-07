@@ -6,6 +6,7 @@ import { BorderDesine, CornerDesine } from "../../Constants/DesingConstants";
 import FontPicker from "../Test/FontPicker";
 import { fonts } from "../../Utils/Fonts";
 import { TbCloudUpload } from "react-icons/tb";
+import stylee from './WishEdit2.module.css'
 import axios from "axios";
 function WeddingEdits() {
   const [textColour, setTextColour] = useState("#c18435");
@@ -13,6 +14,7 @@ function WeddingEdits() {
   const [coverImage, setCoverImage] = useState(null);
   const [coverBackGround, setBackGround] = useState(null);
   const [frontGround, setFrontGround] = useState(null);
+  const [selectedTab, setSelectedTab] = useState('private');
   const [coverImageDisplay, setCoverImageDisplay] = useState();
   const [coverBackGroundDisplay, setCoverBackGroundDisplay] = useState();
   const [selectedFont, setSelectedFonts] = useState(fonts[0].value);
@@ -21,8 +23,7 @@ function WeddingEdits() {
   const [head1, setHead1] = useState("Invitation");
   const [head2, setHead2] = useState("BrideName");
   const [head3, setHead3] = useState("GroomName");
-  // const frontText=useRef("Risvant & Nuunu");
-  const [frontText, setFrontText] = useState("Risvant & Nuunu");
+  const [frontText, setFrontText] = useState("BrideName & GroomName");
   const [p1, setp1] = useState(
     "We would be delighted with your attendance\nat the wedding of"
   );
@@ -118,7 +119,8 @@ function WeddingEdits() {
         l1: frontText,
         l2: [head1, head2, head3],
         l3: [p1, p2, p3],
-        creater: "6675ad756f694c5f49085e44",
+        creater:localStorage.getItem('UserID'),
+        type:selectedTab
       };
       console.log(data);
       const response = await axios.post(`${API}/api/wedding`, data, {
@@ -492,6 +494,29 @@ function WeddingEdits() {
           }
           className="hidden" // No need for max-width on hidden input
         />
+           <div className={stylee["body"]}>
+      <div className={stylee["tabs"]}>
+        <input
+          checked={selectedTab === 'private'}
+          value="private"
+          id="private"
+          type="radio"
+          className={stylee["input"]}
+          onChange={() => setSelectedTab('private')}
+        />
+        <label htmlFor="private" className={stylee["label"]}>Private</label>
+
+        <input
+          checked={selectedTab === 'public'}
+          value="public"
+          id="public"
+          type="radio"
+          className={stylee["input"]}
+          onChange={() => setSelectedTab('public')}
+        />
+        <label htmlFor="public" className={stylee["label"]}>Public</label>
+      </div>
+    </div>
         <button onClick={handleWeddingSubmit}>Submit</button>
       </div>
     </div>

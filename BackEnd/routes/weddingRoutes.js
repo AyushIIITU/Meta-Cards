@@ -56,7 +56,7 @@ router.post(
         },
         creater: creater,
         type:type?type:"private",
-        tokenId:generateTokenWithoutExp(l2)
+        tokenId:generateTokenWithoutExp(l1)
       });
       const response = await wedding.save();
       res.status(201).json(response);
@@ -78,21 +78,27 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-router.get("/public",async(req,res)=>{
+router.get("/public", async (req, res) => {
   try {
-    const wedding= await WeddingDetails.find({type:"public"});
-    if(!wedding){
-      return res.status(404).json({message:"No Public Wish Found"})
+    const wishes = await WeddingDetails.find({ type: "public" })
+      .populate({
+        path: 'creater',
+        select:'name -_id'
+      }).select('-tokenId')
+      
+
+    if (!wishes || wishes.length === 0) {
+      return res.status(404).json({ message: "No Public Wish Found" });
     }
-    res.status(200).json(wedding);
+
+    res.status(200).json(wishes);
   } catch (err) {
-    console.error("Error in fetching Public Wish",err)
-    return res.status(500).json("Internal Server Error")
-    // console.error("Erorr in Wish Link",err)
+    console.error("Error in fetching Public Wish", err);
+    return res.status(500).json({ message: "Internal Server Error" });
   }
-})
+});
 // GET route to fetch wedding details by ID
-router.get("/:id/:token", async (req, res) => {
+router.get("/get/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
     const token=req.params.token;
