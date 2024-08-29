@@ -2,8 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
-import CakeLinkData from "../Link/CakeLinkData";
 
+import PublicShare from "../Link/PublicShare";
+import CakeDisplay from "../Link/CakeDisplay";
 
 function PublicCake() {
   const [publicCard, setPublicCard] = useState([]);
@@ -21,16 +22,18 @@ function PublicCake() {
   };
   useEffect(() => {
     fetchData();
-  }, []); 
+  }, []);
 
   return (
     <>
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
-            <CakeLinkData key={ind} data={card} height={"100%"} ind={ind} />
+            <PublicShare data={card} key={ind} type={"cake"}>
+              <CakeDisplay data={card} height={"100%"} />
+            </PublicShare>
           ))}
         </div>
       )}

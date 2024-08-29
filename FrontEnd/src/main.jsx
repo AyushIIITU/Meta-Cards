@@ -11,7 +11,7 @@ import WCards2 from "./components/cards/WCards2.jsx";
 import CakeEdits from "./components/Edits/CakeEdits.jsx";
 import FontPicker from "./components/Test/FontPicker.jsx";
 import CakeLink from "./components/Link/CakeLink.jsx";
-import CakeDisplay from "./components/cakes/CakeDisplay.jsx";
+// import CakeDisplay from "./components/cakes/CakeDisplay.jsx";
 import LogInSine from "./components/Login-SignUp/Login.jsx";
 import Otp2 from "./components/Test/Otp2.jsx";
 // import WishEdits from "./components/Edits/WishEdits.jsx";
@@ -19,7 +19,6 @@ import WishEdits2 from "./components/Edits/WishEdits2.jsx";
 
 import Test from "./components/Test/Test.jsx";
 import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
-
 
 import Create from "./components/Create/Create.jsx";
 
@@ -37,12 +36,13 @@ import Cardtest4 from "./components/Test/Cardtest4.jsx";
 import CardClub from "./components/Test/CardClub.jsx";
 import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
 import CakeDemo from "./components/Demo/CakeDemo.jsx";
-import WishTest from "./components/Test/WishTest.jsx";
+// import WishTest from "./components/Test/WishTest.jsx";
 import Home1 from "./components/Home/Home1.jsx";
 // import PublicCake from "./components/Public Cards/PublicWish.jsx";
 import PublicWish from "./components/Public Cards/PublicWish.jsx";
 import PublicWedding from "./components/Public Cards/PublicWedding.jsx";
 import PublicCake from "./components/Public Cards/PublicCake.jsx";
+// import TestPublicWed from "./components/Link/PublicWed.jsx";
 // import './input.css'
 const router = createBrowserRouter([
   {
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home1/>,
+        element: <Home1 />,
       },
       {
         path: "Create",
@@ -69,23 +69,27 @@ const router = createBrowserRouter([
         path: "editWedding",
         element: <WeddingEdits />,
       },
-      
+
       {
-path:'public/gt',
-element:<PublicWish/>
-      }
-      ,{
-        path: "public/greetingCard",
-        element: <WishTest />,
+        path: "public/greeting",
+        element: <PublicWish />,
+      },
+      // {
+      //   path: "public/twed",
+      //   element: <TestPublicWed/>,
+      // },
+      // {
+      //   path: "public/greetingCard",
+      //   element: <WishTest />,
+      // },
+      {
+        path: "public/wedding",
+        element: <PublicWedding />,
       },
       {
-        path:"public/wed",
-        element:<PublicWedding/>
+        path: "public/cake",
+        element: <PublicCake />,
       },
-      {
-        path:"public/gc",
-        element:<PublicCake/>
-      }
     ],
   },
   {
@@ -164,10 +168,10 @@ element:<PublicWish/>
   {
     path: "/Cake",
     children: [
-      {
-        path: "",
-        element: <CakeDisplay />,
-      },
+      // {
+      //   path: "",
+      //   element: <CakeDisplay />,
+      // },
       {
         path: ":id",
         element: <CakeLink />,
@@ -196,7 +200,6 @@ element:<PublicWish/>
     path: "dcake",
     element: <CakeDemo />,
   },
-  
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

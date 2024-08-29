@@ -3,6 +3,8 @@ import axios from "axios";
 import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
 import WishLinkData from "../Link/WishLinkData";
+import PublicShare from "../Link/PublicShare";
+import WishDisplay from "../Link/WishDisplay";
 
 function PublicWish() {
   const [publicCard, setPublicCard] = useState([]);
@@ -29,7 +31,9 @@ function PublicWish() {
       ) : (
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
-            <WishLinkData key={ind} data={card} height={"100%"} ind={ind} />
+                <PublicShare data={card} key={ind}>
+                <WishDisplay data={card} height={"100%"} />
+              </PublicShare>
           ))}
         </div>
       )}

@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { API } from "../../Utils/Apis";
 import Loader from "../skeleton/Loader";
-import WeddingLinkData from "../Link/WeddingLinkData";
+import WeddingDisplay from "../Link/WeddingDisplay";
+import PublicShare from "../Link/PublicShare";
 
 
 function PublicWedding() {
@@ -28,9 +29,12 @@ function PublicWedding() {
       {loading ? (
         <Loader />
       ) : (
-        <div>
+        <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
-            <WeddingLinkData key={ind} data={card} height={"100%"} ind={ind} />
+                <PublicShare data={card} key={ind} type={"wedding"}>
+                <WeddingDisplay data={card} height={"100%"} />
+              </PublicShare>
+            // <PublicWed data={card} height={"100%"} key={ind} />
           ))}
         </div>
       )}
