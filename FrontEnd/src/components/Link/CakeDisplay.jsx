@@ -7,7 +7,7 @@ function CakeDisplay({data,height}) {
   return (
     <div
     style={{
-      backgroundImage: `url(${API}/${data.CakeBackGroundIMG.replace(/\\/g, "/")})`,
+      backgroundImage: `url(${API}/${data?.CakeBackGroundIMG?.replace(/\\/g, "/")})`,
       height: height ?height: '100vh' 
     }}
     className="w-full bg-cover  bg-center bg-no-repeat object-contain overflow-hidden"

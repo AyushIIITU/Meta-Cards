@@ -33,7 +33,7 @@ router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (re
         WishFrontIMG: WishFrontIMGPath,
         Wish,
         creater,
-        type: type ? type : "private",
+        type: type ? type : "Private",
         tokenId: token
       });
       const response = await wish.save();
@@ -44,6 +44,21 @@ router.post("/",uploadWithDestination("any", fields, "./uploads/wish"),async (re
     }
   }
 );
+router.get("/user/:id",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    // console.log(id);
+    
+    const Wish= await WishDetails.find({creater:id});
+    if(!Wish){
+      return res.status(404).json({message:"No Public Wish Found"})
+    }
+    res.status(200).json(Wish);
+  } catch (err) {
+    // console.error("Error in fetching Wish",err)
+    return res.status(500).json("Internal Server Error")
+  }
+})
 router.get('/all', async (req, res) => {
     try {
         const allwishs = await WishDetails.find();
@@ -58,7 +73,7 @@ router.get('/all', async (req, res) => {
 });
 router.get("/public", async (req, res) => {
   try {
-    const wishes = await WishDetails.find({ type: "public" })
+    const wishes = await WishDetails.find({ type: "Public" })
       .populate({
         path: 'creater',
         select:'name -_id'
@@ -138,7 +153,41 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
+router.post("/like", async (req, res) => {
+  try {
+    const { id, user } = req.body;
+    const Wish = await WishDetails.findById(id);
+    if (!Wish) {
+      return res.status(404).json({ message: "No Wish Found" });
+    }
+    if (!Wish.liked.includes(user)) {
+      Wish.liked.push(user);
+    } else {
+      return res.status(400).json({ message: "User already liked this Wish" });
+    }
+    const response = await Wish.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Wish", err);
+    return res.status(500).json("Internal Server Error");
+  }
+});
+router.post("/unlike",async(req,res)=>{
+  try {
+    const {id,user}=req.body;
+    const Wish=await WishDetails.findById(id);
+    if
+    (!Wish){
+      return res.status(404).json({message:"No Wish Found"});
+    }
+    Wish.liked=Wish.liked.filter((item)=>item!=user);
+    const response=await Wish.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Wish",err);
+    return res.status(500).json("Internal Server Error");
+  }
+})
 
 
 module.exports = router;

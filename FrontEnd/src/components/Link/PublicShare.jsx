@@ -1,4 +1,4 @@
-import React, { useState, Children } from "react";
+import { useState } from "react";
 import { SHARE } from "../../Utils/Share";
 import { QRCodeCanvas } from "qrcode.react";
 import { SlActionRedo } from "react-icons/sl";
@@ -20,7 +20,6 @@ function PublicShare({ data, key, children ,type}) {
         }, 2000);
       })
       .catch(() => {
-        // Handle error if needed
       });
   };
 

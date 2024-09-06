@@ -14,14 +14,14 @@ import toast from "react-hot-toast";
 import ImageUpload from "../Test/ImageUpload";
 function CakeEdits() {
   const navigate=useNavigate();
-  console.log("sahi jagha");
+  // console.log("sahi jagha");
   useEffect(()=>{
     const token=localStorage.getItem('token');
     if(!token){
       return navigate('/');
     }
   })
-  const [selectedTab, setSelectedTab] = useState('private');
+  const [selectedTab, setSelectedTab] = useState('Private');
   const [colorHEX1, setColorHEX1] = useState("a88679");
   const [colorHEX2, setColorHEX2] = useState("8b4554");
   const [colorHEX3, setColorHEX3] = useState("fefae9");
@@ -436,22 +436,22 @@ function CakeEdits() {
         <div className={stylee["body"]}>
       <div className={stylee["tabs"]}>
         <input
-          checked={selectedTab === 'private'}
-          value="private"
+          checked={selectedTab === 'Private'}
+          value="Private"
           id="private"
           type="radio"
           className={stylee["input"]}
-          onChange={() => setSelectedTab('private')}
+          onChange={() => setSelectedTab('Private')}
         />
         <label htmlFor="private" className={stylee["label"]}>Private</label>
 
         <input
-          checked={selectedTab === 'public'}
-          value="public"
+          checked={selectedTab === 'Public'}
+          value="Public"
           id="public"
           type="radio"
           className={stylee["input"]}
-          onChange={() => setSelectedTab('public')}
+          onChange={() => setSelectedTab('Public')}
         />
         <label htmlFor="public" className={stylee["label"]}>Public</label>
       </div>

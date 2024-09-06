@@ -42,6 +42,10 @@ import Home1 from "./components/Home/Home1.jsx";
 import PublicWish from "./components/Public Cards/PublicWish.jsx";
 import PublicWedding from "./components/Public Cards/PublicWedding.jsx";
 import PublicCake from "./components/Public Cards/PublicCake.jsx";
+import PrivateCake from "./components/Private/PrivateCake.jsx";
+import PrivateWedding from "./components/Private/PrivateWedding.jsx";
+import PrivateWish from "./components/Private/PrivateWish.jsx";
+import About from "./components/About.jsx";
 // import TestPublicWed from "./components/Link/PublicWed.jsx";
 // import './input.css'
 const router = createBrowserRouter([
@@ -71,7 +75,7 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "public/greeting",
+        path: "public/Wish",
         element: <PublicWish />,
       },
       // {
@@ -90,6 +94,25 @@ const router = createBrowserRouter([
         path: "public/cake",
         element: <PublicCake />,
       },
+      {
+        path:"private/cake",
+        element:<PrivateCake/>
+      },  {
+        path:"private/wedding",
+        element:<PrivateWedding/>
+      },
+      {
+        path:"private/wish",
+        element:<PrivateWish/>
+      },
+      {
+        path:"About",
+        element:<About/>
+      }
+      // {
+      //   path:"private/cake",
+      //   element:<CardClub/>
+      // }
     ],
   },
   {

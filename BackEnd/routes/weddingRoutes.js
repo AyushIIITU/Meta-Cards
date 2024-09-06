@@ -55,7 +55,7 @@ router.post(
           Desing: d2,
         },
         creater: creater,
-        type:type?type:"private",
+        type:type?type:"Private",
         tokenId:generateTokenWithoutExp(l1)
       });
       const response = await wedding.save();
@@ -78,9 +78,24 @@ router.get("/all", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+router.get("/user/:id",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    console.log(id);
+    
+    const Wedding= await WeddingDetails.find({creater:id});
+    if(!Wedding){
+      return res.status(404).json({message:"No Public Wedding Found"})
+    }
+    res.status(200).json(Wedding);
+  } catch (err) {
+    // console.error("Error in fetching Wedding",err)
+    return res.status(500).json("Internal Server Error")
+  }
+})
 router.get("/public", async (req, res) => {
   try {
-    const wishes = await WeddingDetails.find({ type: "public" })
+    const wishes = await WeddingDetails.find({ type: "Public" })
       .populate({
         path: 'creater',
         select:'name -_id'
@@ -105,7 +120,7 @@ router.get("/get/:id/:token", async (req, res) => {
     const wedding = await Wedding.findById(id);
   
     if (!wedding) {
-      return res.status(404).json({ message: "Cake Not Found" });
+      return res.status(404).json({ message: "We WeddingDetails Not Found" });
     }
     if(wedding.type==="public"){
       return res.status(200).json(wedding);

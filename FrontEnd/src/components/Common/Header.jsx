@@ -44,7 +44,27 @@ const products = [
     icon: greetingCard,
   },
 ];
-const publicCard=[
+const PrivateCard = [
+  {
+    name: "BirthDay Card",
+    description: "Get a better understanding of your traffic",
+    href: "private/cake",
+    icon: MdOutlineCake,
+  },
+  {
+    name: "Engagement Card",
+    description: "Speak directly to your customers",
+    href: "private/wedding",
+    icon: weddingIcon,
+  },
+  {
+    name: "Wishing Card",
+    description: "Your customers’ data will be safe and secure",
+    href: "private/wish",
+    icon: greetingCard,
+  },
+];
+const PublicCard=[
   {
     name: "BirthDay Card",
     description: "Get a better understanding of your traffic",
@@ -60,7 +80,7 @@ const publicCard=[
   {
     name: "Wishing Card",
     description: "Your customers’ data will be safe and secure",
-    href: "public/greeting",
+    href: "public/wish",
     icon: greetingCard,
   },
 ]
@@ -103,7 +123,7 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Meta Card Sends</span>
-            <img className="h-8 w-auto" src="./Designer.svg" alt="logo" />
+            <img className="h-8 w-auto" src="./Logo.png" alt="logo" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -188,7 +208,7 @@ export default function Header() {
               className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
             >
               <div className="p-4">
-                {publicCard.map((item) => (
+                {PublicCard.map((item) => (
                   <div
                     key={item.name}
                     className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
@@ -244,7 +264,7 @@ export default function Header() {
                 className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5 transition data-[closed]:translate-y-1 data-[closed]:opacity-0 data-[enter]:duration-200 data-[leave]:duration-150 data-[enter]:ease-out data-[leave]:ease-in"
               >
                 <div className="p-4">
-                  {products.map((item) => (
+                  {PrivateCard.map((item) => (
                     <div
                       key={item.name}
                       className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
@@ -256,13 +276,13 @@ export default function Header() {
                         />
                       </div>
                       <div className="flex-auto">
-                        <a
-                          href={item.href}
+                        <Link
+                          to={item.href}
                           className="block font-semibold text-gray-900"
                         >
                           {item.name}
                           <span className="absolute inset-0" />
-                        </a>
+                        </Link>
                         <p className="mt-1 text-gray-600">{item.description}</p>
                       </div>
                     </div>
@@ -271,9 +291,9 @@ export default function Header() {
               </PopoverPanel>
             </Popover>
           )}
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="about" className="text-sm font-semibold leading-6 text-gray-900">
             Abou Us
-          </a>
+          </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           {isLoggedIn ? (
@@ -304,7 +324,7 @@ export default function Header() {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img className="h-8 w-auto" src="./Designer.svg" alt="" />
+              <img className="h-8 w-auto" src="./Logo.png" alt="Logo" />
             </a>
             <button
               type="button"
@@ -360,7 +380,7 @@ export default function Header() {
                         />
                       </DisclosureButton>
                       <DisclosurePanel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
+                        {[...PublicCard, ...callsToAction].map((item) => (
                           <DisclosureButton
                             key={item.name}
                             as="a"

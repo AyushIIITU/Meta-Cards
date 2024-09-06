@@ -26,9 +26,9 @@ const weddingSchema = new mongoose.Schema(
     },
     type:{
       type: String,
-      default: "public",
+      default: "Public",
       required: true,
-      enum:["public","private"]
+      enum:["Public","Private"]
     },
     tokenId:String,
     liked:[{type:mongoose.Schema.ObjectId,

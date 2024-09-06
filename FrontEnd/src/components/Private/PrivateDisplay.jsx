@@ -1,20 +1,29 @@
 // import Public from 'Public'
-import { useState } from "react";
-import CakeDemo from "../Demo/CakeDemo";
+import { useEffect, useState } from "react";
+// import CakeDemo from "../Demo/CakeDemo";
 import { SHARE } from "../../Utils/Share";
 import { QRCodeCanvas } from "qrcode.react";
+import Like from "../Common/Like";
 
-function Cardtest4({type,data,handleDelete}) {
-  console.log(data?.type);
+function PrivateShare({type,data,handleDelete,children,handleOnLike}) {
+  
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(data?.type);
+  const [selectedOption, setSelectedOption] = useState("Private");
+  useEffect(()=>{
+    const option=data?.type;
+    
+    setSelectedOption(option);
+    // console.log(selectedOption);
+    
+  },[])
+  
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 const [isCopied, setIsCopied] = useState(false);
 const [qrVisible, setQrVisible] = useState(false);
-  // console.log(data);
-  
+
 const url = selectedOption==="Public"?`${SHARE}/${type}/${data?._id}`:`${SHARE}/${type}/${data?._id}/${data?.tokenId}`;
 
 const copyToClipboard = () => {
@@ -67,6 +76,7 @@ const handleShare = () => {
     setSelectedOption(selectedOption==="Private"?"Public":"Private");
     setIsModalOpen(false);
   };
+
   return (
     <>
     {/* // Add this button inside your return statement for debugging */}
@@ -124,10 +134,9 @@ const handleShare = () => {
         </div>
 
         <div className="flex flex-col items-center pb-5">
-          <CakeDemo height={'100%'}/>
-          <h5 className="text-xl font-medium text-gray-900 dark:text-white">
-            Bonnie Green
-          </h5>
+          {children}
+          {/* <CakeDemo height={'100%'}/> */}
+   
           <div className="flex mt-4 md:mt-6">
             <div className="flex space-x-2 border-[3px] border-purple-400 rounded-xl select-none">
               <label className="radio flex flex-grow items-center justify-center rounded-lg p-1 cursor-pointer">
@@ -408,4 +417,4 @@ const handleShare = () => {
   );
 }
 
-export default Cardtest4;
+export default PrivateShare;

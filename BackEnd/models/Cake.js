@@ -18,9 +18,9 @@ const cackSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      default: "public",
+      default: "Public",
       require: true,
-      enum: ["public", "private"],
+      enum: ["Public", "Private"],
     },
     tokenId: String,
     liked: [{ type: mongoose.Schema.ObjectId, ref: "User" }],

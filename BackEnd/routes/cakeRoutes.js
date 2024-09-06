@@ -31,7 +31,7 @@ router.post(
         CakeBackGroundIMG: CakeBackGroundIMGPath,
         BName,
         creater,
-        type:type?type:"private",
+        type:type?type:"Private",
         tokenId:generateTokenWithoutExp(message)
       });
 
@@ -57,7 +57,7 @@ router.get('/all', async (req, res) => {
 });
 
 // GET route to fetch cake details by ID
-router.get("/:id/:token", async (req, res) => {
+router.get("/private/:id/:token", async (req, res) => {
   try {
     const id = req.params.id;
     const token=req.params.token;
@@ -102,7 +102,24 @@ router.delete("/:id", async (req, res) => {
 });
 router.get("/public",async(req,res)=>{
   try {
-    const cake= await Cake.find({type:"public"});
+    const cake= await Cake.find({type:"Public"}).populate({
+      path:"creater",
+      select:"name -_id"
+    });
+    if(!cake){
+      return res.status(404).json({message:"No Cake Found"})
+    }
+    return res.status(200).json(cake);
+  } catch (err) {
+    console.error("Error in fetching Cake",err)
+    return res.status(500).json("Internal Server Error")
+    // console.error("Erorr in cake Link",err)
+  }
+})
+router.get("/private/:id",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    const cake= await Cake.findById(id);
     if(!cake){
       return res.status(404).json({message:"No Public cake Found"})
     }
@@ -113,5 +130,54 @@ router.get("/public",async(req,res)=>{
     // console.error("Erorr in cake Link",err)
   }
 })
-
+router.get("/user/:id",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    console.log(id);
+    
+    const cake= await Cake.find({creater:id});
+    if(!cake){
+      return res.status(404).json({message:"No Public cake Found"})
+    }
+    res.status(200).json(cake);
+  } catch (err) {
+    // console.error("Error in fetching cake",err)
+    return res.status(500).json("Internal Server Error")
+  }
+})
+router.post("/like", async (req, res) => {
+  try {
+    const { id, user } = req.body;
+    const cake = await Cake.findById(id);
+    if (!cake) {
+      return res.status(404).json({ message: "No Cake Found" });
+    }
+    if (!cake.liked.includes(user)) {
+      cake.liked.push(user);
+    } else {
+      return res.status(400).json({ message: "User already liked this cake" });
+    }
+    const response = await cake.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Cake", err);
+    return res.status(500).json("Internal Server Error");
+  }
+});
+router.post("/unlike",async(req,res)=>{
+  try {
+    const {id,user}=req.body;
+    const cake=await Cake.findById(id);
+    if
+    (!cake){
+      return res.status(404).json({message:"No Cake Found"});
+    }
+    cake.liked=cake.liked.filter((item)=>item!=user);
+    const response=await cake.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Cake",err);
+    return res.status(500).json("Internal Server Error");
+  }
+})
 module.exports = router;
