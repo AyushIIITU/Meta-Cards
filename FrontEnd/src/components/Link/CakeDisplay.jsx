@@ -2,7 +2,7 @@
 import { API } from "../../Utils/Apis";
 import style from "./CakeLink.module.css";
 function CakeDisplay({data,height}) {
-    console.log(data);
+    // console.log(data);
     
   return (
     <div
@@ -36,7 +36,7 @@ function CakeDisplay({data,height}) {
                     xmlSpace="preserve"
                   >
                     <path
-                      fill={`#${data.l2}`}
+                      fill={`#${data?.l2}`}
                       d="M173.667-13.94c-49.298,0-102.782,0-147.334,0c-3.999,0-4-16.002,0-16.002
                           c44.697,0,96.586,0,147.334,0C177.667-29.942,177.668-13.94,173.667-13.94z"
                     >
@@ -62,7 +62,7 @@ function CakeDisplay({data,height}) {
                       />
                     </path>
                     <path
-                      fill={`#${data.l1}`}
+                      fill={`#${data?.l1}`}
                       d="M100-178.521c1.858,0,3.364,1.506,3.364,3.363c0,0,0,33.17,0,44.227
                         c0,19.144,0,57.431,0,76.574c0,10.152,0,40.607,0,40.607c0,1.858-1.506,3.364-3.364,3.364l0,0c-1.858,0-3.364-1.506-3.364-3.364c0,0,0-30.455,0-40.607c0-19.144,0-57.432,0-76.575c0-11.057,0-44.226,0-44.226C96.636-177.015,98.142-178.521,100-178.521
                         L100-178.521z"
@@ -97,7 +97,7 @@ function CakeDisplay({data,height}) {
                       />
                     </path>
                     <path
-                      fill={`#${data.l2}`}
+                      fill={`#${data?.l2}`}
                                         d="M173.667-15.929c-46.512,0-105.486,0-147.334,0c-3.999,0-4-16.002,0-16.002
                         c43.566,0,97.96,0,147.334,0C177.667-31.931,177.666-15.929,173.667-15.929z"
                     >
@@ -125,7 +125,7 @@ function CakeDisplay({data,height}) {
                       />
                     </path>
                     <path
-                                          fill={`#${data.l1}`}
+                                          fill={`#${data?.l1}`}
                                           d="M101.368-73.685c0,12.164,0,15.18,0,28.519c0,22.702,0-13.661,0,8.304c0,14.48,0,18.233,0,30.512
                           c0,1.753-2.958,1.847-2.958,0c0-12.68,0-16.277,0-30.401c0-21.983,0,11.66,0-8.305c0-13.027,0-15.992,0-28.628
                           C98.411-75.883,101.368-75.592,101.368-73.685z"
@@ -158,7 +158,7 @@ function CakeDisplay({data,height}) {
                       />
                     </path>
                     <path
-                      fill={`#${data.l2}`}
+                      fill={`#${data?.l2}`}
                                         d="M173.667,21.571c-33.174,0-111.467,0-147.334,0c-4,0-4-16.002,0-16.002c39.836,0,105.982,0,147.334,0
                         C177.668,5.569,177.667,21.571,173.667,21.571z"
                     >
@@ -195,11 +195,8 @@ function CakeDisplay({data,height}) {
                       />
                     </path>
                     <path
-                      fill={`#${data.l3}`}
-                                            d="M104.812,113.216c0,3.119-2.164,5.67-4.812,5.67c-2.646,0-4.812-2.551-4.812-5.67c0-5.594,0-16.782,0-22.375
-                          c0-5.143,0-15.427,0-20.568c0-7.333,0-21.998,0-29.33c0-5.523,0-16.569,0-22.092c0-3.295,0-9.885,0-13.181
-                          C95.188,2.551,97.353,0,100,0c2.648,0,4.812,2.551,4.812,5.669c0,3.248,0,9.743,0,12.991c0,5.428,0,16.284,0,21.711
-                          c0,7.618,0,22.854,0,30.472c0,4.952,0,14.854,0,19.807C104.812,96.292,104.812,107.576,104.812,113.216z"
+                      fill={`#${data?.l3}`}
+                                            d=""
                                           >
                       <animate
                         id="crema"
@@ -255,27 +252,27 @@ function CakeDisplay({data,height}) {
                     <rect
                       x="10"
                       y="475.571"
-                      fill={`#${data.l3}`}
+                      fill={`#${data?.l3}`}
                       width="180"
                       height="4"
                     />
                   </svg>
-                  {data && data.BName && (
+                  {data && data?.BName && (
                     <div
                       style={{
-                        fontFamily: `${data.BName.Font}`,
-                        color: `${data.BName.Color}`,
+                        fontFamily: `${data?.BName?.Font}`,
+                        color: `${data?.BName?.Color}`,
                       }}
                       className="text"
                     >
                       <h1>Happy birthday!</h1>
-                      {data && <p>{data.BName.Name}</p>}
+                      {data && <p>{data?.BName?.Name}</p>}
                     </div>
                   )}
                 </div>
                 <div className={style["flip-card-back"]}>
                   {/* <p className={style["title"]}>BACK</p> */}
-                  <p>{data.message}</p>
+                  <p>{data?.message}</p>
                 </div>
               </div>
             </div>

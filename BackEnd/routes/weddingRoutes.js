@@ -4,7 +4,7 @@ const uploadWithDestination = require("../multer");
 const WeddingDetails = require("../models/Wedding");
 const fs = require("fs");
 const { create } = require("domain");
-const { generateTokenWithoutExp } = require("../jwt");
+const { generateTokenWithoutExp, jwtAuthMiddleware } = require("../jwt");
 const Wedding = require("../models/Wedding");
 const fields = [
   { name: "WeddingBackGroundIMG", maxCount: 1 },
@@ -95,43 +95,54 @@ router.get("/user/:id",async(req,res)=>{
 })
 router.get("/public", async (req, res) => {
   try {
-    const wishes = await WeddingDetails.find({ type: "Public" })
+    const wedding = await WeddingDetails.find({ type: "Public" })
       .populate({
         path: 'creater',
         select:'name -_id'
       }).select('-tokenId')
       
 
-    if (!wishes || wishes.length === 0) {
-      return res.status(404).json({ message: "No Public Wish Found" });
+    if (!wedding ||wedding.length === 0) {
+      return res.status(404).json({ message: "No Publicwedding Found" });
     }
 
-    res.status(200).json(wishes);
+    res.status(200).json(wedding);
   } catch (err) {
-    console.error("Error in fetching Public Wish", err);
+    console.error("Error in fetching Publicwedding", err);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 });
-// GET route to fetch wedding details by ID
-router.get("/get/:id/:token", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    const token=req.params.token;
-    const wedding = await Wedding.findById(id);
-  
+    const wedding = await WeddingDetails.findById(id);
+
     if (!wedding) {
-      return res.status(404).json({ message: "We WeddingDetails Not Found" });
+      return res.status(404).json({ message: "wedding Not Found" });
     }
-    if(wedding.type==="public"){
-      return res.status(200).json(wedding);
-    }
-    if(wedding.tokenId!==token){
-      return res.status(401).json({message:"Unauthorized"})
-    }
+
     return res.status(200).json(wedding);
   } catch (err) {
     console.error("Error fetching wedding details:", err);
-    res.status(500).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+});
+router.post("/get/:id", jwtAuthMiddleware, async (req, res) => {
+  try {
+    const id = req.params.id;
+    const wedding = await WeddingDetails.findById(id);
+    if (!wedding) {
+      return res.status(404).json({ message: "wedding Not Found" });
+    }
+    if (wedding.type === "public") {
+      return res.status(200).json(wedding);
+    }
+    if (wedding.tokenId !== req.userToken) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    return res.status(200).json(wedding);
+  } catch (err) {
+     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
@@ -145,8 +156,8 @@ router.delete("/:id", async (req, res) => {
       return res.status(404).json({ message: "wedding Not Found" });
     }
 
-    if (wedding.WishBackGroundIMG && fs.existsSync(wedding.WishBackGroundIMG)) {
-      fs.unlinkSync(wedding.WishBackGroundIMG);
+    if (wedding.weddingBackGroundIMG && fs.existsSync(wedding.weddingBackGroundIMG)) {
+      fs.unlinkSync(wedding.weddingBackGroundIMG);
     }
     if (wedding.Back.IMG && fs.existsSync(wedding.Back.IMG)) {
       fs.unlinkSync(wedding.Back.IMG);
@@ -161,5 +172,18 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
+router.get("/change/:id/:type",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    const type=req.params.type;
+    const wedding=await WeddingDetails.findByIdAndUpdate(id,{type:type});
+    if(!wedding){
+      return res.status(404).json({message:"No wedding Found"})
+    }
+    return res.status(200).json(wedding);
+  
+  } catch (err) {
+    console.error("Error in changing type",err);
+  }
+})
 module.exports = router;

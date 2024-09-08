@@ -137,6 +137,9 @@ export default function Header() {
           </button>
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
+        <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">
+            Home
+          </Link>
           {token && (
             <Popover className="relative">
               <PopoverButton className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
@@ -292,7 +295,7 @@ export default function Header() {
             </Popover>
           )}
           <Link to="about" className="text-sm font-semibold leading-6 text-gray-900">
-            Abou Us
+            About Us
           </Link>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">

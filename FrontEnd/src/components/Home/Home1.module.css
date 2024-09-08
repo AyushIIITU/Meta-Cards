@@ -38,7 +38,7 @@
   
 /*Aqui se cambia el color del fondo de h1, h2, y h3 */
 .home-content {
-    background: yellowgreen;
+    /* background: yellowgreen; */
     max-width: 600px;
 }
 

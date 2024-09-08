@@ -46,6 +46,11 @@ import PrivateCake from "./components/Private/PrivateCake.jsx";
 import PrivateWedding from "./components/Private/PrivateWedding.jsx";
 import PrivateWish from "./components/Private/PrivateWish.jsx";
 import About from "./components/About.jsx";
+import CakeLinkPrivate from "./components/Link/CakeLinkPrivate.jsx";
+import WeddingLinkPrivate from "./components/Link/WeddingLinkPrivate.jsx";
+import WeddingLink from "./components/Link/WeddingLink.jsx";
+import WishLinkPrivate from "./components/Link/WishLinkPrivate.jsx";
+import WishLink from "./components/Link/WishLink.jsx";
 // import TestPublicWed from "./components/Link/PublicWed.jsx";
 // import './input.css'
 const router = createBrowserRouter([
@@ -174,10 +179,10 @@ const router = createBrowserRouter([
     ],
   },
 
-  {
-    path: "/test2",
-    element: <CardTest2 />,
-  },
+  // {
+  //   path: "/test2",
+  //   element: <CardTest2 />,
+  // },
 
   {
     path: "/Wish",
@@ -189,40 +194,51 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/Cake",
-    children: [
-      // {
-      //   path: "",
-      //   element: <CakeDisplay />,
-      // },
-      {
-        path: ":id",
-        element: <CakeLink />,
-      },
-    ],
+    path: "/cake/:id/:token",
+    element: <CakeLinkPrivate/>
   },
   {
-    path: "/Wedding",
-    children: [
-      {
-        path: ":id",
-        element: <WeddingLinkProvider />,
-      },
-    ],
+    path:"/cake/:id",
+    element:<CakeLink/>
   },
   {
-    path: "fpicker",
-    element: <FontPicker />,
+    path: "/wedding/:id/:token",
+    element: <WeddingLinkPrivate/>
   },
+  {
+    path:"/wedding/:id",
+    element:<WeddingLink/>
+  },{
+    path: "/wish/:id/:token",
+    element: <WishLinkPrivate/>
+  },
+  {
+    path:"/wish/:id",
+    element:<WishLink/>
+  },
+
+  // {
+  //   path: "/Wedding",
+  //   children: [
+  //     {
+  //       path: ":id",
+  //       element: <WeddingLinkProvider />,
+  //     },
+  //   ],
+  // },
+  // {
+  //   path: "fpicker",
+  //   element: <FontPicker />,
+  // },
 
   {
     path: "otp",
     element: <Otp2 />,
   },
-  {
-    path: "dcake",
-    element: <CakeDemo />,
-  },
+  // {
+  //   path: "dcake",
+  //   element: <CakeDemo />,
+  // },
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

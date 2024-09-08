@@ -9,6 +9,7 @@ import PrivateShare from "./PrivateDisplay";
 import { API } from "../../Utils/Apis";
 import CakeDisplay from "../Link/CakeDisplay";
 import Like from "../Common/Like";
+import toast from "react-hot-toast";
 
 function PrivateCake() {
   const [publicCard, setPublicCard] = useState([]);
@@ -17,9 +18,9 @@ function PrivateCake() {
   const fetchData = async () => {
     setLoading(true);
     try {
-        console.log(localStorage.getItem('UserID'));
+        // console.log(localStorage.getItem('UserID'));
         
-      const response = await axios.get(`${API}/api/cake/user/${localStorage.getItem('UserID')}`);
+      const response = await axios.get(`${API}/api/cake/user/${id}`);
       // console.log(response);
       
       setPublicCard(response.data);
@@ -35,9 +36,12 @@ function PrivateCake() {
   const handleDelete=async(id)=>{
     try {
       const response=await axios.delete(`${API}/api/cake/${id}`);
+      if(response.status===200){
+        toast.success("Deleted !!")
+      }
       // console.log(response);
       
-    //   fetchData();
+      fetchData();
     } catch (err) {
       console.error(err);
     }

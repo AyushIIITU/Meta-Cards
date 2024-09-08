@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import style from "./Home1.module.css";
 import TestCarousel from "../Test/TestCrousal";
@@ -9,7 +8,7 @@ function Home1() {
 
       <section className={style["home"]}>
         <div className={style["home-content"]}>
-          <h1 className="text-white">A virtual Cards</h1>
+          <h1 className="text-black">A virtual Cards</h1>
           <h3>for pricious Oucassions</h3>
           <p className="text-dark">
             In this website you can create a virtual card which can be sent on

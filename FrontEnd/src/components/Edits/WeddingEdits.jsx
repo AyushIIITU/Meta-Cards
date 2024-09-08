@@ -8,13 +8,16 @@ import { fonts } from "../../Utils/Fonts";
 import { TbCloudUpload } from "react-icons/tb";
 import stylee from './WishEdit2.module.css'
 import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 function WeddingEdits() {
+  const navigate = useNavigate();
   const [textColour, setTextColour] = useState("#c18435");
   const [textFrontColour, setTextFrontColour] = useState("#c18435");
   const [coverImage, setCoverImage] = useState(null);
   const [coverBackGround, setBackGround] = useState(null);
   const [frontGround, setFrontGround] = useState(null);
-  const [selectedTab, setSelectedTab] = useState('private');
+  const [selectedTab, setSelectedTab] = useState('Private');
   const [coverImageDisplay, setCoverImageDisplay] = useState();
   const [coverBackGroundDisplay, setCoverBackGroundDisplay] = useState();
   const [selectedFont, setSelectedFonts] = useState(fonts[0].value);
@@ -34,7 +37,7 @@ function WeddingEdits() {
 
   const [editable, setEditable] = useState(false);
   const [editableFront, setEditableFront] = useState(false);
-  const [scale, setScale] = useState(16);
+  const [scale, setScale] = useState(1);
   const handleTextChange = (e, setChange) => {
     // if (e.key === "Enter") {
     //   setChange((prev) => prev + '\n');
@@ -128,7 +131,10 @@ function WeddingEdits() {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(response);
+      if(response.status===201){
+        toast.success("Wedding Card is Created");
+      }
+      navigate("/");
     } catch (err) {
       console.error("Error in Wedding", err);
     }
@@ -136,46 +142,44 @@ function WeddingEdits() {
   return (
     <div
       style={{ backgroundImage: coverBackGroundDisplay }}
-      className="bg-cover min-h-screen bg-center bg-no-repeat object-contain"
+      className="bg-cover min-h-screen bg-center bg-no-repeat object-contain "
     >
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col flex-wrap items-center">
-          <div
-            className="w-[500px] h-[500px] bg-center bg-no-repeat object-contain bg-cover"
-            style={{ backgroundImage: coverFrontGroundDisplay }}
-          >
-            <img src={borderDesing} className="w-[500px]" />
-            <div
-              className="flex relative justify-center"
-              style={{ bottom: `${265 + scale / 2}px`, fontFamily: frontFont }}
-            >
-              {editableFront ? (
-                <input
-                  type="text"
-                  className={`text-center w-[80%] bg-transparent`}
-                  onChange={(e) => setFrontText(e.target.value)}
-                  defaultValue={frontText}
-                  style={{
-                    color: textFrontColour,
-                    // WebkitBackgroundClip: "text",
-                    fontSize: `${scale}px`,
-                  }}
-                />
-              ) : (
-                <h1
-                  className={`text-center `}
-                  style={{
-                    bottom: `${265 + scale / 2}px`,
-                    color: textFrontColour,
-                    // WebkitBackgroundClip: "text",
-                    fontSize: `${scale}px`,
-                  }}
-                >
-                  {frontText}
-                </h1>
-              )}
-            </div>
-          </div>
+        <div
+  className="w-full max-w-[500px] h-[500px] bg-center bg-no-repeat overflow-x-auto overflow-y-hidden object-contain bg-cover relative"
+  style={{ backgroundImage: coverFrontGroundDisplay }}
+>
+  <img src={borderDesing} className="w-full max-w-[500px]" />
+  <div
+    className="absolute inset-0 flex justify-center items-center"
+    style={{ fontFamily: frontFont }}
+  >
+    {editableFront ? (
+      <input
+        type="text"
+        className="text-center w-[80%] bg-transparent"
+        onChange={(e) => setFrontText(e.target.value)}
+        defaultValue={frontText}
+        style={{
+          color: textFrontColour,
+          fontSize: `${scale}rem`, // Use rem instead of vh for better scaling
+        }}
+      />
+    ) : (
+      <h1
+        className="text-center"
+        style={{
+          color: textFrontColour,
+          fontSize: `${scale}rem`, // Use rem instead of vh
+        }}
+      >
+        {frontText}
+      </h1>
+    )}
+  </div>
+</div>
+
           <div>
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
@@ -198,9 +202,9 @@ function WeddingEdits() {
                 <label>
                   <input
                     type="range"
-                    min="16"
-                    max="64"
-                    step="1"
+                    min="1"
+                    max="7"
+                    step="0.1"
                     defaultValue={scale}
                     onChange={handleScale}
                   />
@@ -267,7 +271,7 @@ function WeddingEdits() {
                 {editable ? (
                   <input
                     type="text"
-                    className={` font-laFlibustiere text-center text-[45px]`}
+                    className={` font-laFlibustiere text-center bg-transparent text-[45px]`}
                     onChange={(e) => setHead1(e.current.value)}
                     defaultValue={head1}
                     style={{ fontFamily: selectedHeadFont }}
@@ -275,7 +279,7 @@ function WeddingEdits() {
                 ) : (
                   <h1
                     style={{ fontFamily: selectedHeadFont }}
-                    className={` font-laFlibustiere text-center text-[45px]`}
+                    className={` font-laFlibustiere text-center text-[45px] bg-transparent`}
                   >
                     {head1}
                   </h1>
@@ -283,7 +287,7 @@ function WeddingEdits() {
                 {editable ? (
                   <textarea
                     type="text"
-                    className={` font-lobster  resize-none mt-[1px] w-[75%] text-center font-size-14 z-10`}
+                    className={` font-lobster  resize-none mt-[1px] w-[75%] text-center bg-transparent font-size-14 z-10`}
                     onChange={(e) => handleTextChange(e, setp1)}
                     rows={2}
                     defaultValue={p1}
@@ -313,7 +317,7 @@ function WeddingEdits() {
                 {editable ? (
                   <input
                     type="text"
-                    className={` font-laFlibustiere text-center text-[45px]`}
+                    className={` font-laFlibustiere text-center text-[45px] bg-transparent`}
                     onChange={(e) => setHead2(e.current.value)}
                     defaultValue={head2}
                     style={{ fontFamily: selectedHeadFont }}
@@ -321,7 +325,7 @@ function WeddingEdits() {
                 ) : (
                   <h1
                     style={{ fontFamily: selectedHeadFont }}
-                    className={` font-laFlibustiere text-center text-[45px]`}
+                    className={` font-laFlibustiere text-center text-[45px] bg-transparent`}
                   >
                     {head2}
                   </h1>
@@ -329,7 +333,7 @@ function WeddingEdits() {
                 {editable ? (
                   <input
                     type="text"
-                    className={` font-lobster w-[75%] z-10 text-center font-size-14`}
+                    className={` font-lobster w-[75%] bg-transparent z-10 text-center font-size-14`}
                     onChange={(e) => setp2(e.current.value)}
                     defaultValue={p2}
                     style={{ fontFamily: selectedFont }}
@@ -346,7 +350,7 @@ function WeddingEdits() {
                 {editable ? (
                   <input
                     type="text"
-                    className={` font-laFlibustiere z-10 text-center text-[45px]`}
+                    className={` font-laFlibustiere bg-transparent z-10 text-center text-[45px]`}
                     onChange={(e) => setHead3(e.current.value)}
                     defaultValue={head3}
                     style={{ fontFamily: selectedHeadFont }}
@@ -354,7 +358,7 @@ function WeddingEdits() {
                 ) : (
                   <h1
                     style={{ fontFamily: selectedHeadFont }}
-                    className={` font-laFlibustiere text-center text-[45px]`}
+                    className={` font-laFlibustiere text-center text-[45px] bg-transparent`}
                   >
                     {head3}
                   </h1>
@@ -388,7 +392,7 @@ function WeddingEdits() {
                 {editable ? (
                   <textarea
                     type="text"
-                    className={`font-lobster  resize-none mt-[1px] w-[75%] text-center font-size-14 z-10`}
+                    className={`font-lobster  resize-none bg-transparent mt-[1px] w-[75%] text-center font-size-14 z-10`}
                     onChange={(e) => handleTextChange(e, setp3)}
                     rows={3}
                     style={{ fontFamily: selectedFont }}
@@ -472,7 +476,8 @@ function WeddingEdits() {
           </div>
         </div>
       </div>
-      <div>
+      <div className="flex flex-wrap items-center justify-around ">
+        <div>
         <label
           htmlFor="backGround"
           className="flex flex-col justify-center w-[250px] h-[190px] border-2 border-dashed border-gray-300 items-center text-center p-1.5 text-gray-700 cursor-pointer"
@@ -493,39 +498,46 @@ function WeddingEdits() {
             handleFileUpload(e, setBackGround, setCoverBackGroundDisplay)
           }
           className="hidden" // No need for max-width on hidden input
-        />
+        /></div>
            <div className={stylee["body"]}>
       <div className={stylee["tabs"]}>
         <input
-          checked={selectedTab === 'private'}
-          value="private"
-          id="private"
+          checked={selectedTab === 'Private'}
+          value="Private"
+          id="Private"
           type="radio"
           className={stylee["input"]}
-          onChange={() => setSelectedTab('private')}
+          onChange={() => setSelectedTab('Private')}
         />
-        <label htmlFor="private" className={stylee["label"]}>Private</label>
+        <label htmlFor="Private" className={stylee["label"]}>Private</label>
 
         <input
-          checked={selectedTab === 'public'}
-          value="public"
-          id="public"
+          checked={selectedTab === 'Public'}
+          value="Public"
+          id="Public"
           type="radio"
           className={stylee["input"]}
-          onChange={() => setSelectedTab('public')}
+          onChange={() => setSelectedTab('Public')}
         />
-        <label htmlFor="public" className={stylee["label"]}>Public</label>
+        <label htmlFor="Public" className={stylee["label"]}>Public</label>
       </div>
     </div>
     { /* From Uiverse.io by catraco */  }
-<button title="Save" className="cursor-pointer flex items-center fill-lime-400 bg-lime-950 hover:bg-lime-900 active:border active:border-lime-400 rounded-md duration-100 p-2">
-  <svg viewBox="0 -0.5 25 25" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
-    <path strokeLinejoin="round" strokeLinecap="round" strokeWidth="1.5" d="M18.507 19.853V6.034C18.5116 5.49905 18.3034 4.98422 17.9283 4.60277C17.5532 4.22131 17.042 4.00449 16.507 4H8.50705C7.9721 4.00449 7.46085 4.22131 7.08577 4.60277C6.7107 4.98422 6.50252 5.49905 6.50705 6.034V19.853C6.45951 20.252 6.65541 20.6407 7.00441 20.8399C7.35342 21.039 7.78773 21.0099 8.10705 20.766L11.907 17.485C12.2496 17.1758 12.7705 17.1758 13.113 17.485L16.9071 20.767C17.2265 21.0111 17.6611 21.0402 18.0102 20.8407C18.3593 20.6413 18.5551 20.2522 18.507 19.853Z" clipRule="evenodd" fillRule="evenodd"></path>
-  </svg>
-  <span className="text-sm text-lime-400 font-bold pr-1">Submit</span>
-</button>
-        <button onClick={handleWeddingSubmit}>Submit</button>
+
+  
       </div>
+      <div className="flex items-center mt-2 justify-center h-full">
+        <button
+         
+          onClick={handleWeddingSubmit}
+          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          {/* <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]"> */}
+          Submit
+          {/* </span> */}
+        </button>
+      </div>
+      {/* <button onClick={}>Submit</button> */}
     </div>
   );
 }

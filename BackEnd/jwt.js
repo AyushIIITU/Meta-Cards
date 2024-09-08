@@ -4,6 +4,8 @@ const jwtAuthMiddleware = (req, res, next) => {
 
     // first check request headers has authorization or not
     const authorization = req.headers.authorization
+    // console.log(req.headers.authorization);
+    
     if(!authorization) return res.status(401).json({ error: 'Token Not Found' });
 
     // Extract the jwt token from the request headers
@@ -15,6 +17,7 @@ const jwtAuthMiddleware = (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         // Attach user information to the request object
+        req.userToken=token
         req.user = decoded
         next();
     }catch(err){

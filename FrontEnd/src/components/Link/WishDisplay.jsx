@@ -6,7 +6,7 @@ function WishDisplay({data,height}) {
   return (
     <div
     style={{
-      backgroundImage: `url(${API}/${data.WishBackGroundIMG.replace(
+      backgroundImage: `url(${API}/${data?.WishBackGroundIMG?.replace(
         /\\/g,
         "/"
       )})`,
@@ -26,7 +26,7 @@ function WishDisplay({data,height}) {
         <img
           style={{ minWidth: "300px" }}
           className=" w-full h-full object-cover"
-          src={`${API}/${data.WishFrontIMG.replace(/\\/g, "/")}`}
+          src={`${API}/${data?.WishFrontIMG?.replace(/\\/g, "/")}`}
           alt="Card"
         />
       </div>

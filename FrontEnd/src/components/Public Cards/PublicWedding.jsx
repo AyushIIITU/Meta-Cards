@@ -34,18 +34,18 @@ function PublicWedding() {
 
       if (liked) {
         // localStorage.removeItem(`isLiked-${id}`);  
-        const response = await axios.post(`${API}/api/cake/unlike`, {
+        await axios.post(`${API}/api/cake/unlike`, {
           id: id,
           user: userId,
         });
-        console.log(response);
+        // console.log(response);
       } else {
         // localStorage.setItem(`isLiked-${id}`, true);
-        const response = await axios.post(`${API}/api/cake/like`, {
+        await axios.post(`${API}/api/cake/like`, {
           id: id,
           user: userId,
         });
-        console.log(response);
+        // console.log(response);
       }
     } catch (err) {
       console.error(err);

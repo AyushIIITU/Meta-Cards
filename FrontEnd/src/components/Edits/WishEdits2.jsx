@@ -4,14 +4,16 @@ import axios from "axios";
 import { API } from "../../Utils/Apis";
 import { TbCloudUpload } from "react-icons/tb";
 import style from './WishEdit2.module.css'
+import { useNavigate } from "react-router-dom";
 function WishEdits2() {
+  const navigate = useNavigate();
   const [textColour, setTextColour] = useState("#000000");
   const [coverImage, setCoverImage] = useState(null);
   const [coverBackGround, setBackGround] = useState(null);
   const [backGroundColour, setBackGroundColour] = useState("#e0e1dc");
   const [coverImageDisplay, setCoverImageDisplay] = useState();
   const [coverBackGroundDisplay, setCoverBackGroundDisplay] = useState();
-  const [selectedTab, setSelectedTab] = useState('private');
+  const [selectedTab, setSelectedTab] = useState('Private');
   const [line, setLine] = useState([
     "Dear Dad,",
     "Let's see.. .",
@@ -123,11 +125,11 @@ function WishEdits2() {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        console.log(response);
+        // console.log(response);
         if(response.status===201){
             toast.success("Successfully added");
         }
-
+        navigate("/")
     } catch (err) {
         console.error("Error in Wish Card",err);
     }
@@ -138,20 +140,24 @@ function WishEdits2() {
       className="bg-cover min-h-screen bg-center bg-no-repeat object-contain overflow-hidden"
     >
       <div className="flex justify-evenly items-center flex-wrap mt-[5%]">
-        <div className="w-[300px] h-[400px] bg-red-200">
+        <div className="w-[300px] h-[400px] ">
+          {/* {coverImageDisplay? */}
           <img
             className=" w-full h-full object-cover"
             src={coverImageDisplay}
           />
+          {/* // : <div className="text-4xl align-middle text-center my-auto border-red-200 border-2"> Add Image form below
+          // </div>} */}
+          
         </div>
         <div
-          className="w-[300px] mt-auto h-[420px] bg-red-200"
+          className="w-[300px] mt-auto h-[420px] "
           style={{
             color: `${textColour}`,
             backgroundColor: `${backGroundColour}`,
           }}
         >
-          <div className="my-auto">
+          <div className="my-auto bg-transparent">
             {!editable && (
               <>
                 <button
@@ -174,7 +180,7 @@ function WishEdits2() {
                   type="text"
                   defaultValue={head}
                   key={index}
-                  className="text-center w-full"
+                  className="text-center w-full bg-transparent"
                   onChange={(e) => handleEditHeader(index, e.target.value)}
                 />
               ) : (
@@ -187,7 +193,7 @@ function WishEdits2() {
               editable ? (
                 <input
                   type="text"
-                  className="w-full"
+                  className="w-full bg-transparent"
                   defaultValue={line}
                   key={index}
                   onChange={(e) => {
@@ -201,7 +207,7 @@ function WishEdits2() {
             {endPara.map((ep, index) =>
               editable ? (
                 <input
-                  className="w-full text-end"
+                  className="w-full text-end bg-transparent"
                   type="text"
                   defaultValue={ep}
                   key={index}
@@ -288,28 +294,39 @@ function WishEdits2() {
    <div className={style["body"]}>
       <div className={style["tabs"]}>
         <input
-          checked={selectedTab === 'private'}
-          value="private"
-          id="private"
+          checked={selectedTab === 'Private'}
+          value="Private"
+          id="Private"
           type="radio"
           className={style["input"]}
-          onChange={() => setSelectedTab('private')}
+          onChange={() => setSelectedTab('Private')}
         />
-        <label htmlFor="private" className={style["label"]}>Private</label>
+        <label htmlFor="Private" className={style["label"]}>Private</label>
 
         <input
-          checked={selectedTab === 'public'}
-          value="public"
-          id="public"
+          checked={selectedTab === 'Public'}
+          value="Public"
+          id="Public"
           type="radio"
           className={style["input"]}
-          onChange={() => setSelectedTab('public')}
+          onChange={() => setSelectedTab('Public')}
         />
-        <label htmlFor="public" className={style["label"]}>Public</label>
+        <label htmlFor="Public" className={style["label"]}>Public</label>
       </div>
     </div>
       </div>
-      <button onClick={handelWishSubmit}>Submit</button>
+      <div className="flex items-center justify-center h-full mt-3">
+        <button
+         
+          onClick={handelWishSubmit}
+          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          {/* <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]"> */}
+          Submit
+          {/* </span> */}
+        </button>
+      </div>
+      {/* <button onClick={handelWishSubmit}>Submit</button> */}
     </div>
   );
 }

@@ -1,10 +1,10 @@
 import React from 'react'
 import style from "../cards/WCardBack.module.css"
 import { API } from '../../Utils/Apis';
-function WeddingLinkBack({BackData}) {
+function  WeddingLinkBack({BackData}) {
 
-    console.log(BackData);
-    const Desing = `${API}/${BackData.IMG.replace(/\\/g, "/")}`;
+    // console.log(BackData);
+    const Desing = `${API}/${BackData?.IMG?.replace(/\\/g, "/")}`;
   return (
    <>
     <div

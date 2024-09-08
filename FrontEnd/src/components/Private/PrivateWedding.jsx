@@ -35,10 +35,10 @@ function PrivateWedding() {
   }, []);
   const handleDelete=async(id)=>{
     try {
-      const response=await axios.delete(`${API}/api/cake/${id}`);
+      const response=await axios.delete(`${API}/api/wedding/${id}`);
       console.log(response);
       
-    //   fetchData();
+      fetchData();
     } catch (err) {
       console.error(err);
     }
@@ -76,7 +76,7 @@ function PrivateWedding() {
         <Loader />
       ) : (
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
-          {publicCard.map((card, ind) => (
+          {publicCard.length<1?<h1 className="text-xl font-bold font-lato"> No Card Here!</h1>:publicCard.map((card, ind) => (
             <PrivateShare data={card} key={ind} type={"wedding"} handleDelete={handleDelete} handleOnLike={handleOnLike}>
               <WeddingDisplay data={card} height={"100%"} />
               <Like count={card?.liked?.length} onLike={handleOnLike} isLike={card?.liked?.find((like)=>like!=id)} id={card?._id}/>

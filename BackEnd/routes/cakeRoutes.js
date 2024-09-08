@@ -3,7 +3,7 @@ const router = express.Router();
 const uploadWithDestination = require("../multer");
 const CakeDetails = require("../models/Cake");
 const fs = require("fs");
-const { generateTokenWithoutExp } = require("../jwt");
+const { generateTokenWithoutExp, jwtAuthMiddleware } = require("../jwt");
 const Cake = require("../models/Cake");
 const fields = [{ name: "CakeBackGroundIMG", maxCount: 1 }];
 
@@ -43,6 +43,21 @@ router.post(
     }
   }
 );
+router.get("/get/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cake = await CakeDetails.findById(id);
+
+    if (!cake) {
+      return res.status(404).json({ message: "cake Not Found" });
+    }
+
+    return res.status(200).json(cake);
+  } catch (err) {
+    console.error("Error fetching cake details:", err);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 router.get('/all', async (req, res) => {
     try {
         const allCakes = await CakeDetails.find();
@@ -57,10 +72,10 @@ router.get('/all', async (req, res) => {
 });
 
 // GET route to fetch cake details by ID
-router.get("/private/:id/:token", async (req, res) => {
+router.get("/get/:id", async (req, res) => {
   try {
-    const id = req.params.id;
-    const token=req.params.token;
+    // const id = req.params.id;
+    // const token=req.params.token;
     const cake = await CakeDetails.findById(id);
   
     if (!cake) {
@@ -145,6 +160,25 @@ router.get("/user/:id",async(req,res)=>{
     return res.status(500).json("Internal Server Error")
   }
 })
+router.post("/get/:id", jwtAuthMiddleware,async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cake = await CakeDetails.findById(id);
+    if (!cake) {
+      return res.status(404).json({ message: "cake Not Found" });
+    }
+    if(cake.type==="public"){
+      return res.status(200).json(cake);
+    }
+    if(cake.tokenId!==req.userToken){
+      return res.status(401).json({message:"Unauthorized"})
+    }
+    return res.status(200).json(cake);
+  } catch (err) {
+    // console.error("Error fetching cake details:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 router.post("/like", async (req, res) => {
   try {
     const { id, user } = req.body;
@@ -178,6 +212,20 @@ router.post("/unlike",async(req,res)=>{
   } catch (err) {
     console.error("Error in liking Cake",err);
     return res.status(500).json("Internal Server Error");
+  }
+})
+router.get("/change/:id/:type",async(req,res)=>{
+  try {
+    const id=req.params.id;
+    const type=req.params.type;
+    const cake=await Cake.findByIdAndUpdate(id,{type:type});
+    if(!cake){
+      return res.status(404).json({message:"No Cake Found"})
+    }
+    return res.status(200).json(cake);
+  
+  } catch (err) {
+    console.error("Error in changing type",err);
   }
 })
 module.exports = router;

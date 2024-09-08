@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { SHARE } from "../../Utils/Share";
 import { QRCodeCanvas } from "qrcode.react";
 import Like from "../Common/Like";
+import axios from "axios";
+import { API } from "../../Utils/Apis";
 
 function PrivateShare({type,data,handleDelete,children,handleOnLike}) {
   
@@ -76,6 +78,31 @@ const handleShare = () => {
     setSelectedOption(selectedOption==="Private"?"Public":"Private");
     setIsModalOpen(false);
   };
+  const handleChangeVisibilty=async()=>{
+    // e.preventDefault()
+    try {
+      // console.log(`${API}/api/${type}/change/${data?._id}/${selectedOption}`);
+      // const reqOption=selectedOption==="Private"?"Public":"Private";
+      // console.log(reqOption,selectedOption);
+      
+      const response=await axios.get(`${API}/api/${type}/change/${data?._id}/${selectedOption}`);
+      if(response.status===200){
+        setSelectedOption(selectedOption);
+        setIsModalOpen(false);
+      }
+      
+    } catch (err) {
+      console.error(err);
+      
+    }
+  }
+    // console.log(selectedOption);
+    // console.log(data);
+    // console.log(e.target.value);
+    // console.log(data?._id);
+    // console.log(data?.tokenId);
+    // console.log(data?.type);
+    // console.log(data?.type
 
   return (
     <>
@@ -103,10 +130,10 @@ const handleShare = () => {
           </button>
           <div
             id="dropdown"
-            className={`absolute z-20 text-base list-none mt-6   bg-transparent divide-y divide-gray-100 rounded-lg shadow w-44`}
+            className={`absolute text-base list-none mt-6   bg-transparent divide-y divide-gray-100 rounded-lg shadow w-44`}
             style={{
               display: isDropdownOpen ? "block" : "none",
-
+              zIndex:1,
               overflow: isDropdownOpen ? "visible" : "hidden",
               // top:isDropdownOpen?'4%':'100%
             }} // Adjust as needed
@@ -236,8 +263,9 @@ const handleShare = () => {
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button
                     
-                  data-modal-hide="default-modal"
+                  // data-modal-hide="default-modal"
                   type="button"
+                  onClick={handleChangeVisibilty}
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   I accept
@@ -262,12 +290,12 @@ const handleShare = () => {
                     tabIndex="-1"
                     className="fixed inset-0 z-50 flex justify-center items-center w-full h-full overflow-y-auto overflow-x-hidden bg-black bg-opacity-50"
                 >
-                    <div className="relative p-4 w-full max-w-md max-h-full">
-                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div className="relative p-4 w-full max-w-lg max-h-full">
+                        <div className="relative bg-white rounded-lg shadow ">
                             <button
                                 type="button"
                                 onClick={toggleModalDelete}
-                                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
                             >
                                 <svg
                                     className="w-3 h-3"
@@ -288,7 +316,7 @@ const handleShare = () => {
                             </button>
                             <div className="p-4 md:p-5 text-center">
                                 <svg
-                                    className="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200"
+                                    className="mx-auto mb-4 text-gray-400 w-12 h-12 "
                                     aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
@@ -302,7 +330,7 @@ const handleShare = () => {
                                         d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
                                     />
                                 </svg>
-                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 ">
                                     Are you sure you want to delete this creation?
                                 </h3>
                                 <button
@@ -310,7 +338,7 @@ const handleShare = () => {
                                     type="button"
                                     className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center"
                                 >
-                                    Yes, I'm sure
+                                    Yes, I&apos;m sure
                                 </button>
                                 <button
                                     onClick={toggleModalDelete}
@@ -367,7 +395,7 @@ const handleShare = () => {
               <div className="p-4 md:p-5 space-y-4 items-center flex flex-col">
                 <div className="w-full max-w-sm">
                   <div className="flex items-center">
-                    <span className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg dark:bg-gray-600 dark:text-white dark:border-gray-600">URL</span>
+                    <span className="flex-shrink-0 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg dark:bg-gray-600 dark:text-white dark:border-gray-600" style={{zIndex:1}}>URL</span>
                     <div className="relative w-full">
                       <input
                         id="website-url"

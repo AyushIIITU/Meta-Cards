@@ -1,27 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../cakes/style.scss";
-import stylee from './WishEdit2.module.css'
+import stylee from "./WishEdit2.module.css";
 import axios from "axios";
-import { ColorPicker } from "primereact/colorpicker";
 import { API } from "../../Utils/Apis";
 import BMessageSke from "../skeleton/BMessageSke";
 import { CiEdit } from "react-icons/ci";
 import { MdDownloadDone } from "react-icons/md";
 import FontPicker from "../Test/FontPicker";
 import { fonts } from "../../Utils/Fonts";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import ImageUpload from "../Test/ImageUpload";
+import { TbCloudUpload } from "react-icons/tb";
 function CakeEdits() {
-  const navigate=useNavigate();
-  // console.log("sahi jagha");
-  useEffect(()=>{
-    const token=localStorage.getItem('token');
-    if(!token){
-      return navigate('/');
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return navigate("/");
     }
-  })
-  const [selectedTab, setSelectedTab] = useState('Private');
+  });
+  const refMessage = useRef("");
+  // const navigator=useNavigation();
+  const [editable, setEditable] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("Private");
   const [colorHEX1, setColorHEX1] = useState("a88679");
   const [colorHEX2, setColorHEX2] = useState("8b4554");
   const [colorHEX3, setColorHEX3] = useState("fefae9");
@@ -31,11 +32,11 @@ function CakeEdits() {
   const [BName, setBName] = useState("UserName");
   const [generate, setGenerate] = useState(true);
   const [selectedFont, setSelectedFonts] = useState(fonts[0].value);
-  const [cakeBackGround,setCakeBackGround]=useState(null);
+  const [cakeBackGround, setCakeBackGround] = useState(null);
   const [message, setMessage] = useState(
     "May your special day be filled with joy and laughter. As you celebrate another year of life, may you cherish the memories and embrace the future. May your wishes come true, and may this year be your best yet. Happy birthday!"
   );
-  const handleOnRegerate = async () => {
+  const handleOnRegenerate = async () => {
     try {
       setGenerate(false);
       const response = await axios.get(`${API}/ai/cake`);
@@ -74,8 +75,8 @@ function CakeEdits() {
           Font: selectedFont,
           Color: bText,
         },
-        creater:localStorage.getItem('UserID'),
-        type:selectedTab
+        creater: localStorage.getItem("UserID"),
+        type: selectedTab,
       };
       console.log(cakeBackGround);
       const res = await axios.post(`${API}/api/cake`, response, {
@@ -87,18 +88,24 @@ function CakeEdits() {
       if (res.status === 201) {
         toast.success("Successfully added");
       }
+      navigate("/")
     } catch (err) {
       console.error(err);
     }
   };
-
+  const handleOnEdit = async () => {
+    setEditable(!editable);
+    if (editable == true) {
+      setMessage(refMessage?.current?.value);
+    }
+  };
   return (
     <div
       style={{ backgroundImage: backGroundIMG }}
       className="bg-cover  bg-center bg-no-repeat object-contain overflow-hidden"
     >
       <div>
-        <div className="velas">
+        <div className="velas" style={{ top: "19em" }}>
           <div className="fuego"></div>
           <div className="fuego"></div>
           <div className="fuego"></div>
@@ -108,6 +115,7 @@ function CakeEdits() {
         <svg
           id="cake"
           version="1.1"
+          // style={{marginTop:'-3vh'}}
           x="0px"
           y="0px"
           width="200px"
@@ -381,91 +389,126 @@ function CakeEdits() {
         </div>
       </div>
       <br />
-      <div className="flex justify-between flex-wrap content-evenly flex-row">
+      <div className="flex justify-evenly flex-wrap content-around flex-row">
         <div>
-          <ColorPicker
-            format="hex"
-            value={colorHEX1}
-            onChange={(e) => {
-              setColorHEX1(e.value);
-            }}
+          <input
+            type="color"
+            defaultValue={`#${colorHEX1}`}
+            className="border-0 w-full max-w-xl"
+            onChange={(e) => setColorHEX1(e.target.value.split("#")[1])}
           />
           <div>Bread Layer</div>
         </div>
         <div>
-          <ColorPicker
-            format="hex"
-            value={colorHEX2}
-            onChange={(e) => {
-              setColorHEX2(e.value);
-            }}
+          <input
+            type="color"
+            defaultValue={`#${colorHEX2}`}
+            className="border-0 w-full max-w-xl"
+            onChange={(e) => setColorHEX2(e.target.value.split("#")[1])}
           />
           <div>Cream Layer</div>
         </div>
         <div>
-          <ColorPicker
-            format="hex"
-            value={colorHEX3}
-            onChange={(e) => {
-              setColorHEX3(e.value);
-            }}
+          <input
+            type="color"
+            defaultValue={`#${colorHEX3}`}
+            className="border-0 w-full max-w-xl"
+            onChange={(e) => setColorHEX3(e.target.value.split("#")[1])}
           />
+
           <div>Top Layer</div>
         </div>
       </div>
-      <div className="flex flex-row flex-wrap content-stretch justify-around">
+      <div className="flex flex-row flex-wrap gap-y-2 content-stretch justify-around">
         <div
-          className="cardAI max-w-[45vh] w-auto h-[40vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col mr-auto ml-auto"
+          className="cardAI max-w-[45vh] w-auto h-[40vh] bg-[#171717] transition duration-1000 ease-in-out rounded-tr-[20px] rounded-bl-[20px] flex flex-col"
           style={{
             clipPath:
               "polygon(30px 0%, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0% 30px)",
           }}
         >
           <span>Birthday Note By AI</span>
-          {generate ? <p className="infoAI">{message}</p> : <BMessageSke />}
+          {generate ? (
+            editable ? (
+              <textarea
+                ref={refMessage}
+                value={message}
+                cols={4}
+                onChange={(e) => setMessage(e.target.value)}
+                className=" min-w-[20em]  h-full bg-[#1f1f1f] text-white  text-center text-[2vh] m-[2vh] p-[1vh] rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 font-normal"
+              />
+            ) : (
+              <p className="infoAI">{message}</p>
+            )
+          ) : (
+            <BMessageSke />
+          )}{" "}
           <div className="flex content-between mb-[1vh] mt-auto">
-            <button onClick={handleOnRegerate}>Regenerate</button>{" "}
-            <button>Edit</button>
+            <button onClick={handleOnRegenerate}>Regenerate</button>{" "}
+            <button onClick={handleOnEdit}>{editable ? "Save" : "Edit"}</button>
           </div>
         </div>
-
-        <div className="flex items-center justify-center w-[25vh] mx-auto">
-          <ImageUpload handleFileUpload={handleFileUpload}/>
-         
+        <div className="flex justify-center items-center content-center">
+          <label
+            htmlFor="backGround"
+            className="flex flex-col justify-center w-[250px] h-[190px] border-2 border-dashed border-gray-300 items-center text-center p-1.5 text-gray-700 cursor-pointer"
+          >
+            <span>
+              <TbCloudUpload />
+            </span>
+            <p>
+              Drag and drop your file here or click to select a file! for
+              Background Image Change
+            </p>
+          </label>
+          <input
+            id="backGround"
+            type="file"
+            accept=".png, .gif, .jpeg, .jpg"
+            onChange={(e) => handleFileUpload(e)}
+            className="hidden"
+          />
         </div>
-        <div className={stylee["body"]}>
-      <div className={stylee["tabs"]}>
-        <input
-          checked={selectedTab === 'Private'}
-          value="Private"
-          id="private"
-          type="radio"
-          className={stylee["input"]}
-          onChange={() => setSelectedTab('Private')}
-        />
-        <label htmlFor="private" className={stylee["label"]}>Private</label>
 
-        <input
-          checked={selectedTab === 'Public'}
-          value="Public"
-          id="public"
-          type="radio"
-          className={stylee["input"]}
-          onChange={() => setSelectedTab('Public')}
-        />
-        <label htmlFor="public" className={stylee["label"]}>Public</label>
+        <div className={stylee["body"]}>
+          <div className={stylee["tabs"]}>
+            <input
+              checked={selectedTab === "Private"}
+              value="Private"
+              id="private"
+              type="radio"
+              className={stylee["input"]}
+              onChange={() => setSelectedTab("Private")}
+            />
+            <label htmlFor="private" className={stylee["label"]}>
+              Private
+            </label>
+
+            <input
+              checked={selectedTab === "Public"}
+              value="Public"
+              id="public"
+              type="radio"
+              className={stylee["input"]}
+              onChange={() => setSelectedTab("Public")}
+            />
+            <label htmlFor="public" className={stylee["label"]}>
+              Public
+            </label>
+          </div>
+        </div>
       </div>
-    </div>
+      <div className="flex items-center justify-center h-full">
+        <button
+         
+          onClick={handleCakeSubmit}
+          className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+        >
+          {/* <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]"> */}
+          Submit
+          {/* </span> */}
+        </button>
       </div>
-      <Link
-        to=""
-        onClick={handleCakeSubmit}
-        className="relative cursor-pointer flex max-w-[12vh] mx-auto opacity-90 hover:opacity-100 transition-opacity p-[2px] bg-black rounded-[16px] bg-gradient-to-t from-[#8122b0] to-[#dc98fd] active:scale-95"
-      >
-        <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]">
-          Done
-        </span>
-      </Link>
     </div>
   );
 }
