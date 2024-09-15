@@ -23,7 +23,7 @@ exports.sendOTP = async (req, res, next) => {
             to: email,
             subject: 'Your OTP to Verify Email',
             message: `<html>
-      <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+       <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #dddddd; border-radius: 10px; padding: 20px;">
         
           <p style="color: #555555; font-size: 16px;margin-top: 10%;">
@@ -34,7 +34,7 @@ exports.sendOTP = async (req, res, next) => {
           </p>
           <h2 style="color: #333333;text-align: center;margin-top: 5%;">Your One-Time Password (OTP):</h2>
             <p style="text-align: center; font-size: 24px; color: #000000; font-weight: bold; margin: 15px 0;">
-            <span style="width: fit-content;padding: 10px;background-color: #F2D59D;border-radius: 7px;">${otp}</span>
+            <span style="width: fit-content;padding: 10px;background-color: #54ffde;border-radius: 7px;">${otp}</span>
             </p>
           <p style="color: #555555; font-size: 16px;margin-top: 7%;">
             Please use this OTP to complete your verification process. This OTP is valid for the next 10 minutes.

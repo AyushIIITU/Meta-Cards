@@ -6,6 +6,7 @@ import Loader from "../skeleton/Loader";
 import PublicShare from "../Link/PublicShare";
 import CakeDisplay from "../Link/CakeDisplay";
 import Like from "../Common/Like";
+import Error404 from "../Common/Error404";
 
 function PublicCake() {
   const [publicCard, setPublicCard] = useState([]);
@@ -16,6 +17,7 @@ function PublicCake() {
     try {
       const response = await axios.get(`${API}/api/cake/public`);
       setPublicCard(response.data);
+      
     } catch (err) {
       console.error(err);
     } finally {
@@ -56,6 +58,7 @@ function PublicCake() {
       {loading ? (
         <Loader />
       ) : (
+        publicCard.length>0?
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
             <PublicShare data={card} key={ind} type={"cake"}>
@@ -69,7 +72,7 @@ function PublicCake() {
               />
             </PublicShare>
           ))}
-        </div>
+        </div>:<Error404/>
       )}
     </>
   );

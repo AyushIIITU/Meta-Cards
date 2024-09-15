@@ -17,9 +17,9 @@ function Home1() {
           <h1 className="text-blue-400 size-4000">Welcome to Meta Cards</h1>
           <h4>Here You can Cretae your own custom cards for occasions</h4>
           <div className="flex justify-start p-[2vh] pl-[4vh] gap-4">
-            <Link to="preview" className={style["button2"]}>Demo</Link>
+            <Link to="/editcake" className={style["button2"]}>Get Started</Link>
 
-            <Link to="create" className={style["button2"]}>Create</Link>
+            {/* <Link to="create" className={style["button2"]}>Create</Link> */}
 
           </div>
           {/* <div className={style["btn-box"]}>

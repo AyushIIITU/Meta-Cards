@@ -10,6 +10,7 @@ import { API } from "../../Utils/Apis";
 // import CakeDisplay from "../Link/CakeDisplay";
 import Like from "../Common/Like";
 import WeddingDisplay from "../Link/WeddingDisplay";
+import Error404 from "../Common/Error404";
 
 function PrivateWedding() {
   const [publicCard, setPublicCard] = useState([]);
@@ -74,7 +75,7 @@ function PrivateWedding() {
     <>
       {loading ? (
         <Loader />
-      ) : (
+      ) : ( publicCard.length>0?
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.length<1?<h1 className="text-xl font-bold font-lato"> No Card Here!</h1>:publicCard.map((card, ind) => (
             <PrivateShare data={card} key={ind} type={"wedding"} handleDelete={handleDelete} handleOnLike={handleOnLike}>
@@ -82,7 +83,7 @@ function PrivateWedding() {
               <Like count={card?.liked?.length} onLike={handleOnLike} isLike={card?.liked?.find((like)=>like!=id)} id={card?._id}/>
             </PrivateShare>
           ))}
-        </div>
+        </div>:<Error404/>
       )}
     </>
   );

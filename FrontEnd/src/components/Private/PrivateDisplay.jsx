@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 // import CakeDemo from "../Demo/CakeDemo";
 import { SHARE } from "../../Utils/Share";
 import { QRCodeCanvas } from "qrcode.react";
-import Like from "../Common/Like";
 import axios from "axios";
 import { API } from "../../Utils/Apis";
 

@@ -88,7 +88,7 @@ function CakeEdits() {
       if (res.status === 201) {
         toast.success("Successfully added");
       }
-      navigate("/")
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -356,11 +356,14 @@ function CakeEdits() {
         >
           {/* {editable ? 'Save' : 'Edit'} */}
           {editableName ? (
-            <MdDownloadDone onClick={() => setEditableName(false)} />
+            <MdDownloadDone
+              onClick={() => setEditableName(false)}
+              className="cursor-pointer"
+            />
           ) : (
             <CiEdit
               onClick={() => setEditableName(true)}
-              className="absolute m-[-2vh] text-black h-[2.5vh] w-[2.5vh] top-0 right-0"
+              className="absolute m-[-2vh] text-black h-[2.5vh] w-[2.5vh] top-0 cursor-pointer right-0"
             />
           )}
           <h1 className="mx-auto">Happy birthday!</h1>
@@ -389,7 +392,7 @@ function CakeEdits() {
         </div>
       </div>
       <br />
-      <div className="flex justify-evenly flex-wrap content-around flex-row">
+      <div className="flex justify-center gap-x-2 flex-wrap content-around flex-row">
         <div>
           <input
             type="color"
@@ -500,13 +503,10 @@ function CakeEdits() {
       </div>
       <div className="flex items-center justify-center h-full">
         <button
-         
           onClick={handleCakeSubmit}
           className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         >
-          {/* <span className="w-max h-full flex items-center gap-2 px-8 py-3 bg-[#B931FC] text-white rounded-[14px] bg-gradient-to-t from-[#a62ce2] to-[#c045fc]"> */}
           Submit
-          {/* </span> */}
         </button>
       </div>
     </div>

@@ -1,11 +1,5 @@
-import React from 'react'
-import style from "./Create.module.css"
-import CreateCard from './CreateCard'
+
 import Carousel from 'react-multi-carousel'
-import WCards2 from '../cards/WCards2'
-import Cake from '../cakes/Cake'
-import BCards1 from '../cards/BCards1'
-import CakeDemo from '../Demo/CakeDemo'
 import "./Create.css"
 function Create() {
   return (

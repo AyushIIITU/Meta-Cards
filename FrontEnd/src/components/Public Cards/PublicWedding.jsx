@@ -5,6 +5,7 @@ import Loader from "../skeleton/Loader";
 import WeddingDisplay from "../Link/WeddingDisplay";
 import PublicShare from "../Link/PublicShare";
 import Like from "../Common/Like";
+import Error404 from "../Common/Error404";
 
 
 function PublicWedding() {
@@ -57,6 +58,7 @@ function PublicWedding() {
       {loading ? (
         <Loader />
       ) : (
+        publicCard.length>0?
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
                 <PublicShare data={card} key={ind} type={"wedding"}>
@@ -70,7 +72,7 @@ function PublicWedding() {
               </PublicShare>
             // <PublicWed data={card} height={"100%"} key={ind} />
           ))}
-        </div>
+             </div>:<Error404/>
       )}
     </>
   );

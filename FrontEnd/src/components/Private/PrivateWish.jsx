@@ -10,6 +10,7 @@ import { API } from "../../Utils/Apis";
 // import CakeDisplay from "../Link/CakeDisplay";
 import Like from "../Common/Like";
 import WishDisplay from "../Link/WishDisplay";
+import Error404 from "../Common/Error404";
 // import WeddingDisplay from "../Link/WeddingDisplay";
 
 function PrivateWish() {
@@ -75,7 +76,7 @@ function PrivateWish() {
     <>
       {loading ? (
         <Loader />
-      ) : (
+      ) : ( publicCard.length>0?
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
             <PrivateShare data={card} key={ind} type={"wish"} handleDelete={handleDelete} handleOnLike={handleOnLike}>
@@ -83,7 +84,7 @@ function PrivateWish() {
               <Like count={card?.liked?.length} onLike={handleOnLike} isLike={card?.liked?.find((like)=>like!=id)} id={card?._id}/>
             </PrivateShare>
           ))}
-        </div>
+         </div>:<Error404/>
       )}
     </>
   );

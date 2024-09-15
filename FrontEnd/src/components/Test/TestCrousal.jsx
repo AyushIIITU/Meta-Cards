@@ -20,7 +20,7 @@ const TestCarousel = () => {
   const startAutoplay = () => {
     autoplayIntervalRef.current = setInterval(() => {
       rotate("n");
-    }, 2000); // Adjust the interval as needed
+    }, 4000); // Adjust the interval as needed
   };
 
   const stopAutoplay = () => {
@@ -57,8 +57,7 @@ const TestCarousel = () => {
           loop="loop"
           style={{
             maxHeight: "50vh",
-            borderTopLeftRadius: `10px`,
-            borderTopRightRadius: `10px`,
+            borderRadius: `10px`,
           }}
         ></video></div>
         <div className={`${styles.item} ${styles.b}`}><video
@@ -70,8 +69,7 @@ const TestCarousel = () => {
           loop="loop"
           style={{
             maxHeight: "50vh",
-            borderTopLeftRadius: `10px`,
-            borderTopRightRadius: `10px`,
+            borderRadius: `10px`,
           }}
         ></video></div>
         <div className={`${styles.item} ${styles.c}`}> <video
@@ -83,8 +81,8 @@ const TestCarousel = () => {
           loop="loop"
           style={{
             maxHeight: "50vh",
-            borderTopLeftRadius: `10px`,
-            borderTopRightRadius: `10px`,
+            borderRadius: `10px`,
+            // borderTopRightRadius: `10px`,
           }}
         ></video></div>
       </div>

@@ -10,6 +10,7 @@ import { API } from "../../Utils/Apis";
 import CakeDisplay from "../Link/CakeDisplay";
 import Like from "../Common/Like";
 import toast from "react-hot-toast";
+import Error404 from "../Common/Error404";
 
 function PrivateCake() {
   const [publicCard, setPublicCard] = useState([]);
@@ -78,6 +79,7 @@ function PrivateCake() {
       {loading ? (
         <Loader />
       ) : (
+        publicCard.length>0?
         <div className="flex flex-wrap gap-y-[4vh] justify-evenly">
           {publicCard.map((card, ind) => (
             <PrivateShare data={card} key={ind} type={"cake"} handleDelete={handleDelete} handleOnLike={handleOnLike}>
@@ -85,7 +87,7 @@ function PrivateCake() {
               <Like count={card?.liked?.length} onLike={handleOnLike} isLike={card?.liked?.find((like)=>like!=id)} id={card?._id}/>
             </PrivateShare>
           ))}
-        </div>
+         </div>:<Error404/>
       )}
     </>
   );
