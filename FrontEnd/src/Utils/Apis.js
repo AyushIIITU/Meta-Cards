@@ -1,1 +1,1 @@
-export const API="https://meta-cards-1.onrender.com";
+export const API="http://ec2-3-110-114-63.ap-south-1.compute.amazonaws.com:3000";

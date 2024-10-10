@@ -5,6 +5,8 @@ import style from "./Login.module.css";
 
 const LogInSine = () => {
   const [signIn, setSignIn] = useState(true);
+  
+  const [verifyOTP, setVerifyOTP] = useState(false);
   const [transition, setTransition] = useState(false);
 
   const slide = () => {
@@ -83,8 +85,9 @@ const LogInSine = () => {
   return (
     <div className={`w-[100vw] h-[100vh] ${style['container']} flex items-center`}>
       <div className={style["App"]}>
-        <FormPanel signIn={signIn} setSignIn={setSignIn} />
-        <ActionPanel signIn={signIn} slide={slide} />
+        <FormPanel signIn={signIn} setSignIn={setSignIn} verifyOTP={verifyOTP} setVerifyOTP={
+          setVerifyOTP} />
+        <ActionPanel signIn={signIn} slide={slide} verifyOTP={verifyOTP} />
       </div>
     </div>
   );

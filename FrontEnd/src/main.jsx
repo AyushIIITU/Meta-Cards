@@ -51,6 +51,7 @@ import WeddingLinkPrivate from "./components/Link/WeddingLinkPrivate.jsx";
 import WeddingLink from "./components/Link/WeddingLink.jsx";
 import WishLinkPrivate from "./components/Link/WishLinkPrivate.jsx";
 import WishLink from "./components/Link/WishLink.jsx";
+import Home2 from "./components/Home/Home2.jsx";
 // import TestPublicWed from "./components/Link/PublicWed.jsx";
 // import './input.css'
 const router = createBrowserRouter([
@@ -60,7 +61,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <Home1 />,
+        element: <Home2 />,
       },
       {
         path: "Create",
