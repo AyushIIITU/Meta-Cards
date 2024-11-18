@@ -94,7 +94,7 @@ const FormPanel = ({ signIn, setSignIn,verifyOTP,setVerifyOTP }) => {
       
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-      {verifyOTP ? (verifyEmail?
+      {verifyOTP ? (
         <form style={{ backgroundColor: 'transparent' }} onSubmit={handleOTPV} className={stylee["form-card"]}>
 
 
@@ -112,18 +112,12 @@ const FormPanel = ({ signIn, setSignIn,verifyOTP,setVerifyOTP }) => {
             <div className={stylee["form-card-input-bg"]}></div>
           </div>
           <div className="w-full flex mt-[4vh] flex-row items-center justify-between ">
-            <button type="button" style={{ margin: 'auto' }} onClick={handleResend} className="cursor-pointer transition-all bg-blue-500 m-auto text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
+            <button style={{ margin: 'auto' }} onClick={handleResend} className="cursor-pointer transition-all bg-blue-500 m-auto text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
               Resend
             </button>
             <button type="submit" style={{ margin: 'auto' }} className="cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
               Verify
             </button>
-          </div>
-        </form>:<form>
-          <div className="flex flex-col gap-4">
-            <input type="text" ref={refEmail} placeholder="Email" className={stylee["form-card-input"]} />
-
-            <button onClick={() => setVerifyEmail(true)} className="cursor-pointer">Verify</button>
           </div>
         </form>
       ) : (
