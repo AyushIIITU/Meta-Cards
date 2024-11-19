@@ -3,7 +3,6 @@ import WeddingLinkBack from './WeddingLinkBack'
 import { API } from '../../Utils/Apis'
 
 function WeddingDisplay({data,height}) {
-  // console.log(data);
   // const URL=
   return (
     <div

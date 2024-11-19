@@ -2,8 +2,6 @@
 import { API } from "../../Utils/Apis";
 import style from "./CakeLink.module.css";
 function CakeDisplay({data,height}) {
-    // console.log(data);
-    
   return (
     <div
     style={{

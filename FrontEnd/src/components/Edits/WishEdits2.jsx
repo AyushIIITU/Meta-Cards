@@ -46,7 +46,6 @@ function WishEdits2() {
       const response = await axios.get(`${API}/ai/wish`, {
         wish: refWish.current.value,
       });
-      console.log(response);
       setLine(response.data.split("\n"));
     } catch (err) {
       console.error("error in Ai", err);
@@ -54,20 +53,13 @@ function WishEdits2() {
   };
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    console.log("file", file);
     if (file) {
       setCoverImage(file);
       setCoverImageDisplay(URL.createObjectURL(file));
-      // const reader = new FileReader();
-      // reader.onloadend = () => {
-      //   setCoverImageDisplay(`url(${reader.result})`);
-      // };
-      // reader.readAsDataURL(file);
     }
   };
   const handleBackGroundUpload = (e) => {
     const file = e.target.files[0];
-    // console.log("file", file);
     if (file) {
       setBackGround(file);
       // setCoverBackGroundDisplay(URL.createObjectURL(file));
@@ -79,12 +71,9 @@ function WishEdits2() {
     }
   };
   const handleSaveLine = () => {
-    // console.log(line);
     const newLines = line.filter((l) => l !== "");
-    // console.log(newLines);
     setLine(newLines);
     setEditable(false);
-    console.log(refColour.current.value);
   };
   const handleEdit = () => {
     setEditable(true);
@@ -119,13 +108,11 @@ function WishEdits2() {
             creater:localStorage.getItem('UserID'),
             type:selectedTab
         }
-        console.log(data);
         const response=await axios.post(`${API}/api/wish`,data,{
             headers:{
                 'Content-Type': 'multipart/form-data'
             }
         });
-        // console.log(response);
         if(response.status===201){
             toast.success("Successfully added");
         }

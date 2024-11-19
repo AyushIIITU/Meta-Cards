@@ -9,14 +9,12 @@ router.post("/register", async (req, res) => {
     const { name, email, password } = req.body;
     const existingUser = await userDetail.findOne({ email: email });
     if (existingUser) {
-      console.log("user ALready registered");
       return res.status(409).json({ error: "user Already Exists" });
     }
     const newUser = new userDetail({ name, email, password });
     await newUser.save();
     res.status(201).json(newUser);
   } catch (err) {
-    console.log("Error in register user:", err);
   }
 });
 // POST Method to add a new user
@@ -25,10 +23,8 @@ router.post("/", async (req, res) => {
     const data = req.body;
     const newuser = new userDetail(data);
     const response = await newuser.save();
-    console.log("New user saved");
     res.status(200).json(response);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -36,10 +32,8 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const data = await userDetail.find();
-    console.log("All user fetched");
     res.status(200).json(data);
   } catch (err) {
-    console.log(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
@@ -66,7 +60,7 @@ router.post("/login", async (req, res) => {
       id: existingUser._id,
     });
   } catch (err) {
-    console.log("Error:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
@@ -75,7 +69,6 @@ router.get("/profile", jwtAuthMiddleware, async (req, res) => {
     // Send the username and phone number in the response
     res.status(200).json({ message: "user Loggin Kiya Hai" });
   } catch (err) {
-    console.error(err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });

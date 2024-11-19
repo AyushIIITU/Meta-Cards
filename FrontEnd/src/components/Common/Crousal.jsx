@@ -6,7 +6,6 @@ const Carousell = ({ Cdesing, handleSelectDesing }) => {
     <div>
       {Cdesing.map((img, index) => {
         const imgSrc = `${API}${img.replace(/\\/g, "/")}`;
-        console.log(imgSrc);
         return (
           <img
             src={imgSrc}

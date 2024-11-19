@@ -17,24 +17,24 @@ import Otp2 from "./components/Test/Otp2.jsx";
 // import WishEdits from "./components/Edits/WishEdits.jsx";
 import WishEdits2 from "./components/Edits/WishEdits2.jsx";
 
-import Test from "./components/Test/Test.jsx";
+// import Test from "./components/Test/Test.jsx";
 import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
 
 import Create from "./components/Create/Create.jsx";
 
 // import CardTest2 from "./components/Test/CardTest2.jsx";
 
-import CardTest3 from "./components/Test/CardTest3.jsx";
-import WeddingTest from "./components/Test/WeddingTest.jsx";
+// import CardTest3 from "./components/Test/CardTest3.jsx";
+// import WeddingTest from "./components/Test/WeddingTest.jsx";
 // import WeddingLinkProvider from "./components/Link/WeddingLinkProvider.jsx";
-import BTest from "./components/Test/BTest.jsx";
+// import BTest from "./components/Test/BTest.jsx";
 import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
 // import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
 
-// import TestCarousel from "./components/Test/TestCrousal.jsx";
-import Cardtest4 from "./components/Test/Cardtest4.jsx";
-import CardClub from "./components/Test/CardClub.jsx";
-import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
+// // import TestCarousel from "./components/Test/TestCrousal.jsx";
+// import Cardtest4 from "./components/Test/Cardtest4.jsx";
+// import CardClub from "./components/Test/CardClub.jsx";
+// import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
 // import CakeDemo from "./components/Demo/CakeDemo.jsx";
 // import WishTest from "./components/Test/WishTest.jsx";
 // import Home1 from "./components/Home/Home1.jsx";
@@ -125,34 +125,34 @@ const router = createBrowserRouter([
     path: "auth",
     element: <LogInSine />,
   },
-  {
-    path: "/test",
-    element: <Test />,
-  },
-  {
-    path: "/Ctest",
-    element: <CardTest3 />,
-  },
-  {
-    path: "/cardTest",
-    element: <Cardtest4 />,
-  },
-  {
-    path: "/weddingTest",
-    element: <WeddingTestCard />,
-  },
-  {
-    path: "/test7",
-    element: <CardClub />,
-  },
-  {
-    path: "Wtest",
-    element: <WeddingTest />,
-  },
-  {
-    path: "Btest",
-    element: <BTest />,
-  },
+  // {
+  //   path: "/test",
+  //   element: <Test />,
+  // },
+  // {
+  //   path: "/Ctest",
+  //   element: <CardTest3 />,
+  // },
+  // {
+  //   path: "/cardTest",
+  //   element: <Cardtest4 />,
+  // },
+  // {
+  //   path: "/weddingTest",
+  //   element: <WeddingTestCard />,
+  // },
+  // {
+  //   path: "/test7",
+  //   element: <CardClub />,
+  // },
+  // {
+  //   path: "Wtest",
+  //   element: <WeddingTest />,
+  // },
+  // {
+  //   path: "Btest",
+  //   element: <BTest />,
+  // },
   // {
   //   path: "CCTest",
   //   element: <TestCarousel />,

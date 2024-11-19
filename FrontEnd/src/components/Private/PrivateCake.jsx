@@ -19,10 +19,9 @@ function PrivateCake() {
   const fetchData = async () => {
     setLoading(true);
     try {
-        // console.log(localStorage.getItem('UserID'));
         
       const response = await axios.get(`${API}/api/cake/user/${id}`);
-      // console.log(response);
+      
       
       setPublicCard(response.data);
     } catch (err) {
@@ -40,7 +39,7 @@ function PrivateCake() {
       if(response.status===200){
         toast.success("Deleted !!")
       }
-      // console.log(response);
+      
       
       fetchData();
     } catch (err) {
@@ -51,7 +50,7 @@ function PrivateCake() {
     try {
         const liked = localStorage.getItem(`isLiked-${id}`);
         const userId = localStorage.getItem('UserID') || (await axios.get('https://api.ipify.org?format=json')).data.id;
-        console.log(id);
+       
         
         if (liked) {
             localStorage.removeItem(`isLiked-${id}`);
@@ -59,14 +58,14 @@ function PrivateCake() {
                 id: id,
                 user: userId,
             });
-            console.log(response);
+      
         } else {
             localStorage.setItem(`isLiked-${id}`, true);
             const response = await axios.post(`${API}/api/cake/like`, {
                 id: id,
                 user: userId,
             });
-            console.log(response);
+      
         }
     } catch (err) {
         console.error(err);

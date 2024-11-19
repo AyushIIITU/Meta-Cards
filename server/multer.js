@@ -63,32 +63,16 @@ const processFiles = async (files) => {
     // }
     const compressedPath = path.join(path.dirname(originalPath), "temp" + ext);
     await fs.rename(originalPath, compressedPath);
-    // console.log(originalPath,compressedPath);
     if (mimeType.startsWith("image/") && ext !== ".pdf") {
       let transformer = sharp(compressedPath);
 
-      // switch (mimeType) {
-      //   case "image/jpeg":
-      //     transformer = transformer.jpeg({ quality: 50, force: false });
-      //     break;
-      //   case "image/png":
-      //     transformer = transformer.png({ compressionLevel: 8 });
-      //     break;
-      //   case "image/webp":
-      //     transformer = transformer.webp({ quality: 85, lossless: true });
-      //     break;
-      //   default:
-      //     // console.log("Unsupported image format");
-      //     return;
-      // }
+    
       try {
         const response=transformer.webp({ quality: 75 })
-        // console.log(originalPath);
         await response.toFile(originalPath);
         // await transformer
         tempRemovingFiles.push(compressedPath);
       } catch (error) {
-        console.log("Error:", error);
         fs.renameSync(compressedPath, originalPath);
       }
     } else {
@@ -109,7 +93,6 @@ const cleanupTempFiles = (files) => {
     // Remove the temporary files
     if (fs.existsSync(tempFile)) {
       fs.unlink(tempFile, (err) => {
-        // console.log("Error in removing Temp", err);
       });
     }
   }

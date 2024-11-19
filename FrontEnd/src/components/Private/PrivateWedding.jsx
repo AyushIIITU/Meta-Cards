@@ -37,7 +37,6 @@ function PrivateWedding() {
   const handleDelete=async(id)=>{
     try {
       const response=await axios.delete(`${API}/api/wedding/${id}`);
-      console.log(response);
       
       fetchData();
     } catch (err) {
@@ -56,14 +55,14 @@ function PrivateWedding() {
                 id: id,
                 user: userId,
             });
-            console.log(response);
+           
         } else {
             localStorage.setItem(`isLiked-${id}`, true);
             const response = await axios.post(`${API}/api/cake/like`, {
                 id: id,
                 user: userId,
             });
-            console.log(response);
+           
         }
     } catch (err) {
         console.error(err);

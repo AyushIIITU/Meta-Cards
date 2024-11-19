@@ -59,7 +59,6 @@ exports.sendOTP = async (req, res, next) => {
     }
 };
 exports.verifyFirstTimeOTP = async (req, res, next) => {
-  console.log(req.body);
   try {
       const {data,otp}=req.body;
       const email=data.email;

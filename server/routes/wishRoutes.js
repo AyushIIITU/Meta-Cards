@@ -54,7 +54,6 @@ router.post(
 router.get("/user/:id", async (req, res) => {
   try {
     const id = req.params.id;
-    // console.log(id);
 
     const Wish = await WishDetails.find({ creater: id });
     if (!Wish) {
@@ -129,7 +128,7 @@ router.post("/get/:id", jwtAuthMiddleware, async (req, res) => {
     }
     return res.status(200).json(wish);
   } catch (err) {
-     res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

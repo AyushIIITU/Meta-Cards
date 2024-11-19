@@ -17,8 +17,6 @@ function CakeLink() {
     try {
       setLoading(true);
       const response = await axios.get(`${API}/api/cake/get/${id}`);
-
-      // console.log("response.data", response.data); // Use the id variable
       setData(response.data); // Set the data with response.data
       // setIMG(`${API}/${response.data.CakeBackGroundIMG.replace(/\\/g, "/")}` )
       setLoading(false);

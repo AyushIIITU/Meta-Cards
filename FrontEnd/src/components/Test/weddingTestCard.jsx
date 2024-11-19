@@ -7,7 +7,6 @@ function WeddingTestCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
-    console.log(isModalOpen);
     setIsModalOpen(true);
   };
 

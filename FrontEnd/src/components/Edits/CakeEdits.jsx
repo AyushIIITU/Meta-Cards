@@ -52,7 +52,6 @@ function CakeEdits() {
   };
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    // console.log('file', file)
     if (file) {
       setCakeBackGround(file);
       const reader = new FileReader();
@@ -78,13 +77,11 @@ function CakeEdits() {
         creater: localStorage.getItem("UserID"),
         type: selectedTab,
       };
-      console.log(cakeBackGround);
       const res = await axios.post(`${API}/api/cake`, response, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log(res);
       if (res.status === 201) {
         toast.success("Successfully added");
       }

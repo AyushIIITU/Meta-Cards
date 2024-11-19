@@ -1,8 +1,7 @@
-import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { CornerDesine } from "../../Constants/DesingConstants";
 import { API } from "../../Utils/Apis";
+import "./Crousal3.css";
 
 const Crousal3 = ({ Image, handleSelectDesing }) => {
   return (
@@ -55,13 +54,12 @@ const Crousal3 = ({ Image, handleSelectDesing }) => {
       rtl={false}
       shouldResetAutoplay
       showDots={false}
-      sliderClass=""
+      sliderClass
       slidesToSlide={1}
       swipeable
     >
       {Image.map((img, index) => {
         const imgSrc = `${API}${img.replace(/\\/g, "/")}`;
-        // console.log(imgSrc);
         return (
           <img
             src={imgSrc}

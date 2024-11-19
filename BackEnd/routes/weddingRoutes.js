@@ -16,7 +16,6 @@ router.post(
   "/",
   uploadWithDestination("any", fields, "./uploads/wedding"),
   async (req, res) => {
-    console.log(req.files);
     try {
       const WeddingBackGroundIMGpath = req.files["WeddingBackGroundIMG"]
         ? req.files["WeddingBackGroundIMG"][0]?.path
@@ -74,14 +73,12 @@ router.get("/all", async (req, res) => {
     }
     res.status(200).json(allweddings);
   } catch (error) {
-    console.error("Error fetching weddings:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
 router.get("/user/:id",async(req,res)=>{
   try {
     const id=req.params.id;
-    console.log(id);
     
     const Wedding= await WeddingDetails.find({creater:id});
     if(!Wedding){
