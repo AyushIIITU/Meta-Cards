@@ -1,1 +1,1 @@
-export const API="http://ec2-3-110-114-63.ap-south-1.compute.amazonaws.com:3000";
+export const API="http://localhost:3000";

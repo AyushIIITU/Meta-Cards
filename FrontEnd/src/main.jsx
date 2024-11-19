@@ -9,7 +9,7 @@ import BCards1 from "./components/cards/BCards1.jsx";
 import Cake from "./components/cakes/Cake.jsx";
 import WCards2 from "./components/cards/WCards2.jsx";
 import CakeEdits from "./components/Edits/CakeEdits.jsx";
-import FontPicker from "./components/Test/FontPicker.jsx";
+// import FontPicker from "./components/Test/FontPicker.jsx";
 import CakeLink from "./components/Link/CakeLink.jsx";
 // import CakeDisplay from "./components/cakes/CakeDisplay.jsx";
 import LogInSine from "./components/Login-SignUp/Login.jsx";
@@ -22,11 +22,11 @@ import WeddingEdits from "./components/Edits/WeddingEdits.jsx";
 
 import Create from "./components/Create/Create.jsx";
 
-import CardTest2 from "./components/Test/CardTest2.jsx";
+// import CardTest2 from "./components/Test/CardTest2.jsx";
 
 import CardTest3 from "./components/Test/CardTest3.jsx";
 import WeddingTest from "./components/Test/WeddingTest.jsx";
-import WeddingLinkProvider from "./components/Link/WeddingLinkProvider.jsx";
+// import WeddingLinkProvider from "./components/Link/WeddingLinkProvider.jsx";
 import BTest from "./components/Test/BTest.jsx";
 import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
 // import Test3dCrousal from "./components/Test/Test3dCrousal.jsx";
@@ -35,9 +35,9 @@ import WishLinkProvider from "./components/Link/WishLinkProvider.jsx";
 import Cardtest4 from "./components/Test/Cardtest4.jsx";
 import CardClub from "./components/Test/CardClub.jsx";
 import WeddingTestCard from "./components/Test/weddingTestCard.jsx";
-import CakeDemo from "./components/Demo/CakeDemo.jsx";
+// import CakeDemo from "./components/Demo/CakeDemo.jsx";
 // import WishTest from "./components/Test/WishTest.jsx";
-import Home1 from "./components/Home/Home1.jsx";
+// import Home1 from "./components/Home/Home1.jsx";
 // import PublicCake from "./components/Public Cards/PublicWish.jsx";
 import PublicWish from "./components/Public Cards/PublicWish.jsx";
 import PublicWedding from "./components/Public Cards/PublicWedding.jsx";
