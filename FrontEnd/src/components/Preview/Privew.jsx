@@ -1,8 +1,8 @@
 
 import styles from "./Privew.module.css";
-import BirthDayGif from "../../Video/BirthDay.mp4";
-import WeddingGif from "../../Video/Wedding.mp4";
-import FormalCard from "../../Video/Formal_Card.mp4";
+import BirthDayGif from "../../Video/Birth-DAY.mp4";
+import WeddingGif from "../../Video/Wedding-Card.mp4";
+import FormalCard from "../../Video/Wish-Card.mp4";
 import { Link } from "react-router-dom";
 function Privew() {
   return (

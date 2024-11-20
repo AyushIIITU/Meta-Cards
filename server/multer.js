@@ -7,41 +7,37 @@ const mime = require("mime-types");
 const uploadWithDestination = (method, fields, uploadPath) => {
   const storage = multer.diskStorage({
     destination: uploadPath,
-    filename: function (req, file, cb) {
-      let ext = path.extname(file.originalname).toLowerCase();
-      let mimeType = mime.lookup(file.originalname);
-      
-      const originalName = path.basename(file.originalname, path.extname(file.originalname));
-      if(mimeType.startsWith("image/")){
-        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      const originalName = path.basename(file.originalname, ext);
+      const mimeType = mime.lookup(file.originalname);
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+
+      if (mimeType.startsWith("image/")) {
         cb(null, originalName + uniqueSuffix + ".webp");
+      } else {
+        cb(null, originalName + ext);
       }
-      else{
-      cb(null, originalName + ext);}
     },
   });
+
   const upload = multer({ storage }).fields(fields);
+
   return async (req, res, next) => {
     upload(req, res, async (err) => {
-      if (err instanceof multer.MulterError) {
-        cleanupUploadedFiles(req.files);
-        console.error("Erorr in multer",err);
-        return res.status(400).send("Error uploading files: " + err.message);
-      } else if (err) {
-        cleanupUploadedFiles(req.files);
-        console.error("Error uploading files:", err);
-        return res.status(500).send("Error uploading files: " + err.message);
+      if (err) {
+        console.error("Error during upload:", err);
+        return res.status(500).send("Error uploading files.");
       }
+
       try {
-        const response = await processFiles(req.files);
-        cleanupTempFiles(response);
+        const tempFiles = await processFiles(req.files);
+        // cleanupTempFiles(tempFiles); // Cleanup temp files after processing
         next();
       } catch (processErr) {
-        cleanupUploadedFiles(req.files);
         console.error("Error processing files:", processErr);
-        return res
-          .status(500)
-          .send("Error processing files: " + processErr.message);
+        cleanupUploadedFiles(req.files);
+        res.status(500).send("Error processing files.");
       }
     });
   };
@@ -50,53 +46,51 @@ const uploadWithDestination = (method, fields, uploadPath) => {
 const processFiles = async (files) => {
   const tempRemovingFiles = [];
   const processFile = async (file) => {
-    let mimeType = mime.lookup(file.originalname);
-    let ext = path.extname(file.originalname).toLowerCase();
-    if (mimeType.startsWith("application/")) {
-      return;
-    }
-    const originalPath = file.path.replace(/\\/g, "/");
-    // if (ext === ".jpg" || ext === ".Jpg") {
-    //   ext = ".jpeg";
-    //   originalPath.replace(`${ext}`, "jpeg");
-    //   mimeType = "image/jpeg";
-    // }
-    const compressedPath = path.join(path.dirname(originalPath), "temp" + ext);
-    await fs.rename(originalPath, compressedPath);
-    if (mimeType.startsWith("image/") && ext !== ".pdf") {
-      let transformer = sharp(compressedPath);
+    const mimeType = mime.lookup(file.originalname);
+    const ext = path.extname(file.originalname).toLowerCase();
 
-    
+    if (mimeType.startsWith("application/")) return;
+
+    const originalPath = file.path.replace(/\\/g, "/");
+    const compressedPath = path.join(path.dirname(originalPath), "temp" + file.fieldname+ ext);
+
+    await fs.move(originalPath, compressedPath, { overwrite: true });
+
+    if (mimeType.startsWith("image/") && ext !== ".pdf") {
       try {
-        const response=transformer.webp({ quality: 75 })
-        await response.toFile(originalPath);
-        // await transformer
+        const transformer = sharp(compressedPath).webp({ quality: 75 });
+        await transformer.toFile(originalPath);
         tempRemovingFiles.push(compressedPath);
       } catch (error) {
-        fs.renameSync(compressedPath, originalPath);
+        console.error("Error processing image:", error);
+        await fs.move(compressedPath, originalPath);
       }
     } else {
       tempRemovingFiles.push(compressedPath);
     }
   };
+
   for (const fieldName in files) {
     const fileArray = files[fieldName];
     for (const file of fileArray) {
       await processFile(file);
     }
   }
+
   return tempRemovingFiles;
 };
 
+
 const cleanupTempFiles = (files) => {
   for (const tempFile of files) {
-    // Remove the temporary files
     if (fs.existsSync(tempFile)) {
       fs.unlink(tempFile, (err) => {
+        if (err) console.error("Error removing temp file:", tempFile, err);
       });
     }
   }
 };
+
 const cleanupUploadedFiles = (files) => {
   if (files && Array.isArray(files)) {
     files.forEach((file) => {
@@ -110,5 +104,6 @@ const cleanupUploadedFiles = (files) => {
     });
   }
 };
+
 
 module.exports = uploadWithDestination;

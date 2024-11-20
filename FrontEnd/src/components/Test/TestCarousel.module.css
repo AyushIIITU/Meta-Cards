@@ -1,32 +1,27 @@
-.container {
-    margin: 0 auto;
-    width: 200px;
-    height: 200px;
-    position: relative;
-    perspective: 1000px;
-  }
+.item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 200px; /* Adjust as needed */
+  height: 200px; /* Maintain the same dimensions as before */
+  line-height: 200px;
+  font-size: 5em;
+  text-align: center;
+  color: #FFF;
+  opacity: 0.95;
+  border-radius: 10px;
+}
+
   
-  .carousel {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    transform-style: preserve-3d;
-    transition: transform 1s;
-  }
+video {
+  width: 100%; /* Make the video fill its container */
+  height: 100%; /* Maintain container height */
+  object-fit: cover; /* Crop excess parts while maintaining aspect ratio */
+  border-radius: 10px; /* Ensure consistent border radius */
+}
   
-  .item {
-    display: block;
-    position: absolute;
-    /* background: #000; */
-    width: 200px;
-    height: 200px;
-    line-height: 200px;
-    font-size: 5em;
-    text-align: center;
-    color: #FFF;
-    opacity: 0.95;
-    border-radius: 10px;
-  }
+
   
   .a {
     transform: rotateY(0deg) translateZ(100px);
@@ -78,6 +73,10 @@
         /* padding: 0 0 28vh 0; */
         width: 50%;
     }
+    .item {
+      width: 150px; /* Adjust size for smaller screens */
+      height: 150px;
+    }
 }
 @media only screen and (max-width: 375px) {
     .container{
@@ -87,4 +86,7 @@
         width: inherit;
     }
 
+}
+@media only screen and (max-width: 875px) {
+  
 }

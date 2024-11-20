@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import BirthDayGif from "../../Video/BirthDay.mp4";
-import WeddingGif from "../../Video/Wedding.mp4";
-import FormalCard from "../../Video/Formal_Card.mp4";
+import BirthDayGif from "../../Video/Birth-DAY.mp4";
+import WeddingGif from "../../Video/Wedding-Card.mp4";
+import FormalCard from "../../Video/Wish-Card.mp4";
 import styles from "./TestCarousel.module.css";
 
 const TestCarousel = () => {
@@ -42,10 +42,10 @@ const TestCarousel = () => {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className="my-0 mx-auto w-[200px] h-[200px] relative" style={{ perspective: '1000px' }}>
       <div
-        className={styles.carousel}
-        style={{ transform: `rotateY(${currdeg}deg)` }}
+        className="h-full w-full absolute transform transition-transform duration-1000"
+        style={{ transform: `rotateY(${currdeg}deg)`, transformStyle: 'preserve-3d' }}
         ref={carouselRef}
       >
         <div className={`${styles.item} ${styles.a}`}><video

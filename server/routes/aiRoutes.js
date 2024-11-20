@@ -24,7 +24,6 @@ route.get("/:type", async (req, res) => {
       res.status(err?.status).json(err?.statusText);
     }
 
-    console.error(err);
   }
 });
 module.exports = route;

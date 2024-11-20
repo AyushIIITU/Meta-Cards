@@ -1,1 +1,1 @@
-export const SHARE='meta-cards-brown.vercel.app'
+export const SHARE='http:localhost:5174'

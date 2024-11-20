@@ -211,7 +211,7 @@ function WeddingEdits() {
                 <input
                   id="FrontImage" // Ensure the id matches the htmlFor attribute of the label
                   type="file"
-                  accept=".png, .gif, .jpeg, .jpg"
+                 accept="image/*"
                   onChange={(e) =>
                     handleFileUpload(
                       e,
@@ -232,9 +232,9 @@ function WeddingEdits() {
           </div>
         </div>
         <div className="flex flex-col flex-wrap items-center">
-        <div className="w-full max-w-[500px] h-auto mx-auto">
+        <div className="w-full max-w-[500px] max-h-[500px] h-full mx-auto">
   <div
-    className="relative w-full h-auto object-cover aspect-square transform-center transition-all duration-2000"
+    className="relative w-full h-auto sm:h-full object-cover aspect-square transform-center transition-all duration-2000"
     style={{
       color: `${textColour}`,
       backgroundImage: coverImageDisplay,
@@ -256,7 +256,7 @@ function WeddingEdits() {
         <input
           type="text"
           className="font-laFlibustiere text-center bg-transparent text-[28px] sm:text-[45px]"
-          onChange={(e) => setHead1(e.current.value)}
+          onChange={(e) => handleTextChange(e, setHead1)}
           defaultValue={head1}
           style={{ fontFamily: selectedHeadFont }}
         />
@@ -289,7 +289,7 @@ function WeddingEdits() {
         <input
           type="text"
           className="font-laFlibustiere text-center text-[28px] sm:text-[45px] bg-transparent"
-          onChange={(e) => setHead2(e.current.value)}
+          onChange={(e) => handleTextChange(e, setHead2)}
           defaultValue={head2}
           style={{ fontFamily: selectedHeadFont }}
         />
@@ -305,7 +305,7 @@ function WeddingEdits() {
         <input
           type="text"
           className="font-lobster w-[85%] sm:w-[75%] bg-transparent text-center text-[12px] sm:text-[14px]"
-          onChange={(e) => setp2(e.current.value)}
+          onChange={(e) => handleTextChange(e,setp2)}
           defaultValue={p2}
           style={{ fontFamily: selectedFont }}
         />
@@ -317,10 +317,27 @@ function WeddingEdits() {
           {p2}
         </p>
       )}
+      
+      {editable ? (
+        <input
+          type="text"
+          className="font-laFlibustiere text-center text-[28px] z-[1] sm:text-[45px] bg-transparent"
+          onChange={(e) => handleTextChange(e,setHead3)}
+          defaultValue={head3}
+          style={{ fontFamily: selectedHeadFont }}
+        />
+      ) : (
+        <h1
+        style={{ fontFamily: selectedHeadFont }}
+               className="font-laFlibustiere text-center text-[28px] sm:text-[45px] bg-transparent">
+        {head3}
+      </h1>
+      )
+      }
       {editable ? (
         <textarea
           type="text"
-          className="font-lobster resize-none bg-transparent mt-[1px] w-[85%] sm:w-[75%] text-center text-[12px] sm:text-[14px]"
+          className="font-lobster resize-none bg-transparent z-[1] mt-[1px] w-[85%] sm:w-[75%] text-center text-[12px] sm:text-[14px]"
           onChange={(e) => handleTextChange(e, setp3)}
           rows={3}
           defaultValue={p3}
@@ -337,11 +354,11 @@ function WeddingEdits() {
     </div>
     <img
       src={desing}
-      className="w-[50%] transform -scale-y-100 absolute bottom-0 left-0"
+      className="w-[50%] transform -scale-y-100  absolute bottom-0 left-0"
     />
     <img
       src={desing}
-      className="w-[50%] transform -scale-y-100 -scale-x-100 absolute bottom-0 right-0"
+      className="w-[50%] transform -scale-y-100 -scale-x-100  absolute bottom-0 right-0"
     />
   </div>
 </div>
@@ -388,7 +405,7 @@ function WeddingEdits() {
                 <input
                   id="file" // Ensure the id matches the htmlFor attribute of the label
                   type="file"
-                  accept=".png, .gif, .jpeg, .jpg"
+                  accept="image/*"
                   onChange={(e) =>
                     handleFileUpload(e, setCoverImage, setCoverImageDisplay)
                   }
@@ -422,7 +439,7 @@ function WeddingEdits() {
           <input
             id="backGround" // Ensure the id matches the htmlFor attribute of the label
             type="file"
-            accept=".png, .gif, .jpeg, .jpg"
+             accept="image/*"
             onChange={(e) =>
               handleFileUpload(e, setBackGround, setCoverBackGroundDisplay)
             }
