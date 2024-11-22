@@ -1,1 +1,1 @@
-export const SHARE='http:localhost:5174'
+export const SHARE='https://metacard.me'

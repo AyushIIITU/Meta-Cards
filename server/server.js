@@ -37,15 +37,16 @@ app.use('/api/wedding', weddingRoutes);
 app.use('/', otpRoutes);
 
 // Home Route
-app.get("/", (req, res) => {
-    res.sendFile(path.join(buildPath, "index.html"));
+// app.get("/", (req, res) => {
+//     res.sendFile(path.join(buildPath, "index.html"));
 
-});
+// });
 
 // Catch-All Route for SPA
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(buildPath, "index.html"));
-// });
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(buildPath, "index.html"));
+});
+
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
