@@ -45,7 +45,7 @@ Start the development client:
 ## 🔑 Demo Login Details
 Use the following credentials to log in and explore:
 - **Email:** 22118@iiitu.ac.in  
-- **Password:** 123456
+- **Password:** 123
 
 ---
 
