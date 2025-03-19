@@ -4,7 +4,7 @@ import axios from "axios";
 import Loader from "../skeleton/Loader";
 
 // import PublicShare from "../Link/PublicShare";
-// import CakeDisplay from "../Link/CakeDisplay";
+// import weddingDisplay from "../Link/CakeDisplay";
 import PrivateShare from "./PrivateDisplay";
 import { API } from "../../Utils/Apis";
 // import CakeDisplay from "../Link/CakeDisplay";
@@ -51,14 +51,14 @@ function PrivateWedding() {
         
         if (liked) {
             localStorage.removeItem(`isLiked-${id}`);
-            const response = await axios.post(`${API}/api/cake/unlike`, {
+            const response = await axios.post(`${API}/api/wedding/unlike`, {
                 id: id,
                 user: userId,
             });
            
         } else {
             localStorage.setItem(`isLiked-${id}`, true);
-            const response = await axios.post(`${API}/api/cake/like`, {
+            const response = await axios.post(`${API}/api/wedding/like`, {
                 id: id,
                 user: userId,
             });

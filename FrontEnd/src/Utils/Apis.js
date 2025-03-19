@@ -1,1 +1,1 @@
-export const API="https://metacard.me";
+export const API="http://localhost:3000";

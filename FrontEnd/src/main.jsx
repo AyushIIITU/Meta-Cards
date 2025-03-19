@@ -4,10 +4,10 @@ import App from "./App.jsx";
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import Privew from "./components/Preview/Privew.jsx";
-import BCards1 from "./components/cards/BCards1.jsx";
-import Cake from "./components/cakes/Cake.jsx";
-import WCards2 from "./components/cards/WCards2.jsx";
+// import Privew from "./components/Preview/Privew.jsx";
+// import BCards1 from "./components/cards/BCards1.jsx";
+// import Cake from "./components/cakes/Cake.jsx";
+// import WCards2 from "./components/cards/WCards2.jsx";
 import CakeEdits from "./components/Edits/CakeEdits.jsx";
 // import FontPicker from "./components/Test/FontPicker.jsx";
 import CakeLink from "./components/Link/CakeLink.jsx";
@@ -52,6 +52,7 @@ import WeddingLink from "./components/Link/WeddingLink.jsx";
 import WishLinkPrivate from "./components/Link/WishLinkPrivate.jsx";
 import WishLink from "./components/Link/WishLink.jsx";
 import Home2 from "./components/Home/Home2.jsx";
+import ForgetPassowrd from "./components/Login-SignUp/ForgotPassword.jsx";
 // import TestPublicWed from "./components/Link/PublicWed.jsx";
 // import './input.css'
 const router = createBrowserRouter([
@@ -125,6 +126,10 @@ const router = createBrowserRouter([
     path: "auth",
     element: <LogInSine />,
   },
+  {
+    path:"forgetPassword",
+    element:<ForgetPassowrd/>
+  }
   // {
   //   path: "/test",
   //   element: <Test />,
@@ -157,34 +162,34 @@ const router = createBrowserRouter([
   //   path: "CCTest",
   //   element: <TestCarousel />,
   // },
-  {
-    path: "/preview",
+  // {
+  //   path: "/preview",
 
-    children: [
-      {
-        path: "",
-        element: <Privew />,
-      },
-      {
-        path: "FormalCard",
-        element: <BCards1 />,
-      },
-      {
-        path: "Birthday",
-        element: <Cake />,
-      },
-      {
-        path: "Wedding",
-        element: <WCards2 />,
-      },
-    ],
-  },
+  //   children: [
+  //     {
+  //       path: "",
+  //       element: <Privew />,
+  //     },
+  //     {
+  //       path: "FormalCard",
+  //       element: <BCards1 />,
+  //     },
+  //     {
+  //       path: "Birthday",
+  //       element: <Cake />,
+  //     },
+  //     {
+  //       path: "Wedding",
+  //       element: <WCards2 />,
+  //     },
+  //   ],
+  // },
 
   // {
   //   path: "/test2",
   //   element: <CardTest2 />,
   // },
-
+,
   {
     path: "/Wish",
     children: [

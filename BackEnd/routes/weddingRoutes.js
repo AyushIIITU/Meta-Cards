@@ -3,7 +3,6 @@ const router = express.Router();
 const uploadWithDestination = require("../multer");
 const WeddingDetails = require("../models/Wedding");
 const fs = require("fs");
-const { create } = require("domain");
 const { generateTokenWithoutExp, jwtAuthMiddleware } = require("../jwt");
 const Wedding = require("../models/Wedding");
 const fields = [
@@ -169,6 +168,41 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+router.post("/like", async (req, res) => {
+  try {
+    const { id, user } = req.body;
+    const wedding = await Wedding.findById(id);
+    if (!wedding) {
+      return res.status(404).json({ message: "No Wedding Found" });
+    }
+    if (!wedding.liked.includes(user)) {
+      wedding.liked.push(user);
+    } else {
+      return res.status(400).json({ message: "User already liked this wedding" });
+    }
+    const response = await wedding.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Wedding", err);
+    return res.status(500).json("Internal Server Error");
+  }
+});
+router.post("/unlike",async(req,res)=>{
+  try {
+    const {id,user}=req.body;
+    const wedding=await Wedding.findById(id);
+    if
+    (!wedding){
+      return res.status(404).json({message:"No Wedding Found"});
+    }
+    wedding.liked=wedding.liked.filter((item)=>item!=user);
+    const response=await wedding.save();
+    res.status(200).json(response);
+  } catch (err) {
+    console.error("Error in liking Wedding",err);
+    return res.status(500).json("Internal Server Error");
+  }
+})
 router.get("/change/:id/:type",async(req,res)=>{
   try {
     const id=req.params.id;
@@ -183,4 +217,5 @@ router.get("/change/:id/:type",async(req,res)=>{
     console.error("Error in changing type",err);
   }
 })
+
 module.exports = router;

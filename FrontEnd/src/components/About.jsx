@@ -33,7 +33,7 @@ function About() {
         {/* <!-- Social media icons container --> */}
         <div className="mb-6 flex justify-center space-x-2">
           <Link
-            to="metacardsend@gmail.com"
+            to="mailTo:metacardsend@gmail.com"
             // type="button"
             className="rounded-full bg-transparent p-3 font-medium uppercase leading-normal text-surface transition duration-150 ease-in-out hover:bg-orange-600 focus:outline-none focus:ring-0 dark:text-white dark:hover:bg-secondary-900"
             data-twe-ripple-init>
@@ -86,7 +86,7 @@ function About() {
     
       <div className="w-full bg-black/5 p-4 text-center cursor-pointer">
         © {new Date().getFullYear()} Copyright:
-        <Link to="https://iiitu.ac.in/"className="text-blue-400" >Creater</Link>
+        <Link to="https://www.linkedin.com/in/ayush-ba444b257/"className="text-blue-400" >Creater</Link>
       </div>
     </footer></>
   )

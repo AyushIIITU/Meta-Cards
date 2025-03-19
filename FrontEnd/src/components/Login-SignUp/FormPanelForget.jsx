@@ -1,4 +1,4 @@
-import { Form, Link, useNavigate } from "react-router-dom";
+import { Form } from "react-router-dom";
 import "./FormPanel.css";
 import { useRef, useState, useEffect } from "react";
 import axios from "axios";
@@ -7,9 +7,9 @@ import { API } from "../../Utils/Apis";
 import style from "./Login.module.css";
 import { LoaderIcon } from "react-hot-toast";
 
-const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
-  const navigate = useNavigate();
-  let heading = signIn ? "Sign in" : "Create account";
+const FormPanelForget = ({ verifyEmail, setVerifyEmail, verifyOTP, setVerifyOTP }) => {
+  // const navigate = useNavigate();
+  let heading = verifyEmail ? "Find your recovery email" : "Enter OTP";
 
   const [loading, setLoading] = useState(false);
   const [resendTimer, setResendTimer] = useState(0); // Timer state for resend button
@@ -21,21 +21,12 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
   const refEmail = useRef("");
   const refPassword = useRef("");
   const refOTP = useRef("");
-
+  const refPassword2 = useRef("");
   heading = verifyOTP ? "Verify OTP" : heading;
 
-  const inputs = [
-    { type: "text", placeholder: "Email", ref: refEmail },
-    { type: "password", placeholder: "Password", ref: refPassword },
-  ];
+  
 
-  if (!signIn) {
-    inputs.unshift({
-      type: "text",
-      placeholder: "Name",
-      ref: refName,
-    });
-  }
+
 
   useEffect(() => {
     if (resendTimer > 0) {
@@ -59,7 +50,7 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
           password: refPassword.current.value,
         });
         setVerifyOTP(true);
-        setSignIn(false);
+        setVerifyEmail(false);
         setResendTimer(60); // Start 1-minute timer after sending OTP
       }
     } catch (err) {
@@ -71,19 +62,18 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
   };
 
   const handleOnClick = async () => {
-    if (signIn) {
+    if (verifyEmail) {
       try {
         setLoading(true);
-        const response = await axios.post(`${API}/api/user/login`, {
-          email: refEmail.current.value,
-          password: refPassword.current.value,
-        });
-
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("UserID", response.data.id);
-        localStorage.setItem("UserName", response.data.user);
+        const response = await axios.get(`${API}/api/sendOTP?email=${refEmail.current.value}`);
+        if (response.status === 200) {
+          setEmailToBeSent(refEmail.current.value);
+          setVerifyOTP(true);
+          setVerifyEmail(false);
+          setResendTimer(60);
+          }
         setLoading(false);
-        return navigate("/");
+        // return navigate("/");
       } catch (err) {
         console.error("Error in sign in:", err);
         setErrorMessage("Login failed. Please check your credentials.");
@@ -95,26 +85,7 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
     }
   };
 
-  const handleOTPV = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
-      const response = await axios.post(`${API}/api/register`, {
-        data: registerData,
-        otp: refOTP.current.value,
-      });
-      if (response.status === 200) {
-        setVerifyOTP(false);
-        setSignIn(true);
-        setErrorMessage("");
-      }
-    } catch (err) {
-      console.error("Error in OTP verification:", err);
-      setErrorMessage("Invalid OTP. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  
 
   const handleResend = async () => {
     if (resendTimer === 0) {
@@ -131,7 +102,7 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
       {verifyOTP ? (
         <form
           style={{ backgroundColor: "transparent" }}
-          onSubmit={handleOTPV}
+          onSubmit={handleOnClick}
           className={stylee["form-card"]}
         >
           <p className={stylee["form-card-title"]}>
@@ -172,15 +143,29 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
       ) : (
         <>
           <Form>
-            {inputs.map(({ type, placeholder, ref }) => (
-              <input type={type} key={placeholder} ref={ref} placeholder={placeholder} />
-            ))}
+            {verifyEmail ? (
+              <input
+                type="email"
+                ref={refEmail}
+                placeholder="Email"
+              />
+            ) : (
+              <>
+                <input
+                  type="text"
+                  ref={refPassword}
+                  placeholder="Password"
+                />
+                <input
+                  type="text"
+                  ref={refPassword2}
+                  placeholder="Confirm Password"
+                />
+              </>
+            )}
           </Form>
-          <Link to="/forgetPassword" className="cursor-pointer">
-            Forgot your password?
-          </Link>
           <button onClick={handleOnClick} disabled={loading}>
-            {loading ? <LoaderIcon /> : signIn ? "Sign in" : "Sign up"}
+            {loading ? <LoaderIcon /> : verifyEmail ? "Submit Email" : "Submit Password"}
           </button>
         </>
       )}
@@ -188,4 +173,4 @@ const FormPanel = ({ signIn, setSignIn, verifyOTP, setVerifyOTP }) => {
   );
 };
 
-export default FormPanel;
+export default FormPanelForget;

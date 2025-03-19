@@ -93,7 +93,6 @@ exports.verifyOTP = async (req, res, next) => {
                 message: `<html>
       <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
         <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border: 1px solid #dddddd; border-radius: 10px; padding: 20px;">
-          <img src="https://iiitu-website.onrender.com/uploads/static/1logo-una-full.png" style="width: 100%;" />
           <p style="color: #555555; font-size: 16px;margin-top: 10%;">
             Hi, 
           </p>

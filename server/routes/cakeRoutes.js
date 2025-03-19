@@ -43,21 +43,6 @@ router.post(
     }
   }
 );
-router.get("/get/:id", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const cake = await CakeDetails.findById(id);
-
-    if (!cake) {
-      return res.status(404).json({ message: "cake Not Found" });
-    }
-
-    return res.status(200).json(cake);
-  } catch (err) {
-    console.error("Error fetching cake details:", err);
-    return res.status(500).json({ message: "Internal Server Error" });
-  }
-});
 router.get('/all', async (req, res) => {
     try {
         const allCakes = await CakeDetails.find();
@@ -94,6 +79,25 @@ router.get("/get/:id", async (req, res) => {
   }
 });
 
+router.post("/get/:id", jwtAuthMiddleware,async (req, res) => {
+  try {
+    const id = req.params.id;
+    const cake = await CakeDetails.findById(id);
+    if (!cake) {
+      return res.status(404).json({ message: "cake Not Found" });
+    }
+    if(cake.type==="public"){
+      return res.status(200).json(cake);
+    }
+    if(cake.tokenId!==req.userToken){
+      return res.status(401).json({message:"Unauthorized"})
+    }
+    return res.status(200).json(cake);
+  } catch (err) {
+    // console.error("Error fetching cake details:", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
   
 // DELETE route to remove a cake entry by ID
 router.delete("/:id", async (req, res) => {
@@ -159,25 +163,6 @@ router.get("/user/:id",async(req,res)=>{
     return res.status(500).json("Internal Server Error")
   }
 })
-router.post("/get/:id", jwtAuthMiddleware,async (req, res) => {
-  try {
-    const id = req.params.id;
-    const cake = await CakeDetails.findById(id);
-    if (!cake) {
-      return res.status(404).json({ message: "cake Not Found" });
-    }
-    if(cake.type==="public"){
-      return res.status(200).json(cake);
-    }
-    if(cake.tokenId!==req.userToken){
-      return res.status(401).json({message:"Unauthorized"})
-    }
-    return res.status(200).json(cake);
-  } catch (err) {
-    // console.error("Error fetching cake details:", err);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
 router.post("/like", async (req, res) => {
   try {
     const { id, user } = req.body;

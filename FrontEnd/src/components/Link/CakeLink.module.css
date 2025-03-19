@@ -51,8 +51,7 @@
   /* } */ 
   
   .flip-card-back {
-    background: linear-gradient(120deg, rgb(33, 10, 2) 30%, rgb(21, 6, 0) 88%,
-       rgb(0, 0, 0) 40%, rgb(0, 0, 0) 78%);
+    background: black;
        
     transform: rotateY(180deg);
   }
