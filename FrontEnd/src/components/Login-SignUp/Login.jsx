@@ -8,7 +8,7 @@ const LogInSine = () => {
   
   const [verifyOTP, setVerifyOTP] = useState(false);
   const [transition, setTransition] = useState(false);
-
+  console.log(window.innerWidth)
   const slide = () => {
     if (transition) return;
 
@@ -36,9 +36,13 @@ const LogInSine = () => {
         child.style.opacity = 0;
         child.style.visibility = "hidden";
       });
-
-      formPanel.style.borderRadius = "0 20px 20px 0";
-      actionPanel.style.borderRadius = "20px 0 0 20px";
+      console.log(window.innerWidth)
+      if(window.innerWidth < 640){
+        formPanel.style.borderRadius = "0px 0 20px 20px";
+        actionPanel.style.borderRadius = "0 0px 20px 20px";
+      } else {
+        formPanel.style.borderRadius = "20px 0 0 20px";
+        actionPanel.style.borderRadius = "20px 0px 0px 20px";}
     } else {
       formPanel.style.transform = `translateX(${-actionBoundingRect.width}px)`;
       actionPanel.style.transform = `translateX(${formBoundingRect.width}px)`;
@@ -48,9 +52,13 @@ const LogInSine = () => {
         child.style.opacity = 0;
         child.style.visibility = "hidden";
       });
-
-      formPanel.style.borderRadius = "20px 0 0 20px";
-      actionPanel.style.borderRadius = "0 20px 20px 0";
+      if(window.innerWidth < 640){
+        formPanel.style.borderRadius = "0px 0 20px 20px";
+        actionPanel.style.borderRadius = "0 0px 20px 20px";
+      } else {
+        formPanel.style.borderRadius = "20px 0 0 20px";
+        actionPanel.style.borderRadius = "0 20px 20px 0";}
+      
     }
 
     setTimeout(() => {
