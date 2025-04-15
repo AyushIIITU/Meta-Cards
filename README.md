@@ -68,5 +68,5 @@ This project is licensed under the MIT License.
 ## 📩 Contact
 For any inquiries or support, feel free to reach out:
 - Email: ayush01122004@gmail.com
-- Portfolio: [Your Portfolio](https://portfolio-ayushiiitus-projects.vercel.app/)
+- Portfolio: [Portfolio](https://portfolio-ayushiiitus-projects.vercel.app/)
 
